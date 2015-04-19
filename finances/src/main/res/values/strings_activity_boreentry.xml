@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="boreentry_question1">Date</string>
+    <string name="boreentry_question2">Total Depth</string>
+    <string name="boreentry_question3">Casting Depth</string>
+    <string name="boreentry_question4">Engine Hrs Start</string>
+    <string name="boreentry_question5">Engine Hrs End</string>
+    <string name="boreentry_question6">Customer Name</string>
+    <string name="boreentry_question7">Place</string>
+    <string name="boreentry_question8">Agent Name</string>
+    <string name="boreentry_question9">Bore Type</string>
+    <string name="boreentry_question10">Bill Amount</string>
+    <string name="boreentry_question11">Commission to Agent</string>
+    <string name="boreentry_question12">Total Amount</string>
+
+    <string-array name="boreType_array">
+        <item>New Bore</item>
+        <item>Reset Bore</item>
+        <item>Flushing</item>
+    </string-array>
+</resources>

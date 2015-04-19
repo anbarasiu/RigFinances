@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="vouchers_array">
+        <item>Diesel</item>
+        <item>Maintenance</item>
+        <item>Cook</item>
+        <item>Road Expenses</item>
+        <item>Tools</item>
+        <item>Salary</item>
+        <item>Pipes</item>
+        <item>Site Expenses</item>
+    </string-array>
+
+    <!-- Fragment : Diesel -->
+    <string name="fragment_diesel_question1">Diesel For</string>
+    <string name="diesel_radio_option1">Lorry</string>
+    <string name="diesel_radio_option2">Compressor</string>
+    <string name="fragment_diesel_question2">Litres</string>
+    <string name="fragment_diesel_question3">Total Amount Spent</string>
+    <string name="fragment_diesel_question4">Spent By</string>
+
+    <!-- Fragment : Maintenance -->
+    <string name="fragment_maintenance_question1">Work Type</string>
+    <string name="fragment_maintenance_question2">Service</string>
+    <string name="fragment_maintenance_question3">Engine Hrs (hh : mm)</string>
+    <string name="fragment_maintenance_question4">Total Amount Spent</string>
+    <string name="fragment_maintenance_question5">Remarks</string>
+    <string name="fragment_maintenance_question6">Spent By</string>
+
+    <!-- Fragment : Cook -->
+    <string name="fragment_cook_question1">Items</string>
+    <string name="fragment_cook_question1_col1">Item</string>
+    <string name="fragment_cook_question1_col2">Quantity</string>
+    <string name="fragment_cook_question1_col3">Price</string>
+    <string name="fragment_cook_question2">Total Amount Spent</string>
+    <string name="fragment_cook_question3">Spent By</string>
+
+    <!-- Fragment : Road Expenses -->
+    <string name="fragment_road_question1">Expense Details</string>
+    <string name="fragment_road_question2">Total Amount Spent</string>
+    <string name="fragment_road_question3">Spent By</string>
+
+    <!-- Fragment : Salary -->
+    <string name="fragment_salary_question1">Employee Name</string>
+    <string name="fragment_salary_question2">Remarks</string>
+    <string name="fragment_salary_question3">Total Amount Spent</string>
+    <string name="fragment_salary_question4">Spent By</string>
+
+    <!-- Fragment : Pipes -->
+    <string name="fragment_pipes_question1">Work Type</string>
+    <string name="pipes_question1_option1">New</string>
+    <string name="pipes_question1_option2">Repair</string>
+    <string name="fragment_pipes_question2">Pipe Type</string>
+    <string name="pipes_question2_option1">Rod</string>
+    <string name="pipes_question2_option2">Casing</string>
+    <string name="fragment_pipes_question3">Pipe Length</string>
+    <string name="fragment_pipes_question4">Total Amount Spent</string>
+    <string name="fragment_pipes_question5">Remarks</string>
+    <string name="fragment_pipes_question6">Spent By</string>
+
+    <!-- Fragment : Site Expenses -->
+    <string name="fragment_site_question1">Work Type</string>
+    <string name="fragment_site_question2">Total Amount Spent</string>
+    <string name="fragment_site_question3">Remarks</string>
+    <string name="fragment_site_question4">Spent By</string>
+
+    <!-- Fragment : Credit -->
+    <string name="fragment_credit_question1">Amount Received</string>
+    <string name="fragment_credit_question2">Amount Received From</string>
+    <string name="fragment_credit_question3">Received By</string>
+    <string name="fragment_credit_question4">Remarks</string>
+    <string name="fragment_credit_question5">Amount in Credit</string>
+
+</resources>

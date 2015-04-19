@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="section1">Vouchers</string>
+    <string name="section2">Bore Entry</string>
+    <string name="section3">Reports</string>
+    <string name="section4">Employee Details</string>
+</resources>

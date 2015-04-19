@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="employeedetails_question1">Date</string>
+    <string name="employeedetails_question2">Employee Number</string>
+    <string name="employeedetails_question3">Employee Name</string>
+    <string name="employeedetails_question4">Date of Joining</string>
+    <string name="employeedetails_question5">Date of Leaving</string>
+    <string name="employeedetails_question6">Current Balance</string>
+    <string name="employeedetails_question7">Remarks</string>
+    <string name="employeedetails_question8">Salary Given</string>
+</resources>

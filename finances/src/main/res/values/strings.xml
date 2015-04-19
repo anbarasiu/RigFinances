@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Accounting Assistant</string>
+    <string name="section_heading1">Vouchers</string>
+    <string name="section_heading2">Bore Details</string>
+    <string name="section_heading3">Employee Details</string>
+    <string name="section_heading4">Reports</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_vouchers">Vouchers</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="submit">Submit</string>
+    <string name="back_home">Back to Home</string>
+    <string name="title_activity_bore_entry">Bore Entry</string>
+    <string name="title_activity_employee_details">Employee Details</string>
+    <string name="title_activity_reports">Reports</string>
+
+    <!-- All that's saved in Shared Preferences -->
+    <string name="shared_preferences">ACCOUNTING_PREFS</string>
+    <string name="sp_username">USERNAME</string>
+    <string name="user_role">USER_ROLE</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+</resources>

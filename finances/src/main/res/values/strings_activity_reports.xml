@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="reports_tab1">Expenses</string>
+    <string name="reports_tab2">Diesel in Hand</string>
+    <string name="reports_tab3">Salary</string>
+    <string name="reports_tab4">Bore</string>
+    <string name="reports_tab5">Casing Pipe</string>
+
+    <string name="reports_view">View Reports</string>
+
+    <!-- Expenses -->
+    <string name="reports_expenses_from">From</string>
+    <string name="reports_expenses_to">To</string>
+
+    <!-- Salary -->
+    <string name="reports_salary_field1">Employee Number</string>
+    <string name="reports_salary_field2">Financial Year</string>
+    <string name="reports_salary_field3">Employee Name</string>
+    <string name="reports_salary_field4">Joining Date 1</string>
+    <string name="reports_salary_field5">Leaving Date 1</string>
+    <string name="reports_salary_field6">Joining Date 2</string>
+    <string name="reports_salary_field7">Leaving Date 2</string>
+    <string name="reports_salary_field8">Joining Date 3</string>
+    <string name="reports_salary_field9">Leaving Date 3</string>
+    <string name="reports_salary_field10">Total No. of days worked</string>
+    <string name="reports_salary_field11">Total Salary Amount</string>
+    <string name="reports_salary_field12">Salary Given</string>
+    <string name="reports_salary_field13">Salary with Company</string>
+    <string name="reports_salary_field14">Total Amount Spent</string>
+
+</resources>
