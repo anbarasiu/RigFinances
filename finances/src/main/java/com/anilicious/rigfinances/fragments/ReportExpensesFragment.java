@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.anilicious.rigfinances.finances.R;
-import com.anilicious.rigfinances.mappers.ChartMapper;
+import com.anilicious.rigfinances.mappers.ReportsMapper;
 import com.anilicious.rigfinances.utils.CommonUtils;
 import com.anilicious.rigfinances.utils.PickerFragment;
 
@@ -105,8 +105,8 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
         XYSeriesRenderer xySeriesRenderer = new XYSeriesRenderer();
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 
-        ChartMapper chartMapper = new ChartMapper(getActivity());
-        HashMap<String, Double> expenseMap = chartMapper.mapExpenses(dateFrom, dateTo);
+        ReportsMapper reportsMapper = new ReportsMapper(getActivity());
+        HashMap<String, Double> expenseMap = reportsMapper.mapExpenses(dateFrom, dateTo);
 
         //TODO: Add legends & labels to Bar Chart
         for(Map.Entry entry : expenseMap.entrySet()){

@@ -24,6 +24,7 @@ import com.anilicious.rigfinances.beans.Tools;
 import com.anilicious.rigfinances.beans.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -587,6 +588,27 @@ public class DBAdapter extends SQLiteOpenHelper{
 
         while(cursor.moveToNext()){
             totalAmount = cursor.getDouble(0);
+        }
+
+        database.close();
+        return totalAmount;
+    }
+
+    public HashMap<String, String> retrieveSalaryReportsDetails(String employeeNumber){
+        SQLiteDatabase database = this.getReadableDatabase();
+        HashMap<String, String> salaryReport = new HashMap<String, String>();
+
+        String query = "SELECT employee_name, employee_number, joining_date, leaving_date " +
+                "FROM"+ EMPLOYEE_DATABASE_NAME+" E INNER JOIN"+ SALARY_DATABASE_NAME S +" +
+                "ON E.employee_number = S.employee_number " +
+                "WHERE E.Employee_number = " + employeeNumber;
+
+        while(cursor.moveToNext()){
+            salaryReport.put("employee_name", cursor.getString(cursor.getColumnIndex('employee_name')));
+            salaryReport.put("employee_number", cursor.getString(cursor.getColumnIndex(employee_number)));
+            salaryReport.put("joining_date", cursor.getString(cursor.getColumnIndex(joining_date)));
+            salaryReport.put("leaving_date", cursor.getString(cursor.getColumnIndex(leaving_date)));
+            salaryReport.put("employee_name", cursor.getString(cursor.getColumnIndex('employee_name')));
         }
 
         database.close();

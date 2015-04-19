@@ -1,35 +1,16 @@
 package com.anilicious.rigfinances.fragments;
 
-import android.app.DialogFragment;
 import android.app.Fragment;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.anilicious.rigfinances.finances.R;
-import com.anilicious.rigfinances.mappers.ChartMapper;
-import com.anilicious.rigfinances.utils.CommonUtils;
-import com.anilicious.rigfinances.utils.PickerFragment;
-
-import org.achartengine.ChartFactory;
-import org.achartengine.GraphicalView;
-import org.achartengine.model.CategorySeries;
-import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.model.XYSeries;
-import org.achartengine.renderer.DefaultRenderer;
-import org.achartengine.renderer.SimpleSeriesRenderer;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.anilicious.rigfinances.mappers.ReportsMapper;
 
 /**
  * Created by ANBARASI on 25/1/15.
@@ -69,6 +50,7 @@ public class ReportSalaryFragment extends Fragment implements View.OnClickListen
     }
 
     public void renderReport(){
+        ReportsMapper reportsMapper = new ReportsMapper();
 
     }
 }

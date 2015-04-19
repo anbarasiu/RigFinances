@@ -1,41 +1,21 @@
 package com.anilicious.rigfinances.activities;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.RelativeLayout;
 
 import com.anilicious.rigfinances.finances.R;
-import com.anilicious.rigfinances.fragments.CreditFragment;
-import com.anilicious.rigfinances.fragments.DebitFragment;
 import com.anilicious.rigfinances.fragments.ReportBoreFragment;
 import com.anilicious.rigfinances.fragments.ReportDieselFragment;
 import com.anilicious.rigfinances.fragments.ReportExpensesFragment;
-import com.anilicious.rigfinances.mappers.ChartMapper;
-
-import org.achartengine.ChartFactory;
-import org.achartengine.GraphicalView;
-import org.achartengine.chart.BarChart;
-import org.achartengine.model.CategorySeries;
-import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.model.XYSeries;
-import org.achartengine.renderer.DefaultRenderer;
-import org.achartengine.renderer.SimpleSeriesRenderer;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ReportsActivity extends ActionBarActivity implements ActionBar.TabListener{
 
