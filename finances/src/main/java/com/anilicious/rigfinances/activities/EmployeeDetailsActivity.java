@@ -54,11 +54,11 @@ public class EmployeeDetailsActivity extends ActionBarActivity {
         etDate = (EditText)findViewById(R.id.editText);
         final EditText etEmployeeNumber = (EditText)findViewById(R.id.editText4);
         final EditText etEmployeeName = (EditText)findViewById(R.id.editText3);
-        etDoj = (EditText)findViewById(R.id.editText6);
-        etDol = (EditText)findViewById(R.id.editText7);
-        final EditText etCurrentBalance = (EditText)findViewById(R.id.editText8);
-        final Spinner etRemarks = (Spinner)findViewById(R.id.spinner_boreType);
-        final EditText etSalary = (EditText)findViewById(R.id.editText10);
+        etDoj = (EditText)findViewById(R.id.editText5);
+        etDol = (EditText)findViewById(R.id.editText2);
+        final EditText etCurrentBalance = (EditText)findViewById(R.id.editText6);
+        final EditText etRemarks = (EditText)findViewById(R.id.editText7);
+        final EditText etSalary = (EditText)findViewById(R.id.editText8);
 
         // Setup Date Picker
         setupPickers();
@@ -74,7 +74,7 @@ public class EmployeeDetailsActivity extends ActionBarActivity {
                     String dateOfJoining = etDoj.getText().toString();
                     String dateOfLeaving = etDol.getText().toString();
                     double currentBalance = Double.parseDouble(etCurrentBalance.getText().toString());
-                    String remarks = (String)etRemarks.getSelectedItem();
+                    String remarks = etRemarks.getText().toString();
                     double salary = Double.parseDouble(etSalary.getText().toString());
 
                     Employee employee = new Employee();
@@ -127,6 +127,20 @@ public class EmployeeDetailsActivity extends ActionBarActivity {
                 showDialog(DATE_DIALOG_ID);
             }
         });
+
+        etDoj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog(DATE_DIALOG_ID);
+            }
+        });
+
+        etDol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog(DATE_DIALOG_ID);
+            }
+        });
     }
 
     @Override
@@ -147,12 +161,12 @@ public class EmployeeDetailsActivity extends ActionBarActivity {
      *  Reset form once Submitted button is clicked
      */
     public void clearForm(){
-        ViewGroup group = (ViewGroup)findViewById(R.id.bore_parent);
+        ViewGroup group = (ViewGroup)findViewById(R.id.employeeDetails_parent);
         CommonUtils.clearForm(group);
     }
 
     public boolean validForm(){
-        ViewGroup group = (ViewGroup)findViewById(R.id.bore_parent);
+        ViewGroup group = (ViewGroup)findViewById(R.id.employeeDetails_parent);
         return CommonUtils.validForm(group);
     }
 

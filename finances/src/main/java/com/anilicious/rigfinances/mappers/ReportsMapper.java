@@ -39,19 +39,12 @@ public class ReportsMapper {
         return chartMap;
     }
 
-    public HashMap<String, Double> mapSalary(String dateFrom, String dateTo){
+    public HashMap<String, String> mapSalary(int employeeNumber){
 
-        HashMap<String, Double> salaryMap = new HashMap<String, Double>();
+        HashMap<String, String> salaryMap = new HashMap<String, String>();
 
         DBAdapter dbAdapter = DBAdapter.getInstance(context);
-        chartMap.put(CommonUtils.CONSTANTS.DIESEL, dbAdapter.retrieveDieselAmount(dateFrom, dateTo));
-        chartMap.put(CommonUtils.CONSTANTS.COOK, dbAdapter.retrieveCookAmount(dateFrom, dateTo));
-        chartMap.put(CommonUtils.CONSTANTS.MAINTENANCE, dbAdapter.retrieveMaintenanceAmount(dateFrom, dateTo));
-        chartMap.put(CommonUtils.CONSTANTS.PIPE, dbAdapter.retrievePipeAmount(dateFrom, dateTo));
-        chartMap.put(CommonUtils.CONSTANTS.ROAD, dbAdapter.retrieveRoadAmount(dateFrom, dateTo));
-        chartMap.put(CommonUtils.CONSTANTS.SITE, dbAdapter.retrieveSiteAmount(dateFrom, dateTo));
-        chartMap.put(CommonUtils.CONSTANTS.SALARY, dbAdapter.retrieveSalaryAmount(dateFrom, dateTo));
-        chartMap.put(CommonUtils.CONSTANTS.TOOLS, dbAdapter.retrieveToolAmount(dateFrom, dateTo));
+        salaryMap = dbAdapter.retrieveSalaryReportsDetails(employeeNumber);
 
         return salaryMap;
     }

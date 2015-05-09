@@ -42,9 +42,10 @@
 
     <!-- Fragment : Salary -->
     <string name="fragment_salary_question1">Employee Name</string>
-    <string name="fragment_salary_question2">Remarks</string>
-    <string name="fragment_salary_question3">Total Amount Spent</string>
-    <string name="fragment_salary_question4">Spent By</string>
+    <string name="fragment_salary_question2">Employee Number</string>
+    <string name="fragment_salary_question3">Remarks</string>
+    <string name="fragment_salary_question4">Total Amount Spent</string>
+    <string name="fragment_salary_question5">Spent By</string>
 
     <!-- Fragment : Pipes -->
     <string name="fragment_pipes_question1">Work Type</string>

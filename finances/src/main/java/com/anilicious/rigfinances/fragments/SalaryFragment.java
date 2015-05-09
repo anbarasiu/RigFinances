@@ -26,6 +26,7 @@ public class SalaryFragment extends Fragment {
         // UI Object References
         Button btnSubmit = (Button)view.findViewById(R.id.btn_submit);
         final EditText etEmployeeName = (EditText)view.findViewById(R.id.editText);
+        final EditText etEmployeeNumber = (EditText)view.findViewById(R.id.editText2);
         final EditText etRemarks = (EditText)view.findViewById(R.id.editText4);
         final EditText etTotalAmount = (EditText)view.findViewById(R.id.editText3);
         final EditText etSpentBy = (EditText)view.findViewById(R.id.editText5);
@@ -35,6 +36,7 @@ public class SalaryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String employeeName = etEmployeeName.getText().toString();
+                int employeeNumber = Integer.parseInt(etEmployeeNumber.getText().toString());
                 String remarks = etRemarks.getText().toString();
                 int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
                 String spentBy = etSpentBy.getText().toString();
@@ -43,6 +45,7 @@ public class SalaryFragment extends Fragment {
 
                 Salary salary = new Salary();
                 salary.setEmployeeName(employeeName);
+                salary.setEmployeeNumber(employeeNumber);
                 salary.setReason(remarks);
                 salary.setAmount(totalAmount);
                 salary.setSpentBy(spentBy);

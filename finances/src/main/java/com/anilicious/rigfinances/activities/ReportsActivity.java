@@ -16,6 +16,7 @@ import com.anilicious.rigfinances.finances.R;
 import com.anilicious.rigfinances.fragments.ReportBoreFragment;
 import com.anilicious.rigfinances.fragments.ReportDieselFragment;
 import com.anilicious.rigfinances.fragments.ReportExpensesFragment;
+import com.anilicious.rigfinances.fragments.ReportSalaryFragment;
 
 public class ReportsActivity extends ActionBarActivity implements ActionBar.TabListener{
 
@@ -71,6 +72,11 @@ public class ReportsActivity extends ActionBarActivity implements ActionBar.TabL
             case 1:
                 ReportDieselFragment reportDieselFragment = new ReportDieselFragment();
                 ft.replace(fragmentContainer, reportDieselFragment);
+                ft.commit();
+                break;
+            case 2:
+                ReportSalaryFragment reportSalaryFragment = new ReportSalaryFragment();
+                ft.replace(fragmentContainer, reportSalaryFragment);
                 ft.commit();
                 break;
             case 3:

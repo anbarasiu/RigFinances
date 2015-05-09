@@ -120,7 +120,7 @@ public class DBAdapter extends SQLiteOpenHelper{
     private static final String SALARY_DATABASE_CREATE = "CREATE TABLE " + SALARY_DATABASE_NAME + "(" +
             "_id " + "INTEGER primary key AUTOINCREMENT, " + // 'S' + number
             "date" + " date, " +
-            "employee_number" + " text, " +
+            "employee_number" + " INTEGER, " +
             "employee_name" + " text, " +
             "amount" + " number, " +
             "spent_by" + " text, " +
@@ -594,25 +594,25 @@ public class DBAdapter extends SQLiteOpenHelper{
         return totalAmount;
     }
 
-    public HashMap<String, String> retrieveSalaryReportsDetails(String employeeNumber){
+    public HashMap<String, String> retrieveSalaryReportsDetails(int employeeNumber){
         SQLiteDatabase database = this.getReadableDatabase();
         HashMap<String, String> salaryReport = new HashMap<String, String>();
 
-        String query = "SELECT employee_name, employee_number, joining_date, leaving_date " +
-                "FROM"+ EMPLOYEE_DATABASE_NAME+" E INNER JOIN"+ SALARY_DATABASE_NAME S +" +
+        String query = "SELECT E.employee_name, E.employee_number, E.date_of_joining, E.date_of_leaving " +
+                "FROM "+ EMPLOYEE_DATABASE_NAME+" E INNER JOIN "+ SALARY_DATABASE_NAME +" S "+
                 "ON E.employee_number = S.employee_number " +
-                "WHERE E.Employee_number = " + employeeNumber;
+                "WHERE E.employee_number = " + employeeNumber + ";";
+
+        Cursor cursor = database.rawQuery(query, null);
 
         while(cursor.moveToNext()){
-            salaryReport.put("employee_name", cursor.getString(cursor.getColumnIndex('employee_name')));
-            salaryReport.put("employee_number", cursor.getString(cursor.getColumnIndex(employee_number)));
-            salaryReport.put("joining_date", cursor.getString(cursor.getColumnIndex(joining_date)));
-            salaryReport.put("leaving_date", cursor.getString(cursor.getColumnIndex(leaving_date)));
-            salaryReport.put("employee_name", cursor.getString(cursor.getColumnIndex('employee_name')));
+            salaryReport.put("employee_name", cursor.getString(cursor.getColumnIndex("employee_name")));
+            salaryReport.put("joining_date", cursor.getString(cursor.getColumnIndex("date_of_joining")));
+            salaryReport.put("leaving_date", cursor.getString(cursor.getColumnIndex("date_of_leaving")));
         }
 
         database.close();
-        return totalAmount;
+        return salaryReport;
     }
 
     /* BEGIN : Tables - Insert Methods */

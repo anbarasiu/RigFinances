@@ -7,7 +7,7 @@ import com.anilicious.rigfinances.utils.CommonUtils;
  */
 public class Salary {
     private String date;
-    private String employeeNumber;
+    private int employeeNumber;
     private String employeeName;
     private float amount;
     private String spentBy;
@@ -21,11 +21,11 @@ public class Salary {
         this.date = date;
     }
 
-    public String getEmployeeNumber() {
+    public int getEmployeeNumber() {
         return employeeNumber;
     }
 
-    public void setEmployeeNumber(String employeeNumber) {
+    public void setEmployeeNumber(int employeeNumber) {
         this.employeeNumber = employeeNumber;
     }
 
