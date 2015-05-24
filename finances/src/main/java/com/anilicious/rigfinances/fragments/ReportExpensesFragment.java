@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,7 +28,9 @@ import org.achartengine.renderer.SimpleSeriesRenderer;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,6 +41,14 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
     TextView tvFrom;
     TextView tvTo;
     View view;
+    CheckBox diesel;
+    CheckBox maintenance;
+    CheckBox cook;
+    CheckBox road_expenses;
+    CheckBox tools;
+    CheckBox salary;
+    CheckBox pipes;
+    CheckBox site_expenses;
 
     private String entryDateFrom;
     private String entryDateTo;
@@ -52,6 +63,14 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
         // Attach listeners
         tvFrom =(TextView)view.findViewById(R.id.report_expense_from);
         tvTo =(TextView)view.findViewById(R.id.report_expense_to);
+        diesel =(CheckBox)view.findViewById(R.id.report_expense_checkBox);
+        maintenance =(CheckBox)view.findViewById(R.id.report_expense_checkBox2);
+        cook =(CheckBox)view.findViewById(R.id.report_expense_checkBox3);
+        road_expenses =(CheckBox)view.findViewById(R.id.report_expense_checkBox4);
+        tools =(CheckBox)view.findViewById(R.id.report_expense_checkBox5);
+        salary =(CheckBox)view.findViewById(R.id.report_expense_checkBox6);
+        pipes =(CheckBox)view.findViewById(R.id.report_expense_checkBox7);
+        site_expenses =(CheckBox)view.findViewById(R.id.report_expense_checkBox8);
         Button btnViewReports = (Button)view.findViewById(R.id.reports_view);
         tvFrom.setOnClickListener(this);
         tvTo.setOnClickListener(this);
@@ -63,7 +82,34 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.reports_view && entryDateTo != null && entryDateFrom != null){
-            renderCharts(entryDateFrom, entryDateTo);
+            List<String> selectedExpenses = new ArrayList<String>();
+
+            // TODO : Code smell, I know.. <Revisit>
+            if(diesel.isChecked()){
+                selectedExpenses.add(CommonUtils.CONSTANTS.DIESEL);
+            }
+            if(maintenance.isChecked()){
+                selectedExpenses.add(CommonUtils.CONSTANTS.MAINTENANCE);
+            }
+            if(cook.isChecked()){
+                selectedExpenses.add(CommonUtils.CONSTANTS.COOK);
+            }
+            if(road_expenses.isChecked()){
+                selectedExpenses.add(CommonUtils.CONSTANTS.ROAD);
+            }
+            if(tools.isChecked()){
+                selectedExpenses.add(CommonUtils.CONSTANTS.TOOLS);
+            }
+            if(salary.isChecked()){
+                selectedExpenses.add(CommonUtils.CONSTANTS.SALARY);
+            }
+            if(pipes.isChecked()){
+                selectedExpenses.add(CommonUtils.CONSTANTS.PIPE);
+            }
+            if(site_expenses.isChecked()){
+                selectedExpenses.add(CommonUtils.CONSTANTS.SITE);
+            }
+            renderCharts(entryDateFrom, entryDateTo, selectedExpenses);
         }
         else{
             DialogFragment picker = new PickerFragment(CommonUtils.DIALOG_DATE);
@@ -89,7 +135,7 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
         }
     }
 
-    public void renderCharts(String dateFrom, String dateTo){
+    public void renderCharts(String dateFrom, String dateTo, List selectedExpenses){
         // Pie Chart init
         int[] colours = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.BLACK, Color.GRAY, Color.CYAN, Color.MAGENTA};
         int i = 0;
@@ -106,7 +152,7 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 
         ReportsMapper reportsMapper = new ReportsMapper(getActivity());
-        HashMap<String, Double> expenseMap = reportsMapper.mapExpenses(dateFrom, dateTo);
+        HashMap<String, Double> expenseMap = reportsMapper.mapExpenses(dateFrom, dateTo, selectedExpenses);
 
         //TODO: Add legends & labels to Bar Chart
         for(Map.Entry entry : expenseMap.entrySet()){

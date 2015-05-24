@@ -22,10 +22,12 @@ import com.anilicious.rigfinances.beans.Site;
 import com.anilicious.rigfinances.beans.ToolItem;
 import com.anilicious.rigfinances.beans.Tools;
 import com.anilicious.rigfinances.beans.User;
+import com.anilicious.rigfinances.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ANBARASI on 14/11/14.
@@ -458,7 +460,7 @@ public class DBAdapter extends SQLiteOpenHelper{
         database.close();
     }
 
-    public double retrieveDieselAmount(String dateFrom, String dateTo){
+    /*public double retrieveDieselAmount(String dateFrom, String dateTo){
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.query(DIESEL_DATABASE_NAME,
                 new String[] {"SUM(amount)"},
@@ -592,7 +594,75 @@ public class DBAdapter extends SQLiteOpenHelper{
 
         database.close();
         return totalAmount;
+    }*/
+
+    public HashMap<String, Double> retrieveExpenseAmount(String dateFrom, String dateTo, List<String> selectedExpenses){
+        HashMap<String, Double> expenseReport = new HashMap<String, Double>();
+        List<String> columnRetriever = new ArrayList<String>();
+
+        String queryColumns = "SELECT";
+        String queryTables = "";
+        String columnName = "";
+        for(String type : selectedExpenses){
+            switch(type){
+                case CommonUtils.CONSTANTS.DIESEL :
+                    columnName = "d";
+                    queryTables += " " + DIESEL_DATABASE_NAME + " d";
+                    break;
+                case CommonUtils.CONSTANTS.MAINTENANCE :
+                    columnName = "m";
+                    queryTables += " " + MAINTENANCE_DATABASE_NAME + " m";
+                    break;
+                case CommonUtils.CONSTANTS.COOK :
+                    columnName = "c";
+                    queryTables += " " + COOK_DATABASE_NAME + " c";
+                    break;
+                case CommonUtils.CONSTANTS.PIPE :
+                    columnName = "p";
+                    queryTables += " " + PIPE_DATABASE_NAME + " p";
+                    break;
+                case CommonUtils.CONSTANTS.ROAD :
+                    columnName = "r";
+                    queryTables += " " + ROAD_DATABASE_NAME + " r";
+                    break;
+                case CommonUtils.CONSTANTS.SITE :
+                    columnName = "si";
+                    queryTables += " " + SITE_DATABASE_NAME + " si";
+                    break;
+                case CommonUtils.CONSTANTS.SALARY :
+                    columnName = "sa";
+                    queryTables += " " + SALARY_DATABASE_NAME + " sa";
+                    break;
+                case CommonUtils.CONSTANTS.TOOLS :
+                    columnName = "t";
+                    queryTables += " " + TOOL_DATABASE_NAME + " t";
+                    break;
+            }
+            queryColumns += " SUM(" + columnName + ".amount)";
+            if(selectedExpenses.indexOf(type) != selectedExpenses.size() - 1){
+                queryColumns += ",";
+                queryTables += ",";
+            }
+            columnRetriever.add(type);
+        }
+
+        SQLiteDatabase database = this.getReadableDatabase();
+        String query = queryColumns + " FROM" + queryTables + " WHERE " + columnName + ".date BETWEEN " + dateFrom + " AND " + dateTo +";";
+        Log.d("Query ", query);
+
+        Cursor cursor = database.rawQuery(query, null);
+
+        while(cursor.moveToNext()){
+            for(String entry : columnRetriever){
+                expenseReport.put(entry, cursor.getDouble(0));
+            }
+        }
+
+        database.close();
+        return expenseReport;
     }
+
+
 
     public HashMap<String, String> retrieveSalaryReportsDetails(int employeeNumber){
         SQLiteDatabase database = this.getReadableDatabase();

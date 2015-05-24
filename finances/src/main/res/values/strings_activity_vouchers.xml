@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="vouchers_array">
-        <item>Diesel</item>
-        <item>Maintenance</item>
-        <item>Cook</item>
-        <item>Road Expenses</item>
-        <item>Tools</item>
-        <item>Salary</item>
-        <item>Pipes</item>
-        <item>Site Expenses</item>
+        <item>@string/diesel</item>
+        <item>@string/maintenance</item>
+        <item>@string/cook</item>
+        <item>@string/road_expenses</item>
+        <item>@string/tools</item>
+        <item>@string/salary</item>
+        <item>@string/pipes</item>
+        <item>@string/site_expenses</item>
     </string-array>
+
+    <string name="diesel">Diesel</string>
+    <string name="maintenance">Maintenance</string>
+    <string name="cook">Cook</string>
+    <string name="road_expenses">Road Expenses</string>
+    <string name="tools">Tools</string>
+    <string name="salary">Salary</string>
+    <string name="pipes">Pipes</string>
+    <string name="site_expenses">Site Expenses</string>
 
     <!-- Fragment : Diesel -->
     <string name="fragment_diesel_question1">Diesel For</string>

@@ -27,7 +27,80 @@
             android:id="@+id/report_expense_to"
             android:layout_weight="1"
             android:gravity="center_vertical|center_horizontal" />
+
     </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/diesel"
+            android:id="@+id/report_expense_checkBox"
+            android:checked="false"
+            android:layout_weight="1" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/maintenance"
+            android:id="@+id/report_expense_checkBox2"
+            android:checked="false"
+            android:layout_weight="1" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cook"
+            android:id="@+id/report_expense_checkBox3"
+            android:layout_weight="1" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/road_expenses"
+            android:id="@+id/report_expense_checkBox4"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tools"
+            android:id="@+id/report_expense_checkBox5"
+            android:layout_weight="1" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/salary"
+            android:id="@+id/report_expense_checkBox6"
+            android:layout_weight="1" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pipes"
+            android:id="@+id/report_expense_checkBox7"
+            android:layout_weight="1" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/site_expenses"
+            android:id="@+id/report_expense_checkBox8"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
 
     <Button
         android:layout_width="fill_parent"
