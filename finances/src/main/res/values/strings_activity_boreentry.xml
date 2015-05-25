@@ -12,6 +12,9 @@
     <string name="boreentry_question10">Bill Amount</string>
     <string name="boreentry_question11">Commission to Agent</string>
     <string name="boreentry_question12">Total Amount</string>
+    <string name="boreentry_question13">Diesel Used</string>
+    <string name="boreentry_question14">Diesel in Hand</string>
+    <string name="boreentry_question15">Casing Pipe in Hand</string>
 
     <string-array name="boreType_array">
         <item>New Bore</item>

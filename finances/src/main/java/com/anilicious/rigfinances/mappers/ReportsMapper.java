@@ -16,38 +16,36 @@ import java.util.List;
 public class ReportsMapper {
 
     Context context;
+    DBAdapter dbAdapter;
 
     public ReportsMapper(Context context){
         this.context = context.getApplicationContext();
+        dbAdapter = DBAdapter.getInstance(context);
     }
 
     public HashMap<String, Double> mapExpenses(String dateFrom, String dateTo, List<String> selectedExpenses){
-
         HashMap<String, Double> chartMap = new HashMap<String, Double>();
-        DBAdapter dbAdapter = DBAdapter.getInstance(context);
         chartMap = dbAdapter.retrieveExpenseAmount(dateFrom, dateTo, selectedExpenses);
-        /*);
-        chartMap.put(CommonUtils.CONSTANTS.COOK, dbAdapter.retrieveCookAmount(dateFrom, dateTo));
-        chartMap.put(CommonUtils.CONSTANTS.MAINTENANCE, dbAdapter.retrieveMaintenanceAmount(dateFrom, dateTo));
-        chartMap.put(CommonUtils.CONSTANTS.PIPE, dbAdapter.retrievePipeAmount(dateFrom, dateTo));
-            chartMap.put(CommonUtils.CONSTANTS.ROAD, dbAdapter.retrieveRoadAmount(dateFrom, dateTo));
-        chartMap.put(CommonUtils.CONSTANTS.SITE, dbAdapter.retrieveSiteAmount(dateFrom, dateTo));
-        chartMap.put(CommonUtils.CONSTANTS.SALARY, dbAdapter.retrieveSalaryAmount(dateFrom, dateTo));
-        chartMap.put(CommonUtils.CONSTANTS.TOOLS, dbAdapter.retrieveToolAmount(dateFrom, dateTo));*/
-
         return chartMap;
     }
 
     public HashMap<String, String> mapSalary(int employeeNumber){
-
         HashMap<String, String> salaryMap = new HashMap<String, String>();
-
-        DBAdapter dbAdapter = DBAdapter.getInstance(context);
         salaryMap = dbAdapter.retrieveSalaryReportsDetails(employeeNumber);
-
         return salaryMap;
     }
 
+    public HashMap<String, Double> mapBoreDetails(String dateFrom, String dateTo){
+        HashMap<String, Double> boreDetailsMap = new HashMap<String, Double>();
+        boreDetailsMap = dbAdapter.retrieveBoreReportsDetails(dateFrom, dateTo);
 
+        double mileage = 100.0; // TODO : Figure out where Mileage comes from
+        double diesel_in_hand = boreDetailsMap.get("diesel_used") - ((boreDetailsMap.get("engine_hrs_end") - boreDetailsMap.get("engine_hrs_start"))/mileage);
+        double casing_pipe_in_hand = boreDetailsMap.get("total_pipe_length") - boreDetailsMap.get("casting_depth");
+        boreDetailsMap.put("diesel_in_hand", diesel_in_hand);
+        boreDetailsMap.put("casing_pipe_in_hand", casing_pipe_in_hand);
+
+        return boreDetailsMap;
+    }
 
 }

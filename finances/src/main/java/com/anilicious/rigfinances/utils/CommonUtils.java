@@ -22,6 +22,9 @@ public final class CommonUtils {
     public static final String DIALOG_DATE = "date";
     public static final String DIALOG_TIME = "time";
 
+    public static final String FINANCIAL_YEAR_START = "01/04";  // DD/MM
+    public static final String FINANCIAL_YEAR_END = "01/03";    // DD/MM
+
     public class CONSTANTS{
         public static final String DIESEL = "Diesel";
         public static final String COOK = "Cook";

@@ -12,38 +12,73 @@ import android.widget.TextView;
 
 import com.anilicious.rigfinances.database.DBAdapter;
 import com.anilicious.rigfinances.finances.R;
+import com.anilicious.rigfinances.mappers.ReportsMapper;
+import com.anilicious.rigfinances.utils.CommonUtils;
+
+import java.util.Calendar;
+import java.util.HashMap;
 
 /**
  * Created by ANBARASI on 3/2/15.
  * Bore Details extracted from DB - Reports
  */
 public class ReportBoreFragment extends Fragment {
+
+    TextView tvTotalDepth;
+    TextView tvCastingDepth;
+    TextView tvBillAmount;
+    TextView tvCommission;
+    TextView tvTotalAmount;
+    TextView tvDieselUsed;
+    TextView tvDate;
+    TextView tvDieselInHand;
+    TextView tvCasingPipeInHand;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reports_bore, null);
 
         // UI Object References
         Button btnSubmit = (Button)view.findViewById(R.id.btn_submit);
-        final TextView tvDate = (TextView)view.findViewById(R.id.TextView2);
-        final TextView tvTotalDepth = (TextView)view.findViewById(R.id.TextView4);
-        final TextView tvCastingDepth = (TextView)view.findViewById(R.id.TextView6);
-        final TextView tvEngineHrsStart = (TextView)view.findViewById(R.id.TextView8);
-        final TextView tvEngineHrsEnd = (TextView)view.findViewById(R.id.TextView10);
-        final TextView tvCustomerName = (TextView)view.findViewById(R.id.TextView12);
-        final TextView tvPlace = (TextView)view.findViewById(R.id.TextView14);
-        final TextView tvAgentName = (TextView)view.findViewById(R.id.TextView16);
-        final TextView tvBoreType = (TextView)view.findViewById(R.id.TextView18);
-        final TextView tvBillAmount = (TextView)view.findViewById(R.id.TextView20);
-        final TextView tvCommission = (TextView)view.findViewById(R.id.TextView22);
-        final TextView tvTotalAmount = (TextView)view.findViewById(R.id.TextView24);
-
+        tvDate = (TextView)view.findViewById(R.id.TextView2);
+        tvTotalDepth = (TextView)view.findViewById(R.id.TextView4);
+        tvCastingDepth = (TextView)view.findViewById(R.id.TextView6);
+        TextView tvEngineHrsStart = (TextView)view.findViewById(R.id.TextView8);
+        TextView tvEngineHrsEnd = (TextView)view.findViewById(R.id.TextView10);
+        TextView tvBoreType = (TextView)view.findViewById(R.id.TextView18);
+        tvBillAmount = (TextView)view.findViewById(R.id.TextView20);
+        tvCommission = (TextView)view.findViewById(R.id.TextView22);
+        tvTotalAmount = (TextView)view.findViewById(R.id.TextView24);
+        tvDieselUsed = (TextView)view.findViewById(R.id.TextView26);
+        tvDieselInHand = (TextView)view.findViewById(R.id.TextView28);
+        tvCasingPipeInHand = (TextView)view.findViewById(R.id.TextView30);
         retrieveDetailsFromDB();
+
+        // TODO: Back to Home listener
 
         return view;
     }
 
     public void retrieveDetailsFromDB(){
-        // Insert to DB
-        //DBAdapter dbAdapter = DBAdapter.getInstance(getApplicationContext());
+        HashMap<String, Double> reportsMap = new HashMap<String, Double>();
+        ReportsMapper reportsMapper = new ReportsMapper(getActivity());
+
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+
+        String dateFrom = CommonUtils.FINANCIAL_YEAR_START + "/" + (year-1);
+        String dateTo = CommonUtils.FINANCIAL_YEAR_END + "/" + year;
+
+        reportsMap = reportsMapper.mapBoreDetails(dateFrom, dateTo);
+
+        tvDate.setText(dateFrom + " - " + dateTo);
+        tvTotalDepth.setText(reportsMap.get("total_depth").toString());
+        tvCastingDepth.setText(reportsMap.get("casting_depth").toString());
+        tvCommission.setText(reportsMap.get("bill_amount").toString());
+        tvTotalDepth.setText(reportsMap.get("commission").toString());
+        tvTotalAmount.setText(reportsMap.get("total_amount").toString());
+        tvDieselUsed.setText(reportsMap.get("diesel_used").toString());
+        tvDieselInHand.setText(reportsMap.get("diesel_in_hand").toString());
+        tvCasingPipeInHand.setText(reportsMap.get("casing_pipe_in_hand").toString());
     }
 }

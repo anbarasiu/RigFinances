@@ -641,13 +641,13 @@ public class DBAdapter extends SQLiteOpenHelper{
             queryColumns += " SUM(" + columnName + ".amount)";
             if(selectedExpenses.indexOf(type) != selectedExpenses.size() - 1){
                 queryColumns += ",";
-                queryTables += ",";
+                queryTables += " INNER JOIN";
             }
             columnRetriever.add(type);
         }
 
         SQLiteDatabase database = this.getReadableDatabase();
-        String query = queryColumns + " FROM" + queryTables + " WHERE " + columnName + ".date BETWEEN " + dateFrom + " AND " + dateTo +";";
+        String query = queryColumns + " FROM" + queryTables + " WHERE " + columnName + ".date BETWEEN '" + dateFrom + "' AND '" + dateTo +"';";
         Log.d("Query ", query);
 
         Cursor cursor = database.rawQuery(query, null);
@@ -683,6 +683,33 @@ public class DBAdapter extends SQLiteOpenHelper{
 
         database.close();
         return salaryReport;
+    }
+
+    public HashMap<String, Double> retrieveBoreReportsDetails(String dateFrom, String dateTo){
+        SQLiteDatabase database = this.getReadableDatabase();
+        HashMap<java.lang.String, Double> boreDetailsReport = new HashMap<java.lang.String, Double>();
+
+        String query = "SELECT SUM(total_depth), SUM(casting_depth), SUM(bill_amount), SUM(commission), SUM(total_amount), SUM(diesel_used), MIN(engine_hrs_start), MAX(engine_hrs_end) " +
+                "FROM "+ BORE_DATABASE_NAME +
+                " WHERE date BETWEEN '" + dateFrom + "' AND '" + dateTo + "' UNION ALL" +
+                "SELECT SUM(length) FROM " + PIPE_DATABASE_NAME + " WHERE date BETWEEN '" + dateFrom + "' AND '" + dateTo + "';";
+
+        Cursor cursor = database.rawQuery(query, null);
+
+        while(cursor.moveToNext()){
+            boreDetailsReport.put("total_depth", cursor.getInt(0));
+            boreDetailsReport.put("casting_depth", cursor.getDouble(1));
+            boreDetailsReport.put("bill_amount", cursor.getDouble(2));
+            boreDetailsReport.put("commission", cursor.getDouble(3));
+            boreDetailsReport.put("total_amount", cursor.getDouble(4));
+            boreDetailsReport.put("diesel_used", cursor.getDouble(5));
+            boreDetailsReport.put("engine_hrs_start", cursor.getDouble(6));
+            boreDetailsReport.put("engine_hrs_end", cursor.getDouble(7));
+            boreDetailsReport.put("total_pipe_length", cursor.getDouble(8));
+        }
+
+        database.close();
+        return boreDetailsReport;
     }
 
     /* BEGIN : Tables - Insert Methods */
