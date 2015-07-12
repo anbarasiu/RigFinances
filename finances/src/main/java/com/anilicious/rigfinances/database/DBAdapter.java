@@ -57,7 +57,7 @@ public class DBAdapter extends SQLiteOpenHelper{
             "date" + " date, " +
             "item" + " text, " +
             "quantity" + " number, " +
-            "price" + " number, " +
+            "amount" + " number, " +
             "spent_by" + " text);";
 
     private static final String COOKITEM_DATABASE_NAME = "COOKITEM";
@@ -94,7 +94,7 @@ public class DBAdapter extends SQLiteOpenHelper{
             "item" + " text, " +
             "detail" + " text, " +
             "quantity" + " number, " +
-            "price" + " number, " +
+            "amount" + " number, " +
             "spent_by" + " text);";
 
     private static final String TOOLITEM_DATABASE_NAME = "TOOLITEM";
@@ -294,7 +294,7 @@ public class DBAdapter extends SQLiteOpenHelper{
         values.put("item", cook.getItem());
         values.put("date", cook.getDate());
         values.put("quantity", cook.getQuantity());
-        values.put("price", cook.getPrice());
+        values.put("amount", cook.getPrice());
         values.put("spent_by", cook.getSpentBy());
         values.put("amount", cook.getAmount());
 
@@ -345,7 +345,7 @@ public class DBAdapter extends SQLiteOpenHelper{
         values.put("item", tool.getItem());
         values.put("detail", tool.getDetails());
         values.put("quantity", tool.getQuantity());
-        values.put("price", tool.getPrice());
+        values.put("amount", tool.getPrice());
         values.put("spent_by", tool.getSpentBy());
         values.put("company", tool.getCompany());
         values.put("total_amount", tool.getTotalAmount());
@@ -668,10 +668,10 @@ public class DBAdapter extends SQLiteOpenHelper{
         SQLiteDatabase database = this.getReadableDatabase();
         HashMap<String, String> salaryReport = new HashMap<String, String>();
 
-        String query = "SELECT E.employee_name, E.employee_number, E.date_of_joining, E.date_of_leaving " +
+        String query = "SELECT E.employee_name, E.employee_number, E.date_of_joining, E.date_of_leaving, SUM(S.amount) " +
                 "FROM "+ EMPLOYEE_DATABASE_NAME+" E INNER JOIN "+ SALARY_DATABASE_NAME +" S "+
                 "ON E.employee_number = S.employee_number " +
-                "WHERE E.employee_number = " + employeeNumber + ";";
+                "WHERE E.employee_number = " + employeeNumber + " GROUP BY E.employee_number;";
 
         Cursor cursor = database.rawQuery(query, null);
 
@@ -679,6 +679,7 @@ public class DBAdapter extends SQLiteOpenHelper{
             salaryReport.put("employee_name", cursor.getString(cursor.getColumnIndex("employee_name")));
             salaryReport.put("joining_date", cursor.getString(cursor.getColumnIndex("date_of_joining")));
             salaryReport.put("leaving_date", cursor.getString(cursor.getColumnIndex("date_of_leaving")));
+            salaryReport.put("salary_given", cursor.getString(4));
         }
 
         database.close();
@@ -689,23 +690,29 @@ public class DBAdapter extends SQLiteOpenHelper{
         SQLiteDatabase database = this.getReadableDatabase();
         HashMap<java.lang.String, Double> boreDetailsReport = new HashMap<java.lang.String, Double>();
 
-        String query = "SELECT SUM(total_depth), SUM(casting_depth), SUM(bill_amount), SUM(commission), SUM(total_amount), SUM(diesel_used), MIN(engine_hrs_start), MAX(engine_hrs_end) " +
+        String query1 = "SELECT SUM(total_depth), SUM(casting_depth), SUM(bill_amount), SUM(commission), SUM(total_amount), SUM(diesel_used), MIN(engine_hrs_start), MAX(engine_hrs_end) " +
                 "FROM "+ BORE_DATABASE_NAME +
-                " WHERE date BETWEEN '" + dateFrom + "' AND '" + dateTo + "' UNION ALL" +
-                "SELECT SUM(length) FROM " + PIPE_DATABASE_NAME + " WHERE date BETWEEN '" + dateFrom + "' AND '" + dateTo + "';";
+                " WHERE date BETWEEN CAST('" + dateFrom + "' AS DATE) AND CAST('" + dateTo + "' AS DATE);";
 
-        Cursor cursor = database.rawQuery(query, null);
+        Cursor cursor1 = database.rawQuery(query1, null);
 
-        while(cursor.moveToNext()){
-            boreDetailsReport.put("total_depth", cursor.getInt(0));
-            boreDetailsReport.put("casting_depth", cursor.getDouble(1));
-            boreDetailsReport.put("bill_amount", cursor.getDouble(2));
-            boreDetailsReport.put("commission", cursor.getDouble(3));
-            boreDetailsReport.put("total_amount", cursor.getDouble(4));
-            boreDetailsReport.put("diesel_used", cursor.getDouble(5));
-            boreDetailsReport.put("engine_hrs_start", cursor.getDouble(6));
-            boreDetailsReport.put("engine_hrs_end", cursor.getDouble(7));
-            boreDetailsReport.put("total_pipe_length", cursor.getDouble(8));
+        String query2 = "SELECT SUM(length) FROM " + PIPE_DATABASE_NAME + " WHERE date BETWEEN CAST('" + dateFrom + "' AS DATE) AND CAST('" + dateTo + "' AS DATE);";
+
+        Cursor cursor2 = database.rawQuery(query2, null);
+
+        while(cursor1.moveToNext()){
+            boreDetailsReport.put("total_depth", cursor1.getDouble(0));
+            boreDetailsReport.put("casting_depth", cursor1.getDouble(1));
+            boreDetailsReport.put("bill_amount", cursor1.getDouble(2));
+            boreDetailsReport.put("commission", cursor1.getDouble(3));
+            boreDetailsReport.put("total_amount", cursor1.getDouble(4));
+            boreDetailsReport.put("diesel_used", cursor1.getDouble(5));
+            boreDetailsReport.put("engine_hrs_start", cursor1.getDouble(6));
+            boreDetailsReport.put("engine_hrs_end", cursor1.getDouble(7));
+        }
+
+        while(cursor2.moveToNext()){
+            boreDetailsReport.put("total_pipe_length", cursor2.getDouble(0));
         }
 
         database.close();

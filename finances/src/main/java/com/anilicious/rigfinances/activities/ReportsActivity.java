@@ -34,10 +34,6 @@ public class ReportsActivity extends ActionBarActivity implements ActionBar.TabL
         tab1.setText(R.string.reports_tab1).setTabListener(this);
         actionBar.addTab(tab1);
 
-        ActionBar.Tab tab2 = actionBar.newTab();
-        tab2.setText(R.string.reports_tab2).setTabListener(this);
-        actionBar.addTab(tab2);
-
         ActionBar.Tab tab3 = actionBar.newTab();
         tab3.setText(R.string.reports_tab3).setTabListener(this);
         actionBar.addTab(tab3);
@@ -45,10 +41,6 @@ public class ReportsActivity extends ActionBarActivity implements ActionBar.TabL
         ActionBar.Tab tab4 = actionBar.newTab();
         tab4.setText(R.string.reports_tab4).setTabListener(this);
         actionBar.addTab(tab4);
-
-        ActionBar.Tab tab5 = actionBar.newTab();
-        tab5.setText(R.string.reports_tab5).setTabListener(this);
-        actionBar.addTab(tab5);
 
         sharedPrefs = this.getApplicationContext().getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE);
     }
@@ -70,30 +62,15 @@ public class ReportsActivity extends ActionBarActivity implements ActionBar.TabL
                 ft.commit();
                 break;
             case 1:
-                ReportDieselFragment reportDieselFragment = new ReportDieselFragment();
-                ft.replace(fragmentContainer, reportDieselFragment);
-                ft.commit();
-                break;
-            case 2:
                 ReportSalaryFragment reportSalaryFragment = new ReportSalaryFragment();
                 ft.replace(fragmentContainer, reportSalaryFragment);
                 ft.commit();
                 break;
-            case 3:
+            case 2:
                 ReportBoreFragment reportBoreFragment = new ReportBoreFragment();
                 ft.replace(fragmentContainer, reportBoreFragment);
                 ft.commit();
                 break;
-            /*case 4:
-                ReportDieselFragment reportDieselFragment = new ReportDieselFragment();
-                ft.replace(fragmentContainer, reportDieselFragment);
-                ft.commit();
-                break;
-            case 5:
-                ReportDieselFragment reportDieselFragment = new ReportDieselFragment();
-                ft.replace(fragmentContainer, reportDieselFragment);
-                ft.commit();
-                break;*/
         }
     }
 

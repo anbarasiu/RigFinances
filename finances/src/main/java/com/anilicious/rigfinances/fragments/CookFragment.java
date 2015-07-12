@@ -126,6 +126,17 @@ public class CookFragment extends Fragment {
             public void onClick(View view) {
                 items_dummy.add("New Dummy Row");
                 list_cook_adapter.notifyDataSetChanged();
+
+                Button btn_removeItem = (Button)view.findViewById(R.id.cook_delete);
+                if(btn_removeItem == null) return;
+                btn_removeItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int position = (Integer)view.getTag();
+                        items_dummy.remove(position);
+                        list_cook_adapter.notifyDataSetChanged();
+                    }
+                });
         }
      });
     }

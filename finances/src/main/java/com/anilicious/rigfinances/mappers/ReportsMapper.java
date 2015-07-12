@@ -1,6 +1,7 @@
 package com.anilicious.rigfinances.mappers;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.anilicious.rigfinances.activities.ReportsActivity;
 import com.anilicious.rigfinances.database.DBAdapter;
@@ -39,12 +40,16 @@ public class ReportsMapper {
         HashMap<String, Double> boreDetailsMap = new HashMap<String, Double>();
         boreDetailsMap = dbAdapter.retrieveBoreReportsDetails(dateFrom, dateTo);
 
-        double mileage = 100.0; // TODO : Figure out where Mileage comes from
-        double diesel_in_hand = boreDetailsMap.get("diesel_used") - ((boreDetailsMap.get("engine_hrs_end") - boreDetailsMap.get("engine_hrs_start"))/mileage);
-        double casing_pipe_in_hand = boreDetailsMap.get("total_pipe_length") - boreDetailsMap.get("casting_depth");
-        boreDetailsMap.put("diesel_in_hand", diesel_in_hand);
-        boreDetailsMap.put("casing_pipe_in_hand", casing_pipe_in_hand);
-
+        try{
+            double mileage = 100.0; // TODO : Figure out where Mileage comes from
+            double diesel_in_hand = boreDetailsMap.get("diesel_used") - ((boreDetailsMap.get("engine_hrs_end") - boreDetailsMap.get("engine_hrs_start"))/mileage);
+            double casing_pipe_in_hand = boreDetailsMap.get("total_pipe_length") - boreDetailsMap.get("casting_depth");
+            boreDetailsMap.put("diesel_in_hand", diesel_in_hand);
+            boreDetailsMap.put("casing_pipe_in_hand", casing_pipe_in_hand);
+        }
+        catch(Exception e){
+            Log.e("Error : ", "Records not available");
+        }
         return boreDetailsMap;
     }
 
