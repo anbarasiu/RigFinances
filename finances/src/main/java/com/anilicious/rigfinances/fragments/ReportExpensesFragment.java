@@ -145,8 +145,7 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
         mRenderer.setDisplayValues(true);
 
         //Bar Chart init
-        XYSeries xySeries = new XYSeries("Bar Chart");
-        double bar_index = 100; // Indices interval
+        double bar_index = 0; // Indices interval
         XYMultipleSeriesRenderer xyRenderer = new XYMultipleSeriesRenderer();
         XYSeriesRenderer xySeriesRenderer = new XYSeriesRenderer();
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
@@ -156,13 +155,17 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
 
         //TODO: Add legends & labels to Bar Chart
         for(Map.Entry entry : expenseMap.entrySet()){
+            XYSeries xySeries = new XYSeries(entry.getKey().toString());
             mSeries.add(entry.getKey().toString(), Double.parseDouble(entry.getValue().toString()));
             xySeries.add(bar_index, Double.parseDouble(entry.getValue().toString()));
-            bar_index = bar_index + 100;
+            bar_index = bar_index + 20;
 
             SimpleSeriesRenderer renderer = new SimpleSeriesRenderer();
             renderer.setColor(colours[i++]);
             mRenderer.addSeriesRenderer(renderer);
+
+            xyRenderer.addSeriesRenderer(renderer);
+            dataset.addSeries(xySeries);
         }
 
         // Pie Chart Rendering
@@ -171,8 +174,6 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
         layout.addView(chart);
 
         // Bar Chart Rendering
-        xyRenderer.addSeriesRenderer(xySeriesRenderer);
-        dataset.addSeries(xySeries);
         LinearLayout bar_layout = (LinearLayout)view.findViewById(R.id.bar_chart);
         GraphicalView bar_chart = ChartFactory.getBarChartView(getActivity().getApplicationContext(), dataset, xyRenderer, null);
         bar_layout.addView(bar_chart);

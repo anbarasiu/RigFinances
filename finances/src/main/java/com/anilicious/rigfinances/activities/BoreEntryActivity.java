@@ -239,7 +239,7 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
             new DatePickerDialog.OnDateSetListener() {
                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                     etDate.setText(new StringBuilder().append(day).append("/")
-                            .append(month).append("/").append(year).toString());
+                            .append(month + 1).append("/").append(year).toString());
                 }
             };
 

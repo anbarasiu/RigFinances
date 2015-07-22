@@ -600,11 +600,15 @@ public class DBAdapter extends SQLiteOpenHelper{
         HashMap<String, Double> expenseReport = new HashMap<String, Double>();
         List<String> columnRetriever = new ArrayList<String>();
 
-        String queryColumns = "SELECT";
-        String queryTables = "";
-        String columnName = "";
+        //String queryColumns = "SELECT";
+        //String queryTables = "";
+        //String columnName = "";
+
+        String query = "";
+        SQLiteDatabase database = this.getReadableDatabase();
         for(String type : selectedExpenses){
-            switch(type){
+            query = "SELECT SUM(amount) from " + type;
+            /* switch(type){
                 case CommonUtils.CONSTANTS.DIESEL :
                     columnName = "d";
                     queryTables += " " + DIESEL_DATABASE_NAME + " d";
@@ -641,22 +645,21 @@ public class DBAdapter extends SQLiteOpenHelper{
             queryColumns += " SUM(" + columnName + ".amount)";
             if(selectedExpenses.indexOf(type) != selectedExpenses.size() - 1){
                 queryColumns += ",";
-                queryTables += " INNER JOIN";
+                queryTables += " OUTER JOIN";
             }
-            columnRetriever.add(type);
-        }
+            columnRetriever.add(type); */
 
-        SQLiteDatabase database = this.getReadableDatabase();
-        String query = queryColumns + " FROM" + queryTables + " WHERE " + columnName + ".date BETWEEN '" + dateFrom + "' AND '" + dateTo +"';";
-        Log.d("Query ", query);
+            Cursor cursor = database.rawQuery(query, null);
 
-        Cursor cursor = database.rawQuery(query, null);
-
-        while(cursor.moveToNext()){
-            for(String entry : columnRetriever){
-                expenseReport.put(entry, cursor.getDouble(0));
+            while(cursor.moveToNext()){
+                //    for(String entry : columnRetriever){
+                expenseReport.put(type, cursor.getDouble(0));
+                //  }
             }
         }
+
+
+        //String query = queryColumns + " FROM" + queryTables + ";";// " WHERE " + columnName + ".date BETWEEN '" + dateFrom + "' AND '" + dateTo +"';";
 
         database.close();
         return expenseReport;
@@ -692,11 +695,11 @@ public class DBAdapter extends SQLiteOpenHelper{
 
         String query1 = "SELECT SUM(total_depth), SUM(casting_depth), SUM(bill_amount), SUM(commission), SUM(total_amount), SUM(diesel_used), MIN(engine_hrs_start), MAX(engine_hrs_end) " +
                 "FROM "+ BORE_DATABASE_NAME +
-                " WHERE date BETWEEN CAST('" + dateFrom + "' AS DATE) AND CAST('" + dateTo + "' AS DATE);";
+                " WHERE date BETWEEN DATE('" + dateFrom + "') AND DATE('" + dateTo + "');";
 
         Cursor cursor1 = database.rawQuery(query1, null);
 
-        String query2 = "SELECT SUM(length) FROM " + PIPE_DATABASE_NAME + " WHERE date BETWEEN CAST('" + dateFrom + "' AS DATE) AND CAST('" + dateTo + "' AS DATE);";
+        String query2 = "SELECT SUM(length) FROM " + PIPE_DATABASE_NAME + " WHERE date BETWEEN DATE('" + dateFrom + "') AND DATE('" + dateTo + "');";
 
         Cursor cursor2 = database.rawQuery(query2, null);
 
