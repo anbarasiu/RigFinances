@@ -163,7 +163,7 @@ public class EmployeeDetailsActivity extends ActionBarActivity {
     // TODO: Is there a better way instead of these multiple callbacks for different datepicker fields?
 
     /** Callback received when the user "picks" a date in the dialog */
-    private DatePickerDialog.OnDateSetListener mDateSetListener1 =
+    private DatePickerDialog.OnDateSetListener mDateSetListener =
             new DatePickerDialog.OnDateSetListener() {
                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                     etDate.setText(new StringBuilder().append(day).append("/")
