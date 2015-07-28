@@ -34,7 +34,7 @@ public final class CommonUtils {
         public static final String ROAD = "Road";
         public static final String SALARY = "Salary";
         public static final String SITE = "Site";
-        public static final String TOOLS = "Tools";
+        public static final String TOOLS = "Tool";
     }
 
     public static String formatDateEntry(String date){

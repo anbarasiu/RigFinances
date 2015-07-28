@@ -44,6 +44,10 @@ public class EmployeeDetailsActivity extends ActionBarActivity {
 
     SharedPreferences sharedPrefs;
 
+    private static final int DATE_FIELD_ID = 1;
+    private static final int DOJ_FIELD_ID = 2;
+    private static final int DOL_FIELD_ID = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,35 +128,61 @@ public class EmployeeDetailsActivity extends ActionBarActivity {
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialog(DATE_DIALOG_ID);
+                showDialog(DATE_FIELD_ID);
             }
         });
 
         etDoj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialog(DATE_DIALOG_ID);
+                showDialog(DOJ_FIELD_ID);
             }
         });
 
         etDol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialog(DATE_DIALOG_ID);
+                showDialog(DOL_FIELD_ID);
             }
         });
     }
 
     @Override
     protected Dialog onCreateDialog(int id) {
-        return new DatePickerDialog(this, mDateSetListener, currentYear, currentMonth, currentDate);
+        switch(id){
+            case DATE_FIELD_ID:
+                return new DatePickerDialog(this, mDateSetListener, currentYear, currentMonth, currentDate);
+            case DOJ_FIELD_ID:
+                return new DatePickerDialog(this, mDateOfJoiningSetListener, currentYear, currentMonth, currentDate);
+            case DOL_FIELD_ID:
+                return new DatePickerDialog(this, mDateOfLeavingSetListener, currentYear, currentMonth, currentDate);
+        }
+        return null;
     }
 
+    // TODO: Is there a better way instead of these multiple callbacks for different datepicker fields?
+
     /** Callback received when the user "picks" a date in the dialog */
-    private DatePickerDialog.OnDateSetListener mDateSetListener =
+    private DatePickerDialog.OnDateSetListener mDateSetListener1 =
             new DatePickerDialog.OnDateSetListener() {
                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                     etDate.setText(new StringBuilder().append(day).append("/")
+                            .append(month).append("/").append(year).toString());
+                }
+            };
+
+    private DatePickerDialog.OnDateSetListener mDateOfJoiningSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                    etDoj.setText(new StringBuilder().append(day).append("/")
+                            .append(month).append("/").append(year).toString());
+                }
+            };
+
+    private DatePickerDialog.OnDateSetListener mDateOfLeavingSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                    etDol.setText(new StringBuilder().append(day).append("/")
                             .append(month).append("/").append(year).toString());
                 }
             };
