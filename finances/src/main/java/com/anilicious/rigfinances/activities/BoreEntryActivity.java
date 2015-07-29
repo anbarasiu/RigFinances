@@ -35,8 +35,10 @@ import java.util.Calendar;
 
 public class BoreEntryActivity extends ActionBarActivity implements LocationListener {
 
-    private EditText etEngineHrsStart;
-    private EditText etEngineHrsEnd;
+    private EditText etEngineHrsStartmin;
+    private EditText etEngineHrsStarthr;
+    private EditText etEngineHrsEndmin;
+    private EditText etEngineHrsEndhr;
     private EditText etDate;
     private EditText etPlace;
 
@@ -63,8 +65,10 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
         etDate = (EditText)findViewById(R.id.editText);
         final EditText etTotalDepth = (EditText)findViewById(R.id.editText4);
         final EditText etCastingDepth = (EditText)findViewById(R.id.editText3);
-        etEngineHrsStart = (EditText)findViewById(R.id.editText5);
-        etEngineHrsEnd = (EditText)findViewById(R.id.editText2);
+        etEngineHrsStartmin = (EditText)findViewById(R.id.editText5);
+        etEngineHrsEndmin = (EditText)findViewById(R.id.editText2);
+        etEngineHrsStarthr = (EditText)findViewById(R.id.editText15);
+        etEngineHrsEndhr = (EditText)findViewById(R.id.editText16);
         final EditText etCustomerName = (EditText)findViewById(R.id.editText6);
         etPlace = (EditText)findViewById(R.id.editText7);
         final EditText etAgentName = (EditText)findViewById(R.id.editText8);
@@ -84,54 +88,139 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                if(validForm()){
 
-                    String date = etDate.getText().toString();
-                    String[] test=date.split("/");
-                    if(test[1].length()<=1)
-                    {
-                        test[1] = "0"+test[1];
-                    }
-                    if(test[0].length()<=1)
-                    {
-                        test[0] = "0"+test[0];
-                    }
-                    String date1 =(test[2]+test[1]+test[0]);
-                    Integer Bore_Date= Integer.parseInt(date1);
-                    float totalDepth = Float.parseFloat(etTotalDepth.getText().toString());
-                    float castingDepth = Float.parseFloat(etCastingDepth.getText().toString());
-                    String engineHrsStart = etEngineHrsStart.getText().toString();
-                    String engineHrsEnd = etEngineHrsEnd.getText().toString();
-                    String customerName = etCustomerName.getText().toString();
-                    String place = etPlace.getText().toString();
-                    String agentName = etAgentName.getText().toString();
-                    String boreType = (String)etBoreType.getSelectedItem();
-                    int billAmount = Integer.parseInt(etBillAmount.getText().toString());
-                    int commission = Integer.parseInt(etCommission.getText().toString());
-                    int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
-
-                    Bore bore = new Bore();
-                    bore.setDate(Bore_Date);
-                    bore.setTotalDepth(totalDepth);
-                    bore.setCastingDepth(castingDepth);
-                    bore.setEngineHrsStart(engineHrsStart);
-                    bore.setEngineHrsEnd(engineHrsEnd);
-                    bore.setCustomerName(customerName);
-                    bore.setPlace(place);
-                    bore.setAgentName(agentName);
-                    bore.setBoreType(boreType);
-                    bore.setBillAmount(billAmount);
-                    bore.setCommission(commission);
-                    bore.setTotalAmount(totalAmount);
-
-                    // Insert to DB
-                    DBAdapter dbAdapter = DBAdapter.getInstance(getApplicationContext());
-                    dbAdapter.insertBore(bore);
-
-                    // Clear the Form
-                    clearForm();
+                if(etDate.getText().toString().equals(""))
+                {
+                    etDate.setError("Please enter date of drilling");
                 }
-            }
+                else
+                {
+                    if(etCustomerName.getText().toString().equals(""))
+                    {
+                        etCustomerName.setError("Please enter customer name");
+                    }
+                    else
+                    {
+                        if(etBillAmount.getText().toString().equals(""))
+                        {
+                            etBillAmount.setError("Please enter bill amount");
+                        }
+                        else
+                        {
+                            if(etTotalAmount.getText().toString().equals(""))
+                            {
+                                etTotalAmount.setError("Please enter total amount");
+                            }
+                            else
+                            {
+                                if(etBoreType.getSelectedItem().toString().equals("New Bore") || etBoreType.getSelectedItem().toString().equals("Reset Bore"))
+                                {
+                                    if(etTotalDepth.getText().toString().equals("") && (etBoreType.getSelectedItem().toString().equals("New Bore") || etBoreType.getSelectedItem().toString().equals("Reset Bore")))
+                                    {
+                                        etTotalDepth.setError("Please enter depth for new bore and reset bore");
+                                    }
+                                    else
+                                    {
+                                        if(etEngineHrsStarthr.getText().toString().equals("") || etEngineHrsStartmin.getText().toString().equals(""))
+                                        {
+                                            etEngineHrsStarthr.setError("Please enter Compressor Engine hrs at start of Point");
+                                        }
+                                        else
+                                        {
+                                            if(etEngineHrsEndhr.getText().toString().equals("") || etEngineHrsEndmin.getText().toString().equals(""))
+                                            {
+                                                etEngineHrsEndhr.setError("Please enter Compressor Engine hrs at start of Point");
+                                            }
+                                            else
+                                            {
+                                                if(etCastingDepth.getText().toString().equals(""))
+                                                {
+                                                    etCastingDepth.setText("0");
+                                                }
+                                                if(etAgentName.getText().toString().equals(""))
+                                                    etAgentName.setText("None");
+                                                if(etCommission.getText().toString().equals(""))
+                                                    etCommission.setText("0");
+
+                                                String date = etDate.getText().toString();
+                                                String[] test=date.split("/");
+                                                if(test[1].length()<=1)
+                                                {
+                                                    test[1] = "0"+test[1];
+                                                }
+                                                if(test[0].length()<=1)
+                                                {
+                                                    test[0] = "0"+test[0];
+                                                }
+                                                String date1 =(test[2]+test[1]+test[0]);
+                                                Integer Bore_Date= Integer.parseInt(date1);
+                                                float totalDepth = Float.parseFloat(etTotalDepth.getText().toString());
+                                                float castingDepth = Float.parseFloat(etCastingDepth.getText().toString());
+                                                Double engineHrsStart = Double.parseDouble(etEngineHrsStarthr.getText().toString());
+                                                Double engineHrsEnd = Double.parseDouble(etEngineHrsEndhr.getText().toString());
+                                                Integer min = Integer.parseInt(etEngineHrsStartmin.getText().toString());
+                                                if(min>60)
+                                                {
+                                                    Integer remainder = min%60;
+                                                    etDate.setError("rem1"+ remainder);
+                                                    min = min-remainder;
+                                                    engineHrsStart=engineHrsStart+(min/60);
+                                                    double fremainder = (remainder*1.66666667)/100;
+                                                    engineHrsStart = engineHrsStart+fremainder;
+                                                    etTotalDepth.setError("hr at if "+engineHrsStart);
+                                                }
+                                                else
+                                                {
+                                                engineHrsStart=engineHrsStart + (min*1.666667)/100;
+                                                }
+                                                min = Integer.parseInt(etEngineHrsEndmin.getText().toString());
+
+                                                if(min>60)
+                                                {
+                                                    Integer remainder = min%60;
+                                                    min = min-remainder;
+                                                    engineHrsEnd=engineHrsEnd+(min/60);
+                                                    double fremainder = (remainder*1.66666667)/100;
+                                                    engineHrsEnd = engineHrsEnd+fremainder;
+                                                }
+                                                else
+                                                {
+                                                engineHrsEnd=engineHrsEnd + (min*1.666667)/100;
+                                                }
+                                                String customerName = etCustomerName.getText().toString();
+                                                String place = etPlace.getText().toString();
+                                                String agentName = etAgentName.getText().toString();
+                                                String boreType = (String)etBoreType.getSelectedItem();
+                                                int billAmount = Integer.parseInt(etBillAmount.getText().toString());
+                                                int commission = Integer.parseInt(etCommission.getText().toString());
+                                                int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
+                                                etEngineHrsStarthr.setError(""+engineHrsStart+"end "+engineHrsEnd);
+
+                                                Bore bore = new Bore();
+                                                bore.setDate(Bore_Date);
+                                                bore.setTotalDepth(totalDepth);
+                                                bore.setCastingDepth(castingDepth);
+                                                bore.setEngineHrsStart(engineHrsStart);
+                                                bore.setEngineHrsEnd(engineHrsEnd);
+                                                bore.setCustomerName(customerName);
+                                                bore.setPlace(place);
+                                                bore.setAgentName(agentName);
+                                                bore.setBoreType(boreType);
+                                                bore.setBillAmount(billAmount);
+                                                bore.setCommission(commission);
+                                                bore.setTotalAmount(totalAmount);
+
+                                                // Insert to DB
+                                                DBAdapter dbAdapter = DBAdapter.getInstance(getApplicationContext());
+                                                dbAdapter.insertBore(bore);
+                                                // Clear the Form
+                                                clearForm();
+
+                                            }}}}
+                            }}}}
+
+                }
+
         });
 
         // On 'Back to Home' button click
@@ -169,7 +258,7 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
         currentMonth = cal.get(Calendar.MONTH);
         currentDate = cal.get(Calendar.DAY_OF_MONTH);
 
-        etEngineHrsStart.setOnClickListener(new View.OnClickListener() {
+        /*etEngineHrsStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 currentTimeField = etEngineHrsStart;
@@ -177,9 +266,9 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
                 pMinute = cal.get(Calendar.MINUTE);
                 showDialog(TIME_DIALOG_ID);
             }
-        });
+        });*/
 
-        etEngineHrsEnd.setOnClickListener(new View.OnClickListener() {
+        /*etEngineHrsEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 currentTimeField = etEngineHrsEnd;
@@ -187,7 +276,7 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
                 pMinute = cal.get(Calendar.MINUTE);
                 showDialog(TIME_DIALOG_ID);
             }
-        });
+        });*/
 
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override

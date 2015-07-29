@@ -153,8 +153,8 @@ public class DBAdapter extends SQLiteOpenHelper{
             "Bore_Date" + " integer, " +
             "total_depth" + " number, " +
             "casting_depth" + " text, " +
-            "engine_hrs_start" + " text, " +
-            "engine_hrs_end" + " text, " +
+            "engine_hrs_start" + " number, " +
+            "engine_hrs_end" + " number, " +
             "customer_name" + " text, " +
             "place" + " text, " +
             "agent_name" + " text, " +

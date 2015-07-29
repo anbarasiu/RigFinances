@@ -7,8 +7,8 @@ public class Bore {
     private Integer Bore_Date;
     private float totalDepth;
     private float castingDepth;
-    private String engineHrsStart;  // TODO: Input field to be changed
-    private String engineHrsEnd;  // TODO: Input field to be changed
+    private Double engineHrsStart;  // TODO: Input field to be changed
+    private Double engineHrsEnd;  // TODO: Input field to be changed
     private String customerName;
     private String place;
     private String agentName;
@@ -44,19 +44,19 @@ public class Bore {
         this.castingDepth = castingDepth;
     }
 
-    public String getEngineHrsStart() {
+    public Double getEngineHrsStart() {
         return engineHrsStart;
     }
 
-    public void setEngineHrsStart(String engineHrsStart) {
+    public void setEngineHrsStart(Double engineHrsStart) {
         this.engineHrsStart = engineHrsStart;
     }
 
-    public String getEngineHrsEnd() {
+    public Double getEngineHrsEnd() {
         return engineHrsEnd;
     }
 
-    public void setEngineHrsEnd(String engineHrsEnd) {
+    public void setEngineHrsEnd(Double engineHrsEnd) {
         this.engineHrsEnd = engineHrsEnd;
     }
 

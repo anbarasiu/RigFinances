@@ -84,10 +84,22 @@
             android:layout_weight="1" />
 
         <EditText
-            android:layout_width="fill_parent"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
-            android:id="@+id/editText5"
-            android:layout_weight="1" />
+            android:id="@+id/editText15"
+            android:inputType="number" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":" />
+        <EditText
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText5"
+        android:inputType="number" />
+
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -103,10 +115,19 @@
             android:layout_weight="1" />
 
         <EditText
-            android:layout_width="fill_parent"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText16"
+            android:inputType="number" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":" />
+        <EditText
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:id="@+id/editText2"
-            android:layout_weight="1" />
+            android:inputType="number" />
     </LinearLayout>
 
     <LinearLayout
@@ -226,7 +247,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editText11"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:inputType="number" />
     </LinearLayout>
 
     <LinearLayout
