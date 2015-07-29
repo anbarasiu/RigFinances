@@ -66,9 +66,30 @@ public class ReportBoreFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
 
-        String dateFrom = CommonUtils.FINANCIAL_YEAR_START + "/" + (year-1);
-        String dateTo = CommonUtils.FINANCIAL_YEAR_END + "/" + year;
-
+        String dateFroms = CommonUtils.FINANCIAL_YEAR_START + "/" + (year-1);
+        String dateTos = CommonUtils.FINANCIAL_YEAR_END + "/" + year;
+        String[] test=dateFroms.split("/");
+        if(test[1].length()<=1)
+        {
+            test[1] = "0"+test[1];
+        }
+        if(test[0].length()<=1)
+        {
+            test[0] = "0"+test[0];
+        }
+        String date1 =(test[2]+test[1]+test[0]);
+        Integer dateFrom= Integer.parseInt(date1);
+        test=dateTos.split("/");
+        if(test[1].length()<=1)
+        {
+            test[1] = "0"+test[1];
+        }
+        if(test[0].length()<=1)
+        {
+            test[0] = "0"+test[0];
+        }
+        date1 =(test[2]+test[1]+test[0]);
+        Integer dateTo= Integer.parseInt(date1);
         reportsMap = reportsMapper.mapBoreDetails(dateFrom, dateTo);
 
         tvDate.setText(dateFrom + " - " + dateTo);

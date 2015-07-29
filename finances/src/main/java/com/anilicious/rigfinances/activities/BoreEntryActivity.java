@@ -85,7 +85,19 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
             @Override
             public void onClick(View view) {
                 if(validForm()){
+
                     String date = etDate.getText().toString();
+                    String[] test=date.split("/");
+                    if(test[1].length()<=1)
+                    {
+                        test[1] = "0"+test[1];
+                    }
+                    if(test[0].length()<=1)
+                    {
+                        test[0] = "0"+test[0];
+                    }
+                    String date1 =(test[2]+test[1]+test[0]);
+                    Integer Bore_Date= Integer.parseInt(date1);
                     float totalDepth = Float.parseFloat(etTotalDepth.getText().toString());
                     float castingDepth = Float.parseFloat(etCastingDepth.getText().toString());
                     String engineHrsStart = etEngineHrsStart.getText().toString();
@@ -99,7 +111,7 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
                     int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
 
                     Bore bore = new Bore();
-                    bore.setDate(date);
+                    bore.setDate(Bore_Date);
                     bore.setTotalDepth(totalDepth);
                     bore.setCastingDepth(castingDepth);
                     bore.setEngineHrsStart(engineHrsStart);

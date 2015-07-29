@@ -36,7 +36,7 @@ public class ReportsMapper {
         return salaryMap;
     }
 
-    public HashMap<String, Double> mapBoreDetails(String dateFrom, String dateTo){
+    public HashMap<String, Double> mapBoreDetails(Integer dateFrom, Integer dateTo){
         HashMap<String, Double> boreDetailsMap = new HashMap<String, Double>();
         boreDetailsMap = dbAdapter.retrieveBoreReportsDetails(dateFrom, dateTo);
 

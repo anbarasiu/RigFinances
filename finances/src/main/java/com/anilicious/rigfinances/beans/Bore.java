@@ -4,7 +4,7 @@ package com.anilicious.rigfinances.beans;
  * Created by ANBARASI on 11/12/14.
  */
 public class Bore {
-    private String date;
+    private Integer Bore_Date;
     private float totalDepth;
     private float castingDepth;
     private String engineHrsStart;  // TODO: Input field to be changed
@@ -20,12 +20,12 @@ public class Bore {
     private float dieselUsed;
     private String lastEngineHrEnd;
 
-    public String getDate() {
-        return date;
+    public Integer getDate() {
+        return Bore_Date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDate(Integer Bore_Date) {
+        this.Bore_Date = Bore_Date;
     }
 
     public float getTotalDepth() {

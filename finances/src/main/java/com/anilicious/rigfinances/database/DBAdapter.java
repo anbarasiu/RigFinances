@@ -150,7 +150,7 @@ public class DBAdapter extends SQLiteOpenHelper{
     private static final String BORE_DATABASE_NAME = "BORE_DETAILS";
     private static final String BORE_DATABASE_CREATE = "CREATE TABLE " + BORE_DATABASE_NAME + "(" +
             "_id " + "INTEGER primary key AUTOINCREMENT, " + // 'B' + number
-            "date" + " date, " +
+            "Bore_Date" + " integer, " +
             "total_depth" + " number, " +
             "casting_depth" + " text, " +
             "engine_hrs_start" + " text, " +
@@ -427,7 +427,7 @@ public class DBAdapter extends SQLiteOpenHelper{
     public void insertBore(Bore bore){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("date", bore.getDate());
+        values.put("Bore_Date", bore.getDate());
         values.put("total_depth", bore.getTotalDepth());
         values.put("casting_depth", bore.getCastingDepth());
         values.put("engine_hrs_start", bore.getEngineHrsStart());
@@ -689,17 +689,17 @@ public class DBAdapter extends SQLiteOpenHelper{
         return salaryReport;
     }
 
-    public HashMap<String, Double> retrieveBoreReportsDetails(String dateFrom, String dateTo){
+    public HashMap<String, Double> retrieveBoreReportsDetails(Integer dateFrom, Integer dateTo){
         SQLiteDatabase database = this.getReadableDatabase();
         HashMap<java.lang.String, Double> boreDetailsReport = new HashMap<java.lang.String, Double>();
 
         String query1 = "SELECT SUM(total_depth), SUM(casting_depth), SUM(bill_amount), SUM(commission), SUM(total_amount), SUM(diesel_used), MIN(engine_hrs_start), MAX(engine_hrs_end) " +
                 "FROM "+ BORE_DATABASE_NAME +
-                " WHERE date BETWEEN DATE('" + dateFrom + "') AND DATE('" + dateTo + "');";
+                " WHERE Bore_Date BETWEEN " + dateFrom + " AND " + dateTo + ";";
 
         Cursor cursor1 = database.rawQuery(query1, null);
 
-        String query2 = "SELECT SUM(length) FROM " + PIPE_DATABASE_NAME + " WHERE date BETWEEN DATE('" + dateFrom + "') AND DATE('" + dateTo + "');";
+        String query2 = "SELECT SUM(length) FROM " + PIPE_DATABASE_NAME + " WHERE date BETWEEN CAST('" + dateFrom + "' AS DATE) AND CAST('" + dateTo + "' AS DATE);";
 
         Cursor cursor2 = database.rawQuery(query2, null);
 
