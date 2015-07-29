@@ -92,7 +92,7 @@ public class ReportBoreFragment extends Fragment {
         Integer dateTo= Integer.parseInt(date1);
         reportsMap = reportsMapper.mapBoreDetails(dateFrom, dateTo);
 
-        tvDate.setText(dateFrom + " - " + dateTo);
+        tvDate.setText(dateFroms + " - " + dateTos);
         tvTotalDepth.setText(reportsMap.get("total_depth").toString());
         tvCastingDepth.setText(reportsMap.get("casting_depth").toString());
         tvCommission.setText(reportsMap.get("bill_amount").toString());
