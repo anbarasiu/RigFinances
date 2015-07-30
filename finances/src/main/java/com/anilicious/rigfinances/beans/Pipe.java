@@ -8,7 +8,7 @@ import com.anilicious.rigfinances.utils.CommonUtils;
 public class Pipe {
     private String date;
     private String workType;
-    private float length;
+    private Double length;
     private String type;
     private double amount;
     private String spentBy;
@@ -38,11 +38,11 @@ public class Pipe {
         this.workType = workType;
     }
 
-    public float getLength() {
+    public Double getLength() {
         return length;
     }
 
-    public void setLength(float length) {
+    public void setLength(Double length) {
         this.length = length;
     }
 

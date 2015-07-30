@@ -33,26 +33,55 @@ public class SiteFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                String workType = etWorkType.getText().toString();
-                String remarks = etRemarks.getText().toString();
-                int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
-                String spentBy = etSpentBy.getText().toString();
+                if(etWorkType.getText().toString().equals(""))
+                {
+                    etWorkType.setError("Please enter the nature of expense or for what the expense is made");
+                }
+                else
+                {
+                    if (etRemarks.getText().toString().equals(""))
+                    {
+                        etRemarks.setError("Please enter reason for the expense");
+                    }
+                    else
+                    {
+                        if (etSpentBy.getText().toString().equals(""))
+                        {
+                            etSpentBy.setError("Please enter name who have spent");
+                        }
+                        else
+                        {
+                            if (etTotalAmount.getText().equals(""))
+                            {
+                                etTotalAmount.setError("Please enter amount spent");
+                            }
+                            else
+                            {
 
-                DebitFragment parent = (DebitFragment)getParentFragment();
+                                String workType = etWorkType.getText().toString();
+                                String remarks = etRemarks.getText().toString();
+                                int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
+                                String spentBy = etSpentBy.getText().toString();
 
-                Site site = new Site();
-                site.setWorkType(workType);
-                site.setRemarks(remarks);
-                site.setTotalAmount(totalAmount);
-                site.setSpentBy(spentBy);
-                site.setDate(parent.getEntryDate());
+                                DebitFragment parent = (DebitFragment)getParentFragment();
 
-                // Insert to DB
-                DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
-                dbAdapter.insertSite(site);
+                                Site site = new Site();
+                                site.setWorkType(workType);
+                                site.setRemarks(remarks);
+                                site.setTotalAmount(totalAmount);
+                                site.setSpentBy(spentBy);
+                                site.setDate(parent.getEntryDate());
 
-                // Clear the Form
-                ((VouchersActivity)getActivity()).clearForm();
+                                // Insert to DB
+                                DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
+                                dbAdapter.insertSite(site);
+
+                                // Clear the Form
+                                ((VouchersActivity)getActivity()).clearForm();
+                            }
+                        }
+                    }
+                }
             }
         });
 

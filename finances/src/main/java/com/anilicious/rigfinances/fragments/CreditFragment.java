@@ -49,26 +49,48 @@ public class CreditFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                int amountReceived = Integer.parseInt(etAmountReceived.getText().toString());
-                String amountReceivedFrom = etAmountReceivedFrom.getText().toString();
-                String receivedBy = etReceivedBy.getText().toString();
-                String remarks = etRemarks.getText().toString();
-                float amount = Float.parseFloat(etAmount.getText().toString());
+                if (etAmountReceived.getText().toString().equals(""))
+                {
+                    etAmountReceived.setError("Please enter amount");
+                }
+                else
+                {
+                    if(etAmountReceivedFrom.getText().toString().equals(""))
+                    {
+                        etAmountReceivedFrom.setError("Please enter name who gave amount");
+                    }
+                    else
+                    {
+                        if(etReceivedBy.getText().toString().equals(""))
+                        {
+                            etReceivedBy.setError("Please enter name who received the amount");
+                        }
+                        else
+                        {
+                            int amountReceived = Integer.parseInt(etAmountReceived.getText().toString());
+                            String amountReceivedFrom = etAmountReceivedFrom.getText().toString();
+                            String receivedBy = etReceivedBy.getText().toString();
+                            String remarks = etRemarks.getText().toString();
+                            float amount = Float.parseFloat(etAmount.getText().toString());
 
-                Credit credit = new Credit();
-                credit.setAmountReceived(amountReceived);
-                credit.setFrom(amountReceivedFrom);
-                credit.setReceivedBy(receivedBy);
-                credit.setRemarks(remarks);
-                credit.setAmountInCredit(amount);
-                credit.setDate(entryDate);
+                            Credit credit = new Credit();
+                            credit.setAmountReceived(amountReceived);
+                            credit.setFrom(amountReceivedFrom);
+                            credit.setReceivedBy(receivedBy);
+                            credit.setRemarks(remarks);
+                            credit.setAmountInCredit(amount);
+                            credit.setDate(entryDate);
 
-                // Insert to DB
-                DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
-                dbAdapter.insertCredit(credit);
+                            // Insert to DB
+                            DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
+                            dbAdapter.insertCredit(credit);
 
-                // Clear the Form
-                ((VouchersActivity)getActivity()).clearForm();
+                            // Clear the Form
+                            ((VouchersActivity)getActivity()).clearForm();
+                        }
+                    }
+                }
+
 
             }
         });

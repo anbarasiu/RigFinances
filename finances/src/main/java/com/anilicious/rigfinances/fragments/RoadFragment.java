@@ -32,24 +32,46 @@ public class RoadFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                String expense = etExpense.getText().toString();
-                int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
-                String spentBy = etSpentBy.getText().toString();
+                if(etExpense.getText().toString().equals(""))
+                {
+                    etExpense.setError("Please enter type of expense or remarks");
+                }
+                else
+                {
+                    if(etSpentBy.getText().equals(""))
+                    {
+                        etSpentBy.setError("Please enter name who spent");
+                    }
+                    else
+                    {
+                        if (etTotalAmount.getText().toString().equals(""))
+                        {
+                            etTotalAmount.setError("Please enter total amount");
+                        }
+                        else
+                        {
+                            String expense = etExpense.getText().toString();
+                            int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
+                            String spentBy = etSpentBy.getText().toString();
 
-                DebitFragment parent = (DebitFragment)getParentFragment();
+                            DebitFragment parent = (DebitFragment)getParentFragment();
 
-                Road road = new Road();
-                road.setExpenseDetails(expense);
-                road.setTotalAmount(totalAmount);
-                road.setSpentBy(spentBy);
-                road.setDate(parent.getEntryDate());
+                            Road road = new Road();
+                            road.setExpenseDetails(expense);
+                            road.setTotalAmount(totalAmount);
+                            road.setSpentBy(spentBy);
+                            road.setDate(parent.getEntryDate());
 
-                // Insert to DB
-                DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
-                dbAdapter.insertRoad(road);
+                            // Insert to DB
+                            DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
+                            dbAdapter.insertRoad(road);
 
-                // Clear the Form
-                ((VouchersActivity)getActivity()).clearForm();
+                            // Clear the Form
+                            ((VouchersActivity)getActivity()).clearForm();
+                        }
+                    }
+                }
+
             }
         });
 

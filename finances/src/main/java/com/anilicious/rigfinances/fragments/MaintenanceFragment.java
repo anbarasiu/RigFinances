@@ -40,31 +40,84 @@ public class MaintenanceFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                boolean service = swService.isChecked();
-                double engineHrs = (double)(Integer.parseInt(etEngineHrs1.getText().toString()) + Integer.parseInt(etEngineHrs2.getText().toString())/60);
-                float totalAmount = Float.parseFloat(etTotalAmount.getText().toString());
-                String remarks = eRemarks.getText().toString();
-                String spentBy = etSpentBy.getText().toString();
-                RadioButton rbWorkType = (RadioButton)rgWorkType.findViewById(rgWorkType.getCheckedRadioButtonId());
-                String workType = rbWorkType.getText().toString();
+                if(etTotalAmount.getText().toString().equals(""))
+                {
+                    etTotalAmount.setError("Please enter total amount spent");
+                }
+                else
+                {
+                    if (etSpentBy.getText().toString().equals(""))
+                    {
+                        etSpentBy.setError("Please enter name who spent for maintenance");
+                    }
+                    else
+                    {
+                        if (eRemarks.getText().toString().equals(""))
+                        {
+                            eRemarks.setError("Please enter the nature of work done");
+                        }
+                        else
+                        {
 
-                DebitFragment parent = (DebitFragment)getParentFragment();
-                
-                Maintenance maintenance = new Maintenance();
-                maintenance.setService(service);
-                maintenance.setEngineHrs(engineHrs);
-                maintenance.setAmount(totalAmount);
-                maintenance.setReason(remarks);
-                maintenance.setSpentBy(spentBy);
-                maintenance.setWorkType(workType);
-                maintenance.setDate(parent.getEntryDate());
+                            boolean service = swService.isChecked();
+                            float totalAmount = Float.parseFloat(etTotalAmount.getText().toString());
+                            String remarks = eRemarks.getText().toString();
+                            String spentBy = etSpentBy.getText().toString();
+                            RadioButton rbWorkType = (RadioButton)rgWorkType.findViewById(rgWorkType.getCheckedRadioButtonId());
+                            String workType = rbWorkType.getText().toString();
+                            double engineHrs = Double.parseDouble(etEngineHrs1.getText().toString());
 
-                // Insert to DB
-                DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
-                dbAdapter.insertMaintenance(maintenance);
+                                if(etEngineHrs1.getText().toString().equals("") && etEngineHrs2.getText().toString().equals(""))
+                                {
+                                    etEngineHrs1.setError("Please enter engine hours at the time of service, please enter min also, if min is 0 enter 0 and if it is not service please enter 0 in both");
+                                }
+                                else
+                                {
 
-                // Clear the Form
-                ((VouchersActivity)getActivity()).clearForm();
+                                    if(swService.isChecked() && workType.equals("Compressor"))
+                                    {
+                                        double min = Double.parseDouble(etEngineHrs2.getText().toString());
+                                        if(min >= 60)
+                                        {
+                                            Double rem = min%60;
+                                            min =min -rem;
+                                            engineHrs = (engineHrs +(min/60)) + (rem*1.6666667/100);
+
+                                        }
+                                        else
+                                        {
+                                        engineHrs = engineHrs + (min*1.666667/100);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        engineHrs=0;
+                                    }
+                                        DebitFragment parent = (DebitFragment)getParentFragment();
+
+                                    Maintenance maintenance = new Maintenance();
+                                    maintenance.setService(service);
+                                    maintenance.setEngineHrs(engineHrs);
+                                    maintenance.setAmount(totalAmount);
+                                    maintenance.setReason(remarks);
+                                    maintenance.setSpentBy(spentBy);
+                                    maintenance.setWorkType(workType);
+                                    maintenance.setDate(parent.getEntryDate());
+                                    // Insert to DB
+                                    DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
+                                    dbAdapter.insertMaintenance(maintenance);
+
+                                    // Clear the Form
+                                    ((VouchersActivity)getActivity()).clearForm();
+
+                                }
+                                }
+
+
+
+}
+                                            }
+
             }
         });
 

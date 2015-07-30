@@ -38,30 +38,53 @@ public class DieselFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                int litres = Integer.parseInt(etLitres.getText().toString());
-                int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
-                String spentBy = etSpentBy.getText().toString();
-                RadioButton rbDieselFor = (RadioButton)rgDieselFor.findViewById(rgDieselFor.getCheckedRadioButtonId());
-                String dieselFor = rbDieselFor.getText().toString();
 
-               // VouchersActivity v = (VouchersActivity)getActivity();
-                DebitFragment parent = (DebitFragment)getParentFragment();
+                if(etLitres.getText().toString().equals(""))
+                {
+                    etLitres.setError("Please enter diesel in liters");
+                }
+                else
+                {
+                    if(etTotalAmount.getText().toString().equals(""))
+                    {
+                        etTotalAmount.setError("Please enter total amount spent");
+                    }
+                    else
+                    {
+                        if(etSpentBy.getText().toString().equals(""))
+                        {
+                            etSpentBy.setError("Please enter name who spent for diesel");
+                        }
+                        else
+                        {
+                            int litres = Integer.parseInt(etLitres.getText().toString());
+                            int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
+                            String spentBy = etSpentBy.getText().toString();
+                            RadioButton rbDieselFor = (RadioButton)rgDieselFor.findViewById(rgDieselFor.getCheckedRadioButtonId());
 
-                Diesel diesel = new Diesel();
-                diesel.setLitres(litres);
-                diesel.setTotalAmount(totalAmount);
-                diesel.setSpentBy(spentBy);
-                diesel.setDieselFor(dieselFor);
+                            String dieselFor = rbDieselFor.getText().toString();
 
-                diesel.setDate(parent.getEntryDate());
+                            // VouchersActivity v = (VouchersActivity)getActivity();
+                            DebitFragment parent = (DebitFragment)getParentFragment();
 
-                // Insert to DB
-                DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
-                dbAdapter.insertDiesel(diesel);
+                            Diesel diesel = new Diesel();
+                            diesel.setLitres(litres);
+                            diesel.setTotalAmount(totalAmount);
+                            diesel.setSpentBy(spentBy);
+                            diesel.setDieselFor(dieselFor);
+                            diesel.setDate(parent.getEntryDate());
 
-                // Clear the Form
-                ((VouchersActivity)getActivity()).clearForm();
+                            // Insert to DB
+                            DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
+                            dbAdapter.insertDiesel(diesel);
 
+                            // Clear the Form
+                            ((VouchersActivity)getActivity()).clearForm();
+
+                        }
+
+                    }
+            }
             }
         });
 

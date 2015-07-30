@@ -50,7 +50,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_weight="1"
-                android:checked="false" />
+                android:checked="true" />
 
         </RadioGroup>
     </LinearLayout>

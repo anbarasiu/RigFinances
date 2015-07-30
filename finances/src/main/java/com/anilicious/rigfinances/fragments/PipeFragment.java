@@ -37,32 +37,60 @@ public class PipeFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                float pipeLength = Float.parseFloat(etPipeLength.getText().toString());
-                double totalAmount = Double.parseDouble(etTotalAmount.getText().toString());
-                String remarks = etRemarks.getText().toString();
-                String spentBy = etSpentBy.getText().toString();
-                RadioButton rbWorkType = (RadioButton)rgWorkType.findViewById(rgWorkType.getCheckedRadioButtonId());
-                String workType = rbWorkType.getText().toString();
-                RadioButton rbPipeType = (RadioButton)rgPipeType.findViewById(rgPipeType.getCheckedRadioButtonId());
-                String pipeType = rbPipeType.getText().toString();
+                if(etRemarks.getText().toString().equals(""))
+                {
+                    etRemarks.setError("Please enter nature of work done");
+                }
+                else
+                {
+                    if(etSpentBy.getText().toString().equals(""))
+                    {
+                        etSpentBy.setError("Please enter name who spent for pipe work");
+                    }
+                    else
+                    {
+                        if(etTotalAmount.getText().toString().equals(""))
+                        {
+                            etTotalAmount.getText().equals("Please enter total amount spent");
+                        }
+                        else
+                        {
+                            Double pipeLength = 0.0;
+                            double totalAmount = Double.parseDouble(etTotalAmount.getText().toString());
+                            String remarks = etRemarks.getText().toString();
+                            String spentBy = etSpentBy.getText().toString();
+                            RadioButton rbWorkType = (RadioButton)rgWorkType.findViewById(rgWorkType.getCheckedRadioButtonId());
+                            String workType = rbWorkType.getText().toString();
+                            RadioButton rbPipeType = (RadioButton)rgPipeType.findViewById(rgPipeType.getCheckedRadioButtonId());
+                            String pipeType = rbPipeType.getText().toString();
+                            if(etPipeLength.getText().toString().equals(""))
+                            {
+                                etPipeLength.setError("Please enter length of new pipe bought if for repair of pipe, please enter 0");
+                            }
+                            else
+                            {
+                                pipeLength = Double.parseDouble(etPipeLength.getText().toString());
+                                DebitFragment parent = (DebitFragment)getParentFragment();
 
-                DebitFragment parent = (DebitFragment)getParentFragment();
+                                Pipe pipe = new Pipe();
+                                pipe.setLength(pipeLength);
+                                pipe.setAmount(totalAmount);
+                                pipe.setRemarks(remarks);
+                                pipe.setSpentBy(spentBy);
+                                pipe.setWorkType(workType);
+                                pipe.setType(pipeType);
+                                pipe.setDate(parent.getEntryDate());
 
-                Pipe pipe = new Pipe();
-                pipe.setLength(pipeLength);
-                pipe.setAmount(totalAmount);
-                pipe.setRemarks(remarks);
-                pipe.setSpentBy(spentBy);
-                pipe.setWorkType(workType);
-                pipe.setType(pipeType);
-                pipe.setDate(parent.getEntryDate());
+                                // Insert to DB
+                                DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
+                                dbAdapter.insertPipe(pipe);
 
-                // Insert to DB
-                DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
-                dbAdapter.insertPipe(pipe);
-
-                // Clear the Form
-                ((VouchersActivity)getActivity()).clearForm();
+                                // Clear the Form
+                                ((VouchersActivity)getActivity()).clearForm();
+                            }
+                        }
+                    }
+                }
             }
         });
 
