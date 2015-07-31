@@ -66,7 +66,19 @@ public class ToolFragment extends Fragment {
                     tool.setDetails(details);
                     tool.setQuantity(quantity);
                     tool.setPrice(price);
-                    tool.setDate(parent.getEntryDate());
+                    String date = parent.getEntryDate().toString();
+                    String[] test=date.split("/");
+                    if(test[1].length()<=1)
+                    {
+                        test[1] = "0"+test[1];
+                    }
+                    if(test[0].length()<=1)
+                    {
+                        test[0] = "0"+test[0];
+                    }
+                    String date1 =(test[2]+test[1]+test[0]);
+                    Integer Tool_date=Integer.parseInt(date1);
+                    tool.setDate(Tool_date);
 
                     //ToolItem toolItem = new ToolItem(item, details, quantity, price);
                     //toolItems.add(toolItem);

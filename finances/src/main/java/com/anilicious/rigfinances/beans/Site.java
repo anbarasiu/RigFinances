@@ -8,13 +8,13 @@ public class Site {
     private String remarks;
     private float totalAmount;
     private String spentBy;
-    private String date;
+    private Integer date;
 
-    public String getDate() {
+    public Integer getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Integer date) {
         this.date = date;
     }
 

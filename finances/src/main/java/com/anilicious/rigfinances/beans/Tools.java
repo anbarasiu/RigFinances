@@ -8,7 +8,7 @@ import java.util.List;
  * Created by ANBARASI on 6/11/14.
  */
 public class Tools {
-    private String date;
+    private Integer date;
     private String item;
     private String details;
     private int quantity;
@@ -42,11 +42,11 @@ public class Tools {
         this.totalAmount = totalAmount;
     }
 
-    public String getDate() {
-        return CommonUtils.formatDateEntry(date);
+    public Integer getDate() {
+        return (date);
     }
 
-    public void setDate(String date) {
+    public void setDate(Integer date) {
         this.date = date;
     }
 

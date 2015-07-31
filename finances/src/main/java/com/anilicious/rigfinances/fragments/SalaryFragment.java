@@ -49,7 +49,20 @@ public class SalaryFragment extends Fragment {
                 salary.setReason(remarks);
                 salary.setAmount(totalAmount);
                 salary.setSpentBy(spentBy);
-                salary.setDate(parent.getEntryDate());
+
+                String date = parent.getEntryDate().toString();
+                String[] test=date.split("/");
+                if(test[1].length()<=1)
+                {
+                    test[1] = "0"+test[1];
+                }
+                if(test[0].length()<=1)
+                {
+                    test[0] = "0"+test[0];
+                }
+                String date1 =(test[2]+test[1]+test[0]);
+                Integer Salary_date=Integer.parseInt(date1);
+                salary.setDate(Salary_date);
 
                 // Insert to DB
                 DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());

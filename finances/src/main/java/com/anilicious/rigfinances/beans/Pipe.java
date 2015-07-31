@@ -6,7 +6,7 @@ import com.anilicious.rigfinances.utils.CommonUtils;
  * Created by ANBARASI on 6/11/14.
  */
 public class Pipe {
-    private String date;
+    private Integer date;
     private String workType;
     private Double length;
     private String type;
@@ -22,11 +22,11 @@ public class Pipe {
         this.amount = amount;
     }
 
-    public String getDate() {
-        return CommonUtils.formatDateEntry(date);
+    public Integer getDate() {
+        return (date);
     }
 
-    public void setDate(String date) {
+    public void setDate(Integer date) {
         this.date = date;
     }
 

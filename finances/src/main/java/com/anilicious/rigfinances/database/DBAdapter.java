@@ -44,7 +44,7 @@ public class DBAdapter extends SQLiteOpenHelper{
     private static final String DIESEL_DATABASE_NAME = "DIESEL";
     private static final String DIESEL_DATABASE_CREATE = "CREATE TABLE " + DIESEL_DATABASE_NAME + "(" +
             "_id " + "INTEGER primary key AUTOINCREMENT, " + // 'D' + number
-            "date" + " date, " +
+            "Diesel_Date" + " integer, " +
             "diesel_for" + " text, " +
             "litres" + " number, " +
             "amount" + " number, " +
@@ -54,7 +54,7 @@ public class DBAdapter extends SQLiteOpenHelper{
     private static final String COOK_DATABASE_NAME = "COOK";
     private static final String COOK_DATABASE_CREATE = "CREATE TABLE " + COOK_DATABASE_NAME + "(" +
             "_id " + "INTEGER primary key AUTOINCREMENT, " + // 'C' + number
-            "date" + " date, " +
+            "Cook_Date" + " integer, " +
             "item" + " text, " +
             "quantity" + " number, " +
             "amount" + " number, " +
@@ -62,7 +62,7 @@ public class DBAdapter extends SQLiteOpenHelper{
 
     private static final String COOKITEM_DATABASE_NAME = "COOKITEM";
     private static final String COOKITEM_DATABASE_CREATE = "CREATE TABLE " + COOKITEM_DATABASE_NAME + "(" +
-            "cook_key" + "INTEGER, " + // 'C' + number
+            "cook_key" + " INTEGER, " + // 'C' + number
             "item_key" + " number, " +
             "item" + " text, " +
             "quantity" + " number, " +
@@ -71,7 +71,7 @@ public class DBAdapter extends SQLiteOpenHelper{
     private static final String ROAD_DATABASE_NAME = "ROAD";
     private static final String ROAD_DATABASE_CREATE = "CREATE TABLE " + ROAD_DATABASE_NAME + "(" +
             "_id " + "INTEGER, " + // 'R' + number
-            "date" + " date, " +
+            "Road_Date" + " integer, " +
             "expense" + " text, " +
             "amount" + " number, " +
             "spent_by" + " text);";
@@ -79,7 +79,7 @@ public class DBAdapter extends SQLiteOpenHelper{
     private static final String MAINTENANCE_DATABASE_NAME = "MAINTENANCE";
     private static final String MAINTENANCE_DATABASE_CREATE = "CREATE TABLE " + MAINTENANCE_DATABASE_NAME + "(" +
             "_id " + "INTEGER, " + // 'M' + number
-            "date" + " date, " +
+            "Maintenance_Date" + " integer, " +
             "work_type" + " text, " +
             "service" + " boolean, " +
             "engine_hours" + " real, " +
@@ -90,7 +90,7 @@ public class DBAdapter extends SQLiteOpenHelper{
     private static final String TOOL_DATABASE_NAME = "TOOL";
     private static final String TOOL_DATABASE_CREATE = "CREATE TABLE " + TOOL_DATABASE_NAME + "(" +
             "_id " + "INTEGER primary key AUTOINCREMENT, " + // 'T' + number
-            "date" + " date, " +
+            "Tool_Date" + " Number, " +
             "item" + " text, " +
             "detail" + " text, " +
             "quantity" + " number, " +
@@ -110,7 +110,7 @@ public class DBAdapter extends SQLiteOpenHelper{
     private static final String PIPE_DATABASE_NAME = "PIPE";
     private static final String PIPE_DATABASE_CREATE = "CREATE TABLE " + PIPE_DATABASE_NAME + "(" +
             "_id " + "INTEGER primary key AUTOINCREMENT, " + // 'P' + number
-            "date" + " date, " +
+            "Pipe_Date" + " integer, " +
             "work_type" + " text, " +
             "length" + " real, " +
             "type" + " text, " +
@@ -121,7 +121,7 @@ public class DBAdapter extends SQLiteOpenHelper{
     private static final String SALARY_DATABASE_NAME = "SALARY";
     private static final String SALARY_DATABASE_CREATE = "CREATE TABLE " + SALARY_DATABASE_NAME + "(" +
             "_id " + "INTEGER primary key AUTOINCREMENT, " + // 'S' + number
-            "date" + " date, " +
+            "Salary_Date" + " integer, " +
             "employee_number" + " INTEGER, " +
             "employee_name" + " text, " +
             "amount" + " number, " +
@@ -131,7 +131,7 @@ public class DBAdapter extends SQLiteOpenHelper{
     private static final String SITE_DATABASE_NAME = "SITE_EXPENSES";
     private static final String SITE_DATABASE_CREATE = "CREATE TABLE " + SITE_DATABASE_NAME + "(" +
             "_id " + "INTEGER primary key AUTOINCREMENT, " + // 'SE' + number
-            "date" + " date, " +
+            "Site_Date" + " Integer, " +
             "work_type" + " text, " +
             "amount" + " number, " +
             "remarks" + " text, " +
@@ -277,7 +277,7 @@ public class DBAdapter extends SQLiteOpenHelper{
     public void insertDiesel(Diesel diesel){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("date", diesel.getDate());
+        values.put("Diesel_Date", diesel.getDate());
         values.put("diesel_for", diesel.getDieselFor());
         values.put("litres", diesel.getLitres());
         values.put("amount", diesel.getTotalAmount());
@@ -292,7 +292,7 @@ public class DBAdapter extends SQLiteOpenHelper{
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("item", cook.getItem());
-        values.put("date", cook.getDate());
+        values.put("Cook_Date", cook.getDate());
         values.put("quantity", cook.getQuantity());
         values.put("amount", cook.getPrice());
         values.put("spent_by", cook.getSpentBy());
@@ -314,7 +314,7 @@ public class DBAdapter extends SQLiteOpenHelper{
     public void insertRoad(Road road){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("date", road.getDate());
+        values.put("Road_Date", road.getDate());
         values.put("expense", road.getExpenseDetails());
         values.put("amount", road.getTotalAmount());
         values.put("spent_by", road.getSpentBy());
@@ -326,7 +326,7 @@ public class DBAdapter extends SQLiteOpenHelper{
     public void insertMaintenance(Maintenance maintenance){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("date", maintenance.getDate());
+        values.put("Maintenance_Date", maintenance.getDate());
         values.put("work_type", maintenance.getWorkType());
         values.put("service", maintenance.isService());
         values.put("engine_hours", maintenance.getEngineHrs());
@@ -341,7 +341,7 @@ public class DBAdapter extends SQLiteOpenHelper{
     public void insertTool(Tools tool){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("date", tool.getDate());
+        values.put("Tool_Date", tool.getDate());
         values.put("item", tool.getItem());
         values.put("detail", tool.getDetails());
         values.put("quantity", tool.getQuantity());
@@ -371,7 +371,7 @@ public class DBAdapter extends SQLiteOpenHelper{
     public void insertPipe(Pipe pipe){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("date", pipe.getDate());
+        values.put("Pipe_Date", pipe.getDate());
         values.put("work_type", pipe.getWorkType());
         values.put("length", pipe.getLength());
         values.put("type", pipe.getType());
@@ -386,7 +386,7 @@ public class DBAdapter extends SQLiteOpenHelper{
     public void insertSalary(Salary salary){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("date", salary.getDate());
+        values.put("Salary_Date", salary.getDate());
         values.put("employee_number", salary.getEmployeeNumber());
         values.put("employee_name", salary.getEmployeeName());
         values.put("amount", salary.getAmount());
@@ -414,7 +414,7 @@ public class DBAdapter extends SQLiteOpenHelper{
     public void insertSite(Site site){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("date", site.getDate());
+        values.put("Site_Date", site.getDate());
         values.put("work_type", site.getWorkType());
         values.put("remarks", site.getRemarks());
         values.put("amount", site.getTotalAmount());

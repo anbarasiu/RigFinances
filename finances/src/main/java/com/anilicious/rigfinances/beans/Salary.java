@@ -6,18 +6,18 @@ import com.anilicious.rigfinances.utils.CommonUtils;
  * Created by ANBARASI on 6/11/14.
  */
 public class Salary {
-    private String date;
+    private Integer date;
     private int employeeNumber;
     private String employeeName;
     private float amount;
     private String spentBy;
     private String reason;
 
-    public String getDate() {
-        return CommonUtils.formatDateEntry(date);
+    public Integer getDate() {
+        return (date);
     }
 
-    public void setDate(String date) {
+    public void setDate(Integer date) {
         this.date = date;
     }
 

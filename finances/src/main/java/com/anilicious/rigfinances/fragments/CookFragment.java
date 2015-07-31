@@ -74,7 +74,20 @@ public class CookFragment extends Fragment {
                         cook.setItem(item);
                         cook.setQuantity(quantity);
                         cook.setPrice(price);
-                        cook.setDate(parent.getEntryDate());
+
+                        String date = parent.getEntryDate().toString();
+                        String[] test=date.split("/");
+                        if(test[1].length()<=1)
+                        {
+                            test[1] = "0"+test[1];
+                        }
+                        if(test[0].length()<=1)
+                        {
+                            test[0] = "0"+test[0];
+                        }
+                        String date1 =(test[2]+test[1]+test[0]);
+                        Integer Cook_date=Integer.parseInt(date1);
+                        cook.setDate(Cook_date);
 
                         // Insert to DB
                         DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());

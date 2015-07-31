@@ -72,7 +72,20 @@ public class DieselFragment extends Fragment {
                             diesel.setTotalAmount(totalAmount);
                             diesel.setSpentBy(spentBy);
                             diesel.setDieselFor(dieselFor);
-                            diesel.setDate(parent.getEntryDate());
+
+                            String date = parent.getEntryDate().toString();
+                            String[] test=date.split("/");
+                            if(test[1].length()<=1)
+                            {
+                                test[1] = "0"+test[1];
+                            }
+                            if(test[0].length()<=1)
+                            {
+                                test[0] = "0"+test[0];
+                            }
+                            String date1 =(test[2]+test[1]+test[0]);
+                            Integer Diesel_date=Integer.parseInt(date1);
+                            diesel.setDate(Diesel_date);
 
                             // Insert to DB
                             DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());

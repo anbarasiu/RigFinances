@@ -8,7 +8,7 @@ import java.util.List;
  * Created by ANBARASI on 6/11/14.
  */
 public class Cook {
-    private String date;
+    private Integer date;
     private String item;
     private int quantity;
     private float price;
@@ -23,11 +23,11 @@ public class Cook {
         this.amount = amount;
     }
 
-    public String getDate() {
-        return CommonUtils.formatDateEntry(date);
+    public Integer getDate() {
+        return (date);
     }
 
-    public void setDate(String date) {
+    public void setDate(Integer date) {
         this.date = date;
     }
 

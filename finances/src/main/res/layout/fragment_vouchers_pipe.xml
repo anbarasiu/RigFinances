@@ -40,7 +40,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_weight="1"
-                android:checked="false" />
+                android:checked="true" />
 
             <RadioButton
                 android:layout_width="wrap_content"
@@ -91,7 +91,7 @@
                 android:text="@string/pipes_question2_option2"
                 android:id="@+id/radioButton4"
                 android:layout_weight="1"
-                android:checked="false" />
+                android:checked="true" />
         </RadioGroup>
 
     </LinearLayout>

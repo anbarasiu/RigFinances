@@ -102,7 +102,19 @@ public class MaintenanceFragment extends Fragment {
                                     maintenance.setReason(remarks);
                                     maintenance.setSpentBy(spentBy);
                                     maintenance.setWorkType(workType);
-                                    maintenance.setDate(parent.getEntryDate());
+                                    String date = parent.getEntryDate().toString();
+                                    String[] test=date.split("/");
+                                    if(test[1].length()<=1)
+                                    {
+                                        test[1] = "0"+test[1];
+                                    }
+                                    if(test[0].length()<=1)
+                                    {
+                                        test[0] = "0"+test[0];
+                                    }
+                                    String date1 =(test[2]+test[1]+test[0]);
+                                    Integer Maintenance_date=Integer.parseInt(date1);
+                                    maintenance.setDate(Maintenance_date);
                                     // Insert to DB
                                     DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
                                     dbAdapter.insertMaintenance(maintenance);

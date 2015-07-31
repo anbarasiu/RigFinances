@@ -6,7 +6,7 @@ import com.anilicious.rigfinances.utils.CommonUtils;
  * Created by ANBARASI on 6/11/14.
  */
 public class Road {
-    private String date;
+    private Integer date;
     private String expenseDetails;
     private int totalAmount;
     private String spentBy;
@@ -19,11 +19,11 @@ public class Road {
         this.totalAmount = totalAmount;
     }
 
-    public String getDate() {
-        return CommonUtils.formatDateEntry(date);
+    public Integer getDate() {
+        return (date);
     }
 
-    public void setDate(String date) {
+    public void setDate(Integer date) {
         this.date = date;
     }
 
