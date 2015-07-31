@@ -66,7 +66,13 @@ public class DieselFragment extends Fragment {
 
                             // VouchersActivity v = (VouchersActivity)getActivity();
                             DebitFragment parent = (DebitFragment)getParentFragment();
+                            if(parent.getEntryDate().toString().equals(""))
+                            {
+                                etLitres.setError("Please enter date");
+                            }
 
+                            else
+                            {
                             Diesel diesel = new Diesel();
                             diesel.setLitres(litres);
                             diesel.setTotalAmount(totalAmount);
@@ -93,7 +99,7 @@ public class DieselFragment extends Fragment {
 
                             // Clear the Form
                             ((VouchersActivity)getActivity()).clearForm();
-
+                            }
                         }
 
                     }
