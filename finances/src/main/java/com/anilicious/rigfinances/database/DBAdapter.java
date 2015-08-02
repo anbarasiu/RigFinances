@@ -699,7 +699,7 @@ public class DBAdapter extends SQLiteOpenHelper{
 
         Cursor cursor1 = database.rawQuery(query1, null);
 
-        String query2 = "SELECT SUM(length) FROM " + PIPE_DATABASE_NAME + " WHERE date BETWEEN CAST('" + dateFrom + "' AS DATE) AND CAST('" + dateTo + "' AS DATE);";
+        String query2 = "SELECT SUM(length) FROM " + PIPE_DATABASE_NAME + " WHERE Pipe_Date BETWEEN CAST('" + dateFrom + "' AS DATE) AND CAST('" + dateTo + "' AS DATE);";
 
         Cursor cursor2 = database.rawQuery(query2, null);
 

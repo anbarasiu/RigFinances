@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.anilicious.rigfinances.beans.AddItem;
@@ -24,6 +25,8 @@ public class AddItemListAdapter extends BaseAdapter {
     private List<String> items;
     private String voucherType;
     private boolean notified;
+
+    private List<String> items_dummy;
 
     public AddItemListAdapter(Activity activity, List<String> items, String voucherType){
         this.activity = activity;
@@ -46,28 +49,36 @@ public class AddItemListAdapter extends BaseAdapter {
         return items.get(i);
     }
 
-    public void notifyDataSetChanged(boolean notified) {
+    public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
-        this.notified = notified;
     }
 
     public void onCallbackNotified(){
         //return true;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(final int position, View convertView, ViewGroup parent){
         if(inflater == null)
             inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // Row Layout varies for the Voucher Types
         if(convertView == null && voucherType == CommonUtils.VOUCHER_COOK){
             convertView = inflater.inflate(R.layout.fragment_cook_rows, null);
-            if(notified) onCallbackNotified();
+            Button btn_delete = (Button)convertView.findViewById(R.id.cook_delete);
         }
-        else if(convertView == null && voucherType == CommonUtils.VOUCHER_TOOL)
+        else if(convertView == null && voucherType == CommonUtils.VOUCHER_TOOL){
             convertView = inflater.inflate(R.layout.fragment_tool_rows, null);
+            Button btn_delete = (Button)convertView.findViewById(R.id.tool_delete);
+        }
+
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                items.remove(position);
+                notifyDataSetChanged();
+            }
+        });
 
         return convertView;
     }
-
 }
