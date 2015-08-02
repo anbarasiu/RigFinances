@@ -135,7 +135,6 @@ public class CookFragment extends Fragment {
 
         Button btn_addItem = (Button)view.findViewById(R.id.button_addItem);
         btn_addItem.setOnClickListener(new View.OnClickListener() {
-            int j = 1;
 
             @Override
             public void onClick(View view) {
