@@ -150,8 +150,8 @@ public class CookFragment extends Fragment {
                         list_cook_adapter.notifyDataSetChanged();
                     }
                 });
-        }
-     });
+            }
+        });
     }
 
         /*list_cook_adapter.onCallbackNotified();
