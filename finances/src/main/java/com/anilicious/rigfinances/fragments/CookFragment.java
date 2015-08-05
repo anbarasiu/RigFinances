@@ -1,5 +1,6 @@
 package com.anilicious.rigfinances.fragments;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,7 +29,7 @@ import java.util.List;
  */
 public class CookFragment extends Fragment {
 
-    private List<String> items_dummy;
+    private List<CookItem> cookItems;
     private AddItemListAdapter list_cook_adapter;
 
     @Override
@@ -53,15 +54,19 @@ public class CookFragment extends Fragment {
                     //List<CookItem> cookItems = addCookItems();
 
                     ViewGroup group = (ViewGroup)getActivity().findViewById(R.id.list_cook);
-                    for(int i = 0; i < group.getChildCount(); i++){
-                        View form_field = group.getChildAt(i);
-                        EditText etItem = (EditText)form_field.findViewById(R.id.addItem_item);
-                        EditText etQuantity = (EditText)form_field.findViewById(R.id.addItem_quantity);
-                        EditText etPrice = (EditText)form_field.findViewById(R.id.addItem_price);
+                    //for(int i = 0; i < group.getChildCount(); i++){
+                    for(CookItem cookItem : cookItems){
+                        //View form_field = group.getChildAt(i);
+                        //EditText etItem = (EditText)form_field.findViewById(R.id.addItem_item);
+                        //EditText etQuantity = (EditText)form_field.findViewById(R.id.addItem_quantity);
+                        //EditText etPrice = (EditText)form_field.findViewById(R.id.addItem_price);
 
-                        String item = etItem.getText().toString();
-                        int quantity = Integer.parseInt(etQuantity.getText().toString());
-                        float price = Float.parseFloat(etPrice.getText().toString());
+                        //String item = etItem.getText().toString();
+                        String item = cookItem.getItem();
+                        //int quantity = Integer.parseInt(etQuantity.getText().toString());
+                        int quantity = cookItem.getQuantity();
+                        //float price = Float.parseFloat(etPrice.getText().toString());
+                        float price = cookItem.getAmount();
 
                         //CookItem cookItem = new CookItem(item, quantity, price);
                         //cookItems.add(cookItem);
@@ -96,7 +101,7 @@ public class CookFragment extends Fragment {
 
                     // Clear the Form
                     ((VouchersActivity)getActivity()).clearForm();
-                    items_dummy.clear();
+                    cookItems.clear();
                     list_cook_adapter.notifyDataSetChanged();
                 }
             }
@@ -128,41 +133,49 @@ public class CookFragment extends Fragment {
     }
 
     public void setupCookList(View view){
+        cookItems = new ArrayList<CookItem>();
+
         ListView list_cook = (ListView)view.findViewById(R.id.list_cook);
-        items_dummy = new ArrayList<String>();
-        list_cook_adapter = new AddItemListAdapter(getActivity(), items_dummy, CommonUtils.VOUCHER_COOK);
+        list_cook_adapter = new AddItemListAdapter(getActivity(), cookItems, CommonUtils.VOUCHER_COOK);
         list_cook.setAdapter(list_cook_adapter);
 
         Button btn_addItem = (Button)view.findViewById(R.id.button_addItem);
         btn_addItem.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+                final Dialog dialog = new Dialog(getActivity());
+                dialog.setContentView(R.layout.fragment_cook_rows);
+                dialog.setTitle("Cooking Expense Details");
+
+                final EditText etItem = (EditText)dialog.findViewById(R.id.addItem_item);
+                final EditText etQuantity = (EditText)dialog.findViewById(R.id.addItem_quantity);
+                final EditText etPrice = (EditText)dialog.findViewById(R.id.addItem_price);
+
+                Button btn_addDetails = (Button)dialog.findViewById(R.id.cook_submit_details);
+                btn_addDetails.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        String item = etItem.getText().toString();
+                        int quantity = Integer.parseInt(etQuantity.getText().toString());
+                        float price = Float.parseFloat(etPrice.getText().toString());
+
+                        CookItem cookItem = new CookItem(item, quantity, price);
+                        cookItems.add(cookItem);
+
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
+            }
+
+            /*
             @Override
             public void onClick(View view) {
                 items_dummy.add("New Dummy Row");
                 list_cook_adapter.notifyDataSetChanged();
-
-                Button btn_removeItem = (Button)view.findViewById(R.id.cook_delete);
-                if(btn_removeItem == null) return;
-                btn_removeItem.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        int position = (Integer)view.getTag();
-                        items_dummy.remove(position);
-                        list_cook_adapter.notifyDataSetChanged();
-                    }
-                });
             }
-        });
+            */
+     });
     }
-
-        /*list_cook_adapter.onCallbackNotified();
-        Button btn_removeItem = (Button)view.findViewById(R.id.cook_delete);
-        if(btn_removeItem == null) return;
-        btn_removeItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int position = (Integer)view.getTag();
-                items_dummy.remove(position);
-                list_cook_adapter.notifyDataSetChanged();
-            }
-        });*/
 }

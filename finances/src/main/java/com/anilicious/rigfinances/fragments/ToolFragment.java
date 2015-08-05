@@ -128,15 +128,15 @@ public class ToolFragment extends Fragment {
     public void setupToolList(View view){
         ListView list_tool = (ListView) view.findViewById(R.id.list_tool);
         tool_items_dummy = new ArrayList<String>();
-        list_tool_adapter = new AddItemListAdapter(getActivity(), tool_items_dummy, CommonUtils.VOUCHER_TOOL);
-        list_tool.setAdapter(list_tool_adapter);
+        //list_tool_adapter = new AddItemListAdapter(getActivity(), tool_items_dummy, CommonUtils.VOUCHER_TOOL);
+        //list_tool.setAdapter(list_tool_adapter);
 
         Button btn_addItem = (Button)view.findViewById(R.id.button_addItem);
         btn_addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 tool_items_dummy.add("New Dummy Row");
-                list_tool_adapter.notifyDataSetChanged();
+                //list_tool_adapter.notifyDataSetChanged();
             }
         });
     }
