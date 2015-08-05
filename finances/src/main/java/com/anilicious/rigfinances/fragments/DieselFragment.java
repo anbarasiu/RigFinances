@@ -66,40 +66,41 @@ public class DieselFragment extends Fragment {
 
                             // VouchersActivity v = (VouchersActivity)getActivity();
                             DebitFragment parent = (DebitFragment)getParentFragment();
-                            if(parent.getEntryDate().toString().equals(""))
-                            {
-                                etLitres.setError("Please enter date");
-                            }
 
-                            else
-                            {
                             Diesel diesel = new Diesel();
                             diesel.setLitres(litres);
                             diesel.setTotalAmount(totalAmount);
                             diesel.setSpentBy(spentBy);
                             diesel.setDieselFor(dieselFor);
-
-                            String date = parent.getEntryDate().toString();
-                            String[] test=date.split("/");
-                            if(test[1].length()<=1)
+                            if(parent.getEntryDate().equals(""))
                             {
-                                test[1] = "0"+test[1];
+                                etLitres.setError("asdf");
                             }
-                            if(test[0].length()<=1)
+                                else
                             {
-                                test[0] = "0"+test[0];
-                            }
-                            String date1 =(test[2]+test[1]+test[0]);
-                            Integer Diesel_date=Integer.parseInt(date1);
-                            diesel.setDate(Diesel_date);
+                                String date = parent.getEntryDate().toString();
+                                String[] test=date.split("/");
+                                if(test[1].length()<=1)
+                                {
+                                    test[1] = "0"+test[1];
+                                }
+                                if(test[0].length()<=1)
+                                {
+                                    test[0] = "0"+test[0];
+                                }
+                                String date1 =(test[2]+test[1]+test[0]);
+                                Integer Diesel_date=Integer.parseInt(date1);
+                                diesel.setDate(Diesel_date);
 
-                            // Insert to DB
-                            DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
-                            dbAdapter.insertDiesel(diesel);
+                                // Insert to DB
+                                DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
+                                dbAdapter.insertDiesel(diesel);
 
-                            // Clear the Form
-                            ((VouchersActivity)getActivity()).clearForm();
+                                // Clear the Form
+                                ((VouchersActivity)getActivity()).clearForm();
                             }
+
+
                         }
 
                     }

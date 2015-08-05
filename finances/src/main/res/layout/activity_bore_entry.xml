@@ -256,19 +256,6 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/boreentry_question12"
-            android:id="@+id/textView12"
-            android:layout_weight="1" />
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText12"
-            android:inputType="number"
-            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout

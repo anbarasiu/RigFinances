@@ -40,7 +40,6 @@ public class CreditFragment extends Fragment {
         final EditText etAmountReceivedFrom = (EditText)view.findViewById(R.id.editText3);
         final EditText etReceivedBy = (EditText)view.findViewById(R.id.editText4);
         final EditText etRemarks = (EditText)view.findViewById(R.id.editText5);
-        final EditText etAmount = (EditText)view.findViewById(R.id.editText2);
 
         // Setup Date Picker
         setupDatePicker();
@@ -71,14 +70,12 @@ public class CreditFragment extends Fragment {
                             String amountReceivedFrom = etAmountReceivedFrom.getText().toString();
                             String receivedBy = etReceivedBy.getText().toString();
                             String remarks = etRemarks.getText().toString();
-                            float amount = Float.parseFloat(etAmount.getText().toString());
 
                             Credit credit = new Credit();
                             credit.setAmountReceived(amountReceived);
                             credit.setFrom(amountReceivedFrom);
                             credit.setReceivedBy(receivedBy);
                             credit.setRemarks(remarks);
-                            credit.setAmountInCredit(amount);
                             credit.setDate(entryDate);
 
                             // Insert to DB

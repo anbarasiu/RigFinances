@@ -6,19 +6,29 @@ import com.anilicious.rigfinances.utils.CommonUtils;
  * Created by ANBARASI on 6/11/14.
  */
 public class Credit {
-    private String date;
+    private Integer date;
     private float amountReceived;
     private String from;
     private String receivedBy;
     private String remarks;
-    private float amountInCredit;
 
-    public String getDate() {
-        return CommonUtils.formatDateEntry(date);
+    public Integer getDate() {
+        return date;
     }
 
     public void setDate(String date) {
-        this.date = date;
+        String date1 = date.toString();
+        String[] test=date1.split("/");
+        if(test[1].length()<=1)
+        {
+            test[1] = "0"+test[1];
+        }
+        if(test[0].length()<=1)
+        {
+            test[0] = "0"+test[0];
+        }
+        String date2 =(test[2]+test[1]+test[0]);
+        this.date=Integer.parseInt(date1);
     }
 
     public float getAmountReceived() {
@@ -51,13 +61,5 @@ public class Credit {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
-    }
-
-    public float getAmountInCredit() {
-        return amountInCredit;
-    }
-
-    public void setAmountInCredit(float amountInCredit) {
-        this.amountInCredit = amountInCredit;
     }
 }

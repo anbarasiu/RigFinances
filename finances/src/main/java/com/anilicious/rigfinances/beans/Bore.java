@@ -15,10 +15,9 @@ public class Bore {
     private String boreType;
     private float billAmount;
     private float commission;
-    private float totalAmount;
     private String engineRunningTime;
     private float dieselUsed;
-    private String lastEngineHrEnd;
+
 
     public Integer getDate() {
         return Bore_Date;
@@ -108,14 +107,6 @@ public class Bore {
         this.commission = commission;
     }
 
-    public float getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(float totalAmount) {
-        this.totalAmount = totalAmount;
-    }
-
     public String getEngineRunningTime() {
         return engineRunningTime;
     }
@@ -132,11 +123,4 @@ public class Bore {
         this.dieselUsed = dieselUsed;
     }
 
-    public String getLastEngineHrEnd() {
-        return lastEngineHrEnd;
-    }
-
-    public void setLastEngineHrEnd(String lastEngineHrEnd) {
-        this.lastEngineHrEnd = lastEngineHrEnd;
-    }
 }

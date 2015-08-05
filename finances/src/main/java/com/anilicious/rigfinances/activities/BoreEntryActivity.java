@@ -75,7 +75,6 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
         final Spinner etBoreType = (Spinner)findViewById(R.id.spinner_boreType);
         final EditText etBillAmount = (EditText)findViewById(R.id.editText10);
         final EditText etCommission = (EditText)findViewById(R.id.editText11);
-        final EditText etTotalAmount = (EditText)findViewById(R.id.editText12);
 
         // Setup Date Picker
         setupPickers();
@@ -107,13 +106,7 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
                         }
                         else
                         {
-                            if(etTotalAmount.getText().toString().equals(""))
-                            {
-                                etTotalAmount.setError("Please enter total amount");
-                            }
-                            else
-                            {
-                                if(etBoreType.getSelectedItem().toString().equals("New Bore") || etBoreType.getSelectedItem().toString().equals("Reset Bore"))
+                            if(etBoreType.getSelectedItem().toString().equals("New Bore") || etBoreType.getSelectedItem().toString().equals("Reset Bore"))
                                 {
                                     if(etTotalDepth.getText().toString().equals("") && (etBoreType.getSelectedItem().toString().equals("New Bore") || etBoreType.getSelectedItem().toString().equals("Reset Bore")))
                                     {
@@ -193,8 +186,6 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
                                                 String boreType = (String)etBoreType.getSelectedItem();
                                                 int billAmount = Integer.parseInt(etBillAmount.getText().toString());
                                                 int commission = Integer.parseInt(etCommission.getText().toString());
-                                                int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
-                                                etEngineHrsStarthr.setError(""+engineHrsStart+"end "+engineHrsEnd);
 
                                                 Bore bore = new Bore();
                                                 bore.setDate(Bore_Date);
@@ -208,7 +199,6 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
                                                 bore.setBoreType(boreType);
                                                 bore.setBillAmount(billAmount);
                                                 bore.setCommission(commission);
-                                                bore.setTotalAmount(totalAmount);
 
                                                 // Insert to DB
                                                 DBAdapter dbAdapter = DBAdapter.getInstance(getApplicationContext());
@@ -219,7 +209,7 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
                                             }}}}
                             }}}}
 
-                }
+
 
         });
 

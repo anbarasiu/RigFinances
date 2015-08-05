@@ -97,8 +97,6 @@ public class ReportBoreFragment extends Fragment {
         tvCastingDepth.setText(reportsMap.get("casting_depth").toString());
         tvCommission.setText(reportsMap.get("bill_amount").toString());
         tvTotalDepth.setText(reportsMap.get("commission").toString());
-        tvTotalAmount.setText(reportsMap.get("total_amount").toString());
-        tvDieselUsed.setText(reportsMap.get("diesel_used").toString());
         tvDieselInHand.setText(reportsMap.get("diesel_in_hand").toString());
         tvCasingPipeInHand.setText(reportsMap.get("casing_pipe_in_hand").toString());
     }

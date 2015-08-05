@@ -71,32 +71,58 @@ public class EmployeeDetailsActivity extends ActionBarActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                if(validForm()){
-                    String date = etDate.getText().toString();
-                    int employeeNumber = Integer.parseInt(etEmployeeNumber.getText().toString());
-                    String employeeName = etEmployeeName.getText().toString();
-                    String dateOfJoining = etDoj.getText().toString();
-                    String dateOfLeaving = etDol.getText().toString();
-                    double currentBalance = Double.parseDouble(etCurrentBalance.getText().toString());
-                    String remarks = etRemarks.getText().toString();
-                    double salary = Double.parseDouble(etSalary.getText().toString());
+                if(etEmployeeNumber.getText().toString().equals("")){
+                    etEmployeeNumber.setError("Please enter employee number");
+                }
+                else
+                {
+                    if(etEmployeeName.getText().toString().equals(""))
+                    {
+                        etEmployeeName.setError("Please enter employee name");
+                    }
+                    else
+                    {
+                        if(etCurrentBalance.getText().toString().equals(""))
+                        {
+                            etCurrentBalance.setError("Please enter the balance, if balance is 0 enter zero");
+                        }
+                        else
+                        {
+                            if (etSalary.getText().toString().equals(""))
+                            {
+                                etSalary.setError("Please enter salary or amount given");
+                            }
+                            else
+                            {
+                                String date = etDate.getText().toString();
+                                int employeeNumber = Integer.parseInt(etEmployeeNumber.getText().toString());
+                                String employeeName = etEmployeeName.getText().toString();
+                                String dateOfJoining = etDoj.getText().toString();
+                                String dateOfLeaving = etDol.getText().toString();
+                                double currentBalance = Double.parseDouble(etCurrentBalance.getText().toString());
+                                String remarks = etRemarks.getText().toString();
+                                double salary = Double.parseDouble(etSalary.getText().toString());
 
-                    Employee employee = new Employee();
-                    employee.setDate(date);
-                    employee.setName(employeeName);
-                    employee.setNumber(employeeNumber);
-                    employee.setDateOfJoining(dateOfJoining);
-                    employee.setDateOfLeaving(dateOfLeaving);
-                    employee.setCurrentBalance(currentBalance);
-                    employee.setRemarks(remarks);
-                    employee.setSalary(salary);
+                                Employee employee = new Employee();
+                                employee.setDate(date);
+                                employee.setName(employeeName);
+                                employee.setNumber(employeeNumber);
+                                employee.setDateOfJoining(dateOfJoining);
+                                employee.setDateOfLeaving(dateOfLeaving);
+                                employee.setCurrentBalance(currentBalance);
+                                employee.setRemarks(remarks);
+                                employee.setSalary(salary);
 
-                    // Insert to DB
-                    DBAdapter dbAdapter = DBAdapter.getInstance(getApplicationContext());
-                    dbAdapter.insertEmployee(employee);
+                                // Insert to DB
+                                DBAdapter dbAdapter = DBAdapter.getInstance(getApplicationContext());
+                                dbAdapter.insertEmployee(employee);
 
-                    // Clear the Form
-                    clearForm();
+                                // Clear the Form
+                                clearForm();
+                            }
+                        }
+                    }
+
                 }
             }
         });
