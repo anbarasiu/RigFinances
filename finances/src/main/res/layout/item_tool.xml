@@ -8,28 +8,36 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="New Text"
-        android:id="@+id/cook_details_item"
+        android:id="@+id/tool_details_item"
         android:layout_weight="1" />
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="New Text"
-        android:id="@+id/cook_details_quantity"
+        android:id="@+id/tool_details_details"
         android:layout_weight="1" />
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="New Text"
-        android:id="@+id/cook_details_price"
+        android:id="@+id/tool_details_quantity"
         android:layout_weight="1" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/tool_details_price"
+        android:layout_weight="1" />
+
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/cook_details_delete"
+        android:id="@+id/tool_details_delete"
         android:background="@android:drawable/ic_delete" />
 
 

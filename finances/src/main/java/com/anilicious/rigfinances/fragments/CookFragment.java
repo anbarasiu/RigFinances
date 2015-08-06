@@ -47,7 +47,7 @@ public class CookFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if(((VouchersActivity)getActivity()).validForm()){
+                if(((VouchersActivity)getActivity()).validForm()){ // TODO: Test validation
 
                     //float totalAmount = Float.parseFloat(etTotalAmount.getText().toString());
                     String spentBy = etSpentBy.getText().toString();
@@ -66,7 +66,7 @@ public class CookFragment extends Fragment {
                         //int quantity = Integer.parseInt(etQuantity.getText().toString());
                         int quantity = cookItem.getQuantity();
                         //float price = Float.parseFloat(etPrice.getText().toString());
-                        float price = cookItem.getAmount();
+                            float price = cookItem.getAmount();
 
                         //CookItem cookItem = new CookItem(item, quantity, price);
                         //cookItems.add(cookItem);
@@ -161,10 +161,13 @@ public class CookFragment extends Fragment {
 
                         CookItem cookItem = new CookItem(item, quantity, price);
                         cookItems.add(cookItem);
+                        list_cook_adapter.notifyDataSetChanged();
 
                         dialog.dismiss();
                     }
                 });
+
+
 
                 dialog.show();
             }
