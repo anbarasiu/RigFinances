@@ -671,17 +671,19 @@ public class DBAdapter extends SQLiteOpenHelper{
         SQLiteDatabase database = this.getReadableDatabase();
         HashMap<String, String> salaryReport = new HashMap<String, String>();
 
-        String query = "SELECT E.employee_name, E.employee_number, E.date_of_joining, E.date_of_leaving, SUM(S.amount) " +
+        String query = "SELECT employee_name,employee_number,date_of_joining,date_of_leaving,current_balance FROM "+ EMPLOYEE_DATABASE_NAME
+                + " WHERE employee_number = " + employeeNumber + ";";
+                /*"SELECT E.employee_name, E.employee_number, E.date_of_joining, E.date_of_leaving, SUM(S.amount) " +
                 "FROM "+ EMPLOYEE_DATABASE_NAME+" E INNER JOIN "+ SALARY_DATABASE_NAME +" S "+
                 "ON E.employee_number = S.employee_number " +
-                "WHERE E.employee_number = " + employeeNumber + " GROUP BY E.employee_number;";
+                "WHERE E.employee_number = " + employeeNumber + " GROUP BY E.employee_number;";*/
 
         Cursor cursor = database.rawQuery(query, null);
 
         while(cursor.moveToNext()){
-            salaryReport.put("employee_name", cursor.getString(cursor.getColumnIndex("employee_name")));
-            salaryReport.put("joining_date", cursor.getString(cursor.getColumnIndex("date_of_joining")));
-            salaryReport.put("leaving_date", cursor.getString(cursor.getColumnIndex("date_of_leaving")));
+            salaryReport.put("employee_name", cursor.getString(0));
+            salaryReport.put("joining_date", cursor.getString(2));
+            salaryReport.put("leaving_date", cursor.getString(3));
             salaryReport.put("salary_given", cursor.getString(4));
         }
 
