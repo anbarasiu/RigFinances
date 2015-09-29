@@ -657,7 +657,7 @@ public class DBAdapter extends SQLiteOpenHelper{
                 //  }
             }
         }
-
+        // TODO: Error handling : If no entry made, just return 0
 
         //String query = queryColumns + " FROM" + queryTables + ";";// " WHERE " + columnName + ".date BETWEEN '" + dateFrom + "' AND '" + dateTo +"';";
 
