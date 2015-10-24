@@ -4,20 +4,20 @@ package com.anilicious.rigfinances.beans;
  * Created by ANBARASI on 11/12/14.
  */
 public class Employee {
-    private String date;
+    private Integer date;
     private String name;
     private int number;
-    private String dateOfJoining;
-    private String dateOfLeaving;
+    private Integer dateOfJoining;
+    private Integer dateOfLeaving;
     private double currentBalance;
     private String remarks;
     private double salary;
 
-    public String getDate() {
+    public Integer getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Integer date) {
         this.date = date;
     }
 
@@ -37,19 +37,19 @@ public class Employee {
         this.number = number;
     }
 
-    public String getDateOfJoining() {
+    public Integer getDateOfJoining() {
         return dateOfJoining;
     }
 
-    public void setDateOfJoining(String dateOfJoining) {
+    public void setDateOfJoining(Integer dateOfJoining) {
         this.dateOfJoining = dateOfJoining;
     }
 
-    public String getDateOfLeaving() {
+    public Integer getDateOfLeaving() {
         return dateOfLeaving;
     }
 
-    public void setDateOfLeaving(String dateOfLeaving) {
+    public void setDateOfLeaving(Integer dateOfLeaving) {
         this.dateOfLeaving = dateOfLeaving;
     }
 

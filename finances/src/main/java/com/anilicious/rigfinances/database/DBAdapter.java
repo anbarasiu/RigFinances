@@ -671,7 +671,7 @@ public class DBAdapter extends SQLiteOpenHelper{
         SQLiteDatabase database = this.getReadableDatabase();
         HashMap<String, String> salaryReport = new HashMap<String, String>();
 
-        String query = "SELECT employee_name,employee_number,date_of_joining,date_of_leaving,current_balance FROM "+ EMPLOYEE_DATABASE_NAME
+        String query = "SELECT employee_name,employee_number,sum(date_of_joining),sum(date_of_leaving),sum(salary) FROM "+ EMPLOYEE_DATABASE_NAME
                 + " WHERE employee_number = " + employeeNumber + ";";
                 /*"SELECT E.employee_name, E.employee_number, E.date_of_joining, E.date_of_leaving, SUM(S.amount) " +
                 "FROM "+ EMPLOYEE_DATABASE_NAME+" E INNER JOIN "+ SALARY_DATABASE_NAME +" S "+
@@ -695,9 +695,11 @@ public class DBAdapter extends SQLiteOpenHelper{
         SQLiteDatabase database = this.getReadableDatabase();
         HashMap<java.lang.String, Double> boreDetailsReport = new HashMap<java.lang.String, Double>();
 
-        String query1 = "SELECT SUM(total_depth), SUM(casting_depth), SUM(bill_amount), SUM(commission),MIN(engine_hrs_start), MAX(engine_hrs_end) " +
+        String query1 = "SELECT group_concat(employee_name),employee_number,sum(date_of_joining),sum(date_of_leaving),sum(salary) FROM "+ EMPLOYEE_DATABASE_NAME
+                + " WHERE employee_number = 1001;";
+                /*"SELECT SUM(total_depth), SUM(casting_depth), SUM(bill_amount), SUM(commission),MIN(engine_hrs_start), MAX(engine_hrs_end) " +
                 "FROM "+ BORE_DATABASE_NAME +
-                " WHERE Bore_Date BETWEEN " + dateFrom + " AND " + dateTo + ";";
+                " WHERE Bore_Date BETWEEN " + dateFrom + " AND " + dateTo + ";";*/
 
         Cursor cursor1 = database.rawQuery(query1, null);
 
@@ -711,7 +713,7 @@ public class DBAdapter extends SQLiteOpenHelper{
             boreDetailsReport.put("bill_amount", cursor1.getDouble(2));
             boreDetailsReport.put("commission", cursor1.getDouble(3));
             boreDetailsReport.put("engine_hrs_start", cursor1.getDouble(4));
-            boreDetailsReport.put("engine_hrs_end", cursor1.getDouble(5));
+            //boreDetailsReport.put("engine_hrs_end", cursor1.getDouble(5));
         }
 
         while(cursor2.moveToNext()){

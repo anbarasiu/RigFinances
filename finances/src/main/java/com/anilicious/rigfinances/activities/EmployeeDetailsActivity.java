@@ -95,16 +95,49 @@ public class EmployeeDetailsActivity extends ActionBarActivity {
                             else
                             {
                                 String date = etDate.getText().toString();
+                                String[] test=date.split("/");
+                                if(test[1].length()<=1)
+                                {
+                                    test[1] = "0"+test[1];
+                                }
+                                if(test[0].length()<=1)
+                                {
+                                    test[0] = "0"+test[0];
+                                }
+                                String date1 =(test[2]+test[1]+test[0]);
+                                Integer Employee_date=Integer.parseInt(date1);
                                 int employeeNumber = Integer.parseInt(etEmployeeNumber.getText().toString());
                                 String employeeName = etEmployeeName.getText().toString();
-                                String dateOfJoining = etDoj.getText().toString();
-                                String dateOfLeaving = etDol.getText().toString();
+                                String date2 = etDoj.getText().toString();
+                                String date3 = etDol.getText().toString();
+                                test=date2.split("/");
+                                if(test[1].length()<=1)
+                                {
+                                    test[1] = "0"+test[1];
+                                }
+                                if(test[0].length()<=1)
+                                {
+                                    test[0] = "0"+test[0];
+                                }
+                                date1 =(test[2]+test[1]+test[0]);
+                                Integer dateOfJoining=Integer.parseInt(date1);
+                                test=date3.split("/");
+                                if(test[1].length()<=1)
+                                {
+                                    test[1] = "0"+test[1];
+                                }
+                                if(test[0].length()<=1)
+                                {
+                                    test[0] = "0"+test[0];
+                                }
+                                date1 =(test[2]+test[1]+test[0]);
+                                Integer dateOfLeaving=Integer.parseInt(date1);
                                 double currentBalance = Double.parseDouble(etCurrentBalance.getText().toString());
                                 String remarks = etRemarks.getText().toString();
                                 double salary = Double.parseDouble(etSalary.getText().toString());
 
                                 Employee employee = new Employee();
-                                employee.setDate(date);
+                                employee.setDate(Employee_date);
                                 employee.setName(employeeName);
                                 employee.setNumber(employeeNumber);
                                 employee.setDateOfJoining(dateOfJoining);
@@ -116,9 +149,9 @@ public class EmployeeDetailsActivity extends ActionBarActivity {
                                 // Insert to DB
                                 DBAdapter dbAdapter = DBAdapter.getInstance(getApplicationContext());
                                 dbAdapter.insertEmployee(employee);
-
+                                etEmployeeNumber.setError(""+employeeNumber);
                                 // Clear the Form
-                                clearForm();
+                                //clearForm();
                             }
                         }
                     }
