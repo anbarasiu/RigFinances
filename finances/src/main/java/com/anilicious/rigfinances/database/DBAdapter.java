@@ -671,17 +671,19 @@ public class DBAdapter extends SQLiteOpenHelper{
         SQLiteDatabase database = this.getReadableDatabase();
         HashMap<String, String> salaryReport = new HashMap<String, String>();
 
-        String query = "SELECT E.employee_name, E.employee_number, E.date_of_joining, E.date_of_leaving, SUM(S.amount) " +
+        String query = "SELECT employee_name,employee_number,sum(date_of_joining),sum(date_of_leaving),sum(salary) FROM "+ EMPLOYEE_DATABASE_NAME
+                + " WHERE employee_number = " + employeeNumber + ";";
+                /*"SELECT E.employee_name, E.employee_number, E.date_of_joining, E.date_of_leaving, SUM(S.amount) " +
                 "FROM "+ EMPLOYEE_DATABASE_NAME+" E INNER JOIN "+ SALARY_DATABASE_NAME +" S "+
                 "ON E.employee_number = S.employee_number " +
-                "WHERE E.employee_number = " + employeeNumber + " GROUP BY E.employee_number;";
+                "WHERE E.employee_number = " + employeeNumber + " GROUP BY E.employee_number;";*/
 
         Cursor cursor = database.rawQuery(query, null);
 
         while(cursor.moveToNext()){
-            salaryReport.put("employee_name", cursor.getString(cursor.getColumnIndex("employee_name")));
-            salaryReport.put("joining_date", cursor.getString(cursor.getColumnIndex("date_of_joining")));
-            salaryReport.put("leaving_date", cursor.getString(cursor.getColumnIndex("date_of_leaving")));
+            salaryReport.put("employee_name", cursor.getString(0));
+            salaryReport.put("joining_date", cursor.getString(2));
+            salaryReport.put("leaving_date", cursor.getString(3));
             salaryReport.put("salary_given", cursor.getString(4));
         }
 
@@ -693,9 +695,11 @@ public class DBAdapter extends SQLiteOpenHelper{
         SQLiteDatabase database = this.getReadableDatabase();
         HashMap<java.lang.String, Double> boreDetailsReport = new HashMap<java.lang.String, Double>();
 
-        String query1 = "SELECT SUM(total_depth), SUM(casting_depth), SUM(bill_amount), SUM(commission),MIN(engine_hrs_start), MAX(engine_hrs_end) " +
+        String query1 = "SELECT group_concat(employee_name),employee_number,sum(date_of_joining),sum(date_of_leaving),sum(salary) FROM "+ EMPLOYEE_DATABASE_NAME
+                + " WHERE employee_number = 1001;";
+                /*"SELECT SUM(total_depth), SUM(casting_depth), SUM(bill_amount), SUM(commission),MIN(engine_hrs_start), MAX(engine_hrs_end) " +
                 "FROM "+ BORE_DATABASE_NAME +
-                " WHERE Bore_Date BETWEEN " + dateFrom + " AND " + dateTo + ";";
+                " WHERE Bore_Date BETWEEN " + dateFrom + " AND " + dateTo + ";";*/
 
         Cursor cursor1 = database.rawQuery(query1, null);
 
@@ -709,7 +713,7 @@ public class DBAdapter extends SQLiteOpenHelper{
             boreDetailsReport.put("bill_amount", cursor1.getDouble(2));
             boreDetailsReport.put("commission", cursor1.getDouble(3));
             boreDetailsReport.put("engine_hrs_start", cursor1.getDouble(4));
-            boreDetailsReport.put("engine_hrs_end", cursor1.getDouble(5));
+            //boreDetailsReport.put("engine_hrs_end", cursor1.getDouble(5));
         }
 
         while(cursor2.moveToNext()){

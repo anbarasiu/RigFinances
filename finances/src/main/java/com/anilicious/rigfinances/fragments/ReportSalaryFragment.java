@@ -81,9 +81,9 @@ public class ReportSalaryFragment extends Fragment implements View.OnClickListen
         tvJoiningDate1.setText(salaryMap.get("joining_date"));
         tvLeavingDate1.setText(salaryMap.get("leaving_date"));
         tvSalaryGiven.setText(salaryMap.get("salary_given"));
-        tvTotalWorked.setText(salaryMap.get("salary_given")); // TODO : What goes here?
+        /*tvTotalWorked.setText(salaryMap.get("salary_given")); // TODO : What goes here?
         tvTotalAmount.setText(salaryMap.get("salary_given")); // TODO : What goes here?
         tvSalaryWithCompany.setText(salaryMap.get("salary_given")); // TODO : What goes here?
-        tvTotalAmountSpent.setText(salaryMap.get("salary_given")); // TODO : What goes here?
+        tvTotalAmountSpent.setText(salaryMap.get("salary_given")); */// TODO : What goes here?
     }
 }
