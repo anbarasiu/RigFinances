@@ -447,7 +447,7 @@ public class DBAdapter extends SQLiteOpenHelper{
     public void insertEmployee(Employee employee){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("date", employee.getDate());
+        values.put("Emp_Date", employee.getDate());
         values.put("employee_name", employee.getName());
         values.put("employee_number", employee.getNumber());
         values.put("date_of_joining", employee.getDateOfJoining());

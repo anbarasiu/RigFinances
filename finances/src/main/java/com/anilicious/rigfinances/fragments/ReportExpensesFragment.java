@@ -20,6 +20,7 @@ import com.anilicious.rigfinances.utils.PickerFragment;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
+import org.achartengine.chart.BarChart;
 import org.achartengine.model.CategorySeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
@@ -162,9 +163,12 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
 
             SimpleSeriesRenderer renderer = new SimpleSeriesRenderer();
             renderer.setColor(colours[i++]);
-            mRenderer.addSeriesRenderer(renderer);
 
+            mRenderer.addSeriesRenderer(renderer);
             xyRenderer.addSeriesRenderer(renderer);
+            xyRenderer.setBarSpacing(0.1);
+            xySeriesRenderer.setLineWidth(75);
+
             dataset.addSeries(xySeries);
         }
 
@@ -175,7 +179,7 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
 
         // Bar Chart Rendering
         LinearLayout bar_layout = (LinearLayout)view.findViewById(R.id.bar_chart);
-        GraphicalView bar_chart = ChartFactory.getBarChartView(getActivity().getApplicationContext(), dataset, xyRenderer, null);
+        GraphicalView bar_chart = ChartFactory.getBarChartView(getActivity().getApplicationContext(), dataset, xyRenderer, BarChart.Type.DEFAULT);
         bar_layout.addView(bar_chart);
     }
 }
