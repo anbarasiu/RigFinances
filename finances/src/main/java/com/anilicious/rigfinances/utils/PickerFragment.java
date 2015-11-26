@@ -42,9 +42,8 @@ public class PickerFragment extends DialogFragment implements DatePickerDialog.O
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-        String entryDate = new StringBuilder().append(day).append("/")
-                .append(month + 1).append("/").append(year).toString();
-
+        String entryDatestr = new StringBuilder().append(year).append(month + 1).append(day).toString();
+        int entryDate = Integer.parseInt(entryDatestr);
         // Return the Date to the calling fragment
         Intent i = getActivity().getIntent();
         i.putExtra("entryDate", entryDate);

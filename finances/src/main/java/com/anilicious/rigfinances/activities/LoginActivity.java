@@ -273,6 +273,9 @@ public class LoginActivity extends Activity{
         String username2 = props.getProperty("username2");
         String password2 = props.getProperty("password2");
         String role2 = props.getProperty("role2");
+        String username3 = props.getProperty("username3");
+        String password3 = props.getProperty("password3");
+        String role3 = props.getProperty("role3");
 
         User user1 = new User();
         user1.setUsername(username1);
@@ -284,7 +287,13 @@ public class LoginActivity extends Activity{
         user2.setPassword(password2);
         user2.setRole(role2);
 
+        User user3 = new User();
+        user3.setUsername(username3);
+        user3.setPassword(password3);
+        user3.setRole(role3);
+
         dbAdapter.insertUser(user1);
         dbAdapter.insertUser(user2);
+        dbAdapter.insertUser(user3);
     }
 }

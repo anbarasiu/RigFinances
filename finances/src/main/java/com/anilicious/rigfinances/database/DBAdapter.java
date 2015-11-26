@@ -168,6 +168,8 @@ public class DBAdapter extends SQLiteOpenHelper{
 
 
     private static final String EMPLOYEE_DATABASE_NAME = "EMPLOYEE_DETAILS";
+    private static final String USER_DATABASE_NAME = "USER_DETAILS";
+
     private static final String EMPLOYEE_DATABASE_CREATE = "CREATE TABLE " + EMPLOYEE_DATABASE_NAME + "(" +
             "_id " + "INTEGER primary key AUTOINCREMENT, " + // 'B' + number
             "Emp_Date" + " integer, " +
@@ -178,8 +180,6 @@ public class DBAdapter extends SQLiteOpenHelper{
             "current_balance" + " REAL, " +
             "remarks" + " text, " +
             "salary" + " REAL);";
-
-    private static final String USER_DATABASE_NAME = "USER_DETAILS";
     private static final String USER_DATABASE_CREATE = "CREATE TABLE " + USER_DATABASE_NAME + "(" +
             "_id " + "INTEGER primary key AUTOINCREMENT, " + // 'U' + number
             "user_name" + " text, " +
