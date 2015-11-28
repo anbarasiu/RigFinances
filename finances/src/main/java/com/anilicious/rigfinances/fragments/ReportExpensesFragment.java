@@ -108,7 +108,7 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
                 selectedExpenses.add(CommonUtils.CONSTANTS.PIPE);
             }
             if(site_expenses.isChecked()){
-                selectedExpenses.add(CommonUtils.CONSTANTS.SITE);
+                selectedExpenses.add("SITE_EXPENSES");
             }
             renderCharts(entryDateFrom, entryDateTo, selectedExpenses);
         }
