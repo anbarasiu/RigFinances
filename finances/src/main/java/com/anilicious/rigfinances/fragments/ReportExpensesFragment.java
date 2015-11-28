@@ -51,8 +51,8 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
     CheckBox pipes;
     CheckBox site_expenses;
 
-    private String entryDateFrom;
-    private String entryDateTo;
+    private int entryDateFrom;
+    private int entryDateTo;
 
     private static final int DIALOG_DATE_FROM = 1;
     private static final int DIALOG_DATE_TO = 2;
@@ -82,7 +82,7 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.reports_view && entryDateTo != null && entryDateFrom != null){
+        if(view.getId() == R.id.reports_view && entryDateTo > 0 && entryDateFrom >0){
             List<String> selectedExpenses = new ArrayList<String>();
 
             // TODO : Code smell, I know.. <Revisit>
@@ -126,17 +126,41 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == 101){
             if(requestCode == DIALOG_DATE_FROM){
-                entryDateFrom = data.getStringExtra("entryDate");
-                tvFrom.setText(entryDateFrom);
+                String date = data.getStringExtra("entryDate");
+                String[] test=date.split("/");
+                if(test[1].length()<=1)
+                {
+                    test[1] = "0"+test[1];
+                }
+                if(test[0].length()<=1)
+                {
+                    test[0] = "0"+test[0];
+                }
+                String date1 =(test[2]+test[1]+test[0]);
+                Integer date_num=Integer.parseInt(date1);
+                entryDateFrom = date_num;
+                tvFrom.setText(data.getStringExtra("entryDate"));
             }
             else if(requestCode == DIALOG_DATE_TO){
-                entryDateTo = data.getStringExtra("entryDate");
-                tvTo.setText(entryDateTo);
+                String date = data.getStringExtra("entryDate");
+                String[] test=date.split("/");
+                if(test[1].length()<=1)
+                {
+                    test[1] = "0"+test[1];
+                }
+                if(test[0].length()<=1)
+                {
+                    test[0] = "0"+test[0];
+                }
+                String date1 =(test[2]+test[1]+test[0]);
+                Integer date_num=Integer.parseInt(date1);
+                entryDateTo = date_num;
+                tvTo.setText(data.getStringExtra("entryDate"));
             }
         }
     }
 
-    public void renderCharts(String dateFrom, String dateTo, List selectedExpenses){
+    public void renderCharts(int dateFrom, int dateTo, List selectedExpenses){
         // Pie Chart init
         int[] colours = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.BLACK, Color.GRAY, Color.CYAN, Color.MAGENTA};
         int i = 0;
