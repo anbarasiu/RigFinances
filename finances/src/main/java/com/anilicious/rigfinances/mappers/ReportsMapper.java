@@ -24,7 +24,7 @@ public class ReportsMapper {
         dbAdapter = DBAdapter.getInstance(context);
     }
 
-    public HashMap<String, Double> mapExpenses(String dateFrom, String dateTo, List<String> selectedExpenses){
+    public HashMap<String, Double> mapExpenses(int dateFrom, int dateTo, List<String> selectedExpenses){
         HashMap<String, Double> chartMap = new HashMap<String, Double>();
         chartMap = dbAdapter.retrieveExpenseAmount(dateFrom, dateTo, selectedExpenses);
         return chartMap;
