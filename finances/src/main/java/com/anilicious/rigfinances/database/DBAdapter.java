@@ -696,15 +696,18 @@ public class DBAdapter extends SQLiteOpenHelper{
         SQLiteDatabase database = this.getReadableDatabase();
         HashMap<java.lang.String, Double> boreDetailsReport = new HashMap<java.lang.String, Double>();
 
-        String query1 = "SELECT group_concat(employee_name),employee_number,sum(date_of_joining),sum(date_of_leaving),sum(salary) FROM "+ EMPLOYEE_DATABASE_NAME
-                + " WHERE employee_number = 1001;";
+        String query1 = "SELECT SUM(total_depth), SUM(casting_depth), SUM(bill_amount), SUM(commission), SUM(bill_amount), SUM(diesel_used), MIN(engine_hrs_start), MAX(engine_hrs_end) " +
+                "FROM "+ BORE_DATABASE_NAME +
+                " WHERE Date BETWEEN " + dateFrom + " AND " + dateTo + ";";
+        /*"SELECT group_concat(employee_name),employee_number,sum(date_of_joining),sum(date_of_leaving),sum(salary) FROM "+ EMPLOYEE_DATABASE_NAME
+                + " WHERE employee_number = 1001;";*/
                 /*"SELECT SUM(total_depth), SUM(casting_depth), SUM(bill_amount), SUM(commission),MIN(engine_hrs_start), MAX(engine_hrs_end) " +
                 "FROM "+ BORE_DATABASE_NAME +
                 " WHERE Bore_Date BETWEEN " + dateFrom + " AND " + dateTo + ";";*/
 
         Cursor cursor1 = database.rawQuery(query1, null);
 
-        String query2 = "SELECT SUM(length) FROM " + PIPE_DATABASE_NAME + " WHERE Pipe_Date BETWEEN " + dateFrom + " AND " + dateTo + ";";
+        String query2 = "SELECT SUM(length) FROM " + PIPE_DATABASE_NAME + " WHERE Date BETWEEN " + dateFrom + " AND " + dateTo + ";";
 
         Cursor cursor2 = database.rawQuery(query2, null);
 
