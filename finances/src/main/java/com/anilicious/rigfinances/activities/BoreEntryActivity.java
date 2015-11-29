@@ -178,13 +178,14 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
                                                 {
                                                 engineHrsEnd=engineHrsEnd + (min*1.666667)/100;
                                                 }
+                                                etAgentName.setError(" " + engineHrsStart);
                                                 String customerName = etCustomerName.getText().toString();
                                                 String place = etPlace.getText().toString();
                                                 String agentName = etAgentName.getText().toString();
                                                 String boreType = (String)etBoreType.getSelectedItem();
                                                 int billAmount = Integer.parseInt(etBillAmount.getText().toString());
                                                 int commission = Integer.parseInt(etCommission.getText().toString());
-                                                double diesel_used = totalDepth*0.5;
+                                                double diesel_used = engineHrsEnd-engineHrsStart * 5;
                                                 Bore bore = new Bore();
                                                 bore.setDate(Bore_Date);
                                                 bore.setTotalDepth(totalDepth);

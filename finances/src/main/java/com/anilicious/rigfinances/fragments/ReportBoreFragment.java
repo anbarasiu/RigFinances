@@ -33,6 +33,8 @@ public class ReportBoreFragment extends Fragment {
     TextView tvDate;
     TextView tvDieselInHand;
     TextView tvCasingPipeInHand;
+    TextView tvEngineHrsStart;
+    TextView tvEngineHrsEnd;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,8 +45,8 @@ public class ReportBoreFragment extends Fragment {
         tvDate = (TextView)view.findViewById(R.id.TextView2);
         tvTotalDepth = (TextView)view.findViewById(R.id.TextView4);
         tvCastingDepth = (TextView)view.findViewById(R.id.TextView6);
-        TextView tvEngineHrsStart = (TextView)view.findViewById(R.id.TextView8);
-        TextView tvEngineHrsEnd = (TextView)view.findViewById(R.id.TextView10);
+        tvEngineHrsStart = (TextView)view.findViewById(R.id.TextView8);
+        tvEngineHrsEnd = (TextView)view.findViewById(R.id.TextView10);
         TextView tvBoreType = (TextView)view.findViewById(R.id.TextView18);
         tvBillAmount = (TextView)view.findViewById(R.id.TextView20);
         tvCommission = (TextView)view.findViewById(R.id.TextView22);
@@ -95,9 +97,12 @@ public class ReportBoreFragment extends Fragment {
         tvDate.setText(dateFroms + " - " + dateTos);
         tvTotalDepth.setText(reportsMap.get("total_depth").toString());
         tvCastingDepth.setText(reportsMap.get("casting_depth").toString());
-        tvCommission.setText(reportsMap.get("bill_amount").toString());
-        tvTotalDepth.setText(reportsMap.get("commission").toString());
+        tvCommission.setText(reportsMap.get("commission").toString());
+        tvBillAmount.setText(reportsMap.get("bill_amount").toString());
+        tvDieselUsed.setText(reportsMap.get("diesel_used").toString());
         tvDieselInHand.setText(reportsMap.get("diesel_in_hand").toString());
         tvCasingPipeInHand.setText(reportsMap.get("casing_pipe_in_hand").toString());
+        tvEngineHrsStart.setText(reportsMap.get("engine_hrs_start").toString());
+        tvEngineHrsEnd.setText(reportsMap.get("engine_hrs_end").toString());
     }
 }

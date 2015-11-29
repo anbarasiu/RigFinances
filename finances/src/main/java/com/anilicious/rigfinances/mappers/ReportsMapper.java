@@ -42,8 +42,8 @@ public class ReportsMapper {
 
         try{
             double mileage = 100.0; // TODO : Figure out where Mileage comes from
-            double diesel_in_hand = 0;//boreDetailsMap.get("diesel_used") * ((boreDetailsMap.get("engine_hrs_end") - boreDetailsMap.get("engine_hrs_start"))/mileage);
-            double casing_pipe_in_hand = 0;//boreDetailsMap.get("total_pipe_length") - boreDetailsMap.get("casting_depth");
+            double diesel_in_hand = (boreDetailsMap.get("total_liters") - boreDetailsMap.get("diesel_used"));
+            double casing_pipe_in_hand = boreDetailsMap.get("total_pipe_length") - boreDetailsMap.get("casting_depth");
             boreDetailsMap.put("diesel_in_hand", diesel_in_hand);
             boreDetailsMap.put("casing_pipe_in_hand", casing_pipe_in_hand);
         }

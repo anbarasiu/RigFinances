@@ -711,17 +711,26 @@ public class DBAdapter extends SQLiteOpenHelper{
 
         Cursor cursor2 = database.rawQuery(query2, null);
 
+        String query3 = "SELECT SUM(litres) FROM " + DIESEL_DATABASE_NAME + " WHERE Date BETWEEN " + dateFrom + " AND " + dateTo + ";";
+
+        Cursor cursor3 = database.rawQuery(query3, null);
+
         while(cursor1.moveToNext()){
             boreDetailsReport.put("total_depth", cursor1.getDouble(0));
             boreDetailsReport.put("casting_depth", cursor1.getDouble(1));
             boreDetailsReport.put("bill_amount", cursor1.getDouble(2));
             boreDetailsReport.put("commission", cursor1.getDouble(3));
-            boreDetailsReport.put("engine_hrs_start", cursor1.getDouble(4));
-            //boreDetailsReport.put("engine_hrs_end", cursor1.getDouble(5));
+            boreDetailsReport.put("engine_hrs_start", cursor1.getDouble(6));
+            boreDetailsReport.put("engine_hrs_end", cursor1.getDouble(7));
+            boreDetailsReport.put("diesel_used", cursor1.getDouble(5));
         }
 
         while(cursor2.moveToNext()){
             boreDetailsReport.put("total_pipe_length", cursor2.getDouble(0));
+        }
+
+        while(cursor3.moveToNext()){
+            boreDetailsReport.put("total_liters", cursor3.getDouble(0));
         }
 
         database.close();
