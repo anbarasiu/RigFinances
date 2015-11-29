@@ -711,7 +711,7 @@ public class DBAdapter extends SQLiteOpenHelper{
 
         Cursor cursor2 = database.rawQuery(query2, null);
 
-        String query3 = "SELECT SUM(litres) FROM " + DIESEL_DATABASE_NAME + " WHERE Date BETWEEN " + dateFrom + " AND " + dateTo + ";";
+        String query3 = "SELECT SUM(litres) FROM " + DIESEL_DATABASE_NAME + " WHERE diesel_for = 'Compressor' AND Date BETWEEN " + dateFrom + " AND " + dateTo + ";";
 
         Cursor cursor3 = database.rawQuery(query3, null);
 

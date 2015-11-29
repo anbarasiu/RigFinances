@@ -63,7 +63,6 @@ public class DieselFragment extends Fragment {
                             RadioButton rbDieselFor = (RadioButton)rgDieselFor.findViewById(rgDieselFor.getCheckedRadioButtonId());
 
                             String dieselFor = rbDieselFor.getText().toString();
-
                             // VouchersActivity v = (VouchersActivity)getActivity();
                             DebitFragment parent = (DebitFragment)getParentFragment();
 
