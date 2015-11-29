@@ -163,7 +163,7 @@ public class DBAdapter extends SQLiteOpenHelper{
             "commission" + " text, " +
             "engine_running_time" + " text, " +
             /*"total_amount" + " text, " +*/
-            "diesel_used" + " text);"
+            "diesel_used" + " number);"
             /*"last_engine_hr_end" + " text);"*/;
 
 
@@ -438,6 +438,7 @@ public class DBAdapter extends SQLiteOpenHelper{
         values.put("bore_type", bore.getBoreType());
         values.put("bill_amount", bore.getBillAmount());
         values.put("commission", bore.getCommission());
+        values.put("diesel_used", bore.getDieselUsed());
         /*values.put("total_amount", bore.getTotalAmount());*/
 
         database.insert(BORE_DATABASE_NAME, null, values);

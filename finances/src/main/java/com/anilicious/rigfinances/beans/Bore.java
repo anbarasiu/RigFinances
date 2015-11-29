@@ -16,7 +16,7 @@ public class Bore {
     private float billAmount;
     private float commission;
     private String engineRunningTime;
-    private float dieselUsed;
+    private double dieselUsed;
 
 
     public Integer getDate() {
@@ -115,11 +115,11 @@ public class Bore {
         this.engineRunningTime = engineRunningTime;
     }
 
-    public float getDieselUsed() {
+    public double getDieselUsed() {
         return dieselUsed;
     }
 
-    public void setDieselUsed(float dieselUsed) {
+    public void setDieselUsed(double dieselUsed) {
         this.dieselUsed = dieselUsed;
     }
 

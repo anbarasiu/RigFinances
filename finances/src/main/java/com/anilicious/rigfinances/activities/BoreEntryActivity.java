@@ -155,12 +155,10 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
                                                 if(min>60)
                                                 {
                                                     Integer remainder = min%60;
-                                                    etDate.setError("rem1"+ remainder);
                                                     min = min-remainder;
                                                     engineHrsStart=engineHrsStart+(min/60);
                                                     double fremainder = (remainder*1.66666667)/100;
                                                     engineHrsStart = engineHrsStart+fremainder;
-                                                    etTotalDepth.setError("hr at if "+engineHrsStart);
                                                 }
                                                 else
                                                 {
@@ -186,7 +184,7 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
                                                 String boreType = (String)etBoreType.getSelectedItem();
                                                 int billAmount = Integer.parseInt(etBillAmount.getText().toString());
                                                 int commission = Integer.parseInt(etCommission.getText().toString());
-
+                                                double diesel_used = totalDepth*0.5;
                                                 Bore bore = new Bore();
                                                 bore.setDate(Bore_Date);
                                                 bore.setTotalDepth(totalDepth);
@@ -199,6 +197,7 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
                                                 bore.setBoreType(boreType);
                                                 bore.setBillAmount(billAmount);
                                                 bore.setCommission(commission);
+                                                bore.setDieselUsed(diesel_used);
 
                                                 // Insert to DB
                                                 DBAdapter dbAdapter = DBAdapter.getInstance(getApplicationContext());
