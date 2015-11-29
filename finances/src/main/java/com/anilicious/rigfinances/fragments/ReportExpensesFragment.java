@@ -138,12 +138,15 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
 
     public void renderCharts(String dateFrom, String dateTo, List selectedExpenses){
         // Pie Chart init
-        int[] colours = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.BLACK, Color.GRAY, Color.CYAN, Color.MAGENTA};
+        int[] colours = {Color.parseColor("#4D4D4D"), Color.parseColor("#5DA5DA"), Color.parseColor("#FAA43A"), Color.parseColor("#60BD68"), Color.parseColor("#B2912F"), Color.parseColor("#B276B2"), Color.parseColor("#DECF3F"), Color.parseColor("#F15854")};
         int i = 0;
         CategorySeries mSeries = new CategorySeries("Pie Chart");
         DefaultRenderer mRenderer = new DefaultRenderer();
         mRenderer.setStartAngle(0);
         mRenderer.setDisplayValues(true);
+        mRenderer.setLabelsTextSize(36);
+        mRenderer.setLabelsColor(Color.BLACK);
+        mRenderer.setLegendTextSize(36);
 
         //Bar Chart init
         double bar_index = 0; // Indices interval
