@@ -149,9 +149,9 @@ public class EmployeeDetailsActivity extends ActionBarActivity {
                                 // Insert to DB
                                 DBAdapter dbAdapter = DBAdapter.getInstance(getApplicationContext());
                                 dbAdapter.insertEmployee(employee);
-                                etEmployeeNumber.setError(""+employeeNumber);
+                                //etEmployeeNumber.setError(""+employeeNumber); WHY??!?!?!
                                 // Clear the Form
-                                //clearForm();
+                                clearForm();
                             }
                         }
                     }
