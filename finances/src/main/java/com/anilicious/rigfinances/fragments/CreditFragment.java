@@ -71,6 +71,8 @@ public class CreditFragment extends Fragment {
                             String receivedBy = etReceivedBy.getText().toString();
                             String remarks = etRemarks.getText().toString();
 
+
+
                             Credit credit = new Credit();
                             credit.setAmountReceived(amountReceived);
                             credit.setFrom(amountReceivedFrom);

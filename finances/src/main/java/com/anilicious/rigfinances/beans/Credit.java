@@ -28,7 +28,7 @@ public class Credit {
             test[0] = "0"+test[0];
         }
         String date2 =(test[2]+test[1]+test[0]);
-        this.date=Integer.parseInt(date1);
+        this.date=Integer.parseInt(date2);
     }
 
     public float getAmountReceived() {
