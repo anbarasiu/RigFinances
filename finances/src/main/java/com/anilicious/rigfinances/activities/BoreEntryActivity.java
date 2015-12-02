@@ -178,7 +178,6 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
                                                 {
                                                 engineHrsEnd=engineHrsEnd + (min*1.666667)/100;
                                                 }
-                                                etAgentName.setError(" " + engineHrsStart);
                                                 String customerName = etCustomerName.getText().toString();
                                                 String place = etPlace.getText().toString();
                                                 String agentName = etAgentName.getText().toString();
