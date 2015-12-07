@@ -95,12 +95,9 @@ public final class CommonUtils {
             }
 
             if(view instanceof ViewGroup && ((ViewGroup)view).getChildCount() > 0){ // Recursive call in case of View Group
-                validForm((ViewGroup)view);
+                isValid = validForm((ViewGroup)view);
             }
-
         }
-
         return isValid;
     }
-
 }

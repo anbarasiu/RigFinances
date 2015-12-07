@@ -57,7 +57,6 @@ public class ReportBoreFragment extends Fragment {
         retrieveDetailsFromDB();
 
         // TODO: Back to Home listener
-
         return view;
     }
 

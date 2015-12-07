@@ -38,72 +38,48 @@ public class DieselFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                if(((VouchersActivity)getActivity()).validForm()){
+                    int litres = Integer.parseInt(etLitres.getText().toString());
+                    int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
+                    String spentBy = etSpentBy.getText().toString();
+                    RadioButton rbDieselFor = (RadioButton)rgDieselFor.findViewById(rgDieselFor.getCheckedRadioButtonId());
 
-                if(etLitres.getText().toString().equals(""))
-                {
-                    etLitres.setError("Please enter diesel in liters");
-                }
-                else
-                {
-                    if(etTotalAmount.getText().toString().equals(""))
+                    String dieselFor = rbDieselFor.getText().toString();
+                    DebitFragment parent = (DebitFragment)getParentFragment();
+
+                    Diesel diesel = new Diesel();
+                    diesel.setLitres(litres);
+                    diesel.setTotalAmount(totalAmount);
+                    diesel.setSpentBy(spentBy);
+                    diesel.setDieselFor(dieselFor);
+                    if(parent.getEntryDate().equals(""))
                     {
-                        etTotalAmount.setError("Please enter total amount spent");
+                        etLitres.setError("asdf");
                     }
-                    else
-                    {
-                        if(etSpentBy.getText().toString().equals(""))
-                        {
-                            etSpentBy.setError("Please enter name who spent for diesel");
-                        }
                         else
+                    {
+                        String date = parent.getEntryDate().toString();
+                        String[] test=date.split("/");
+                        if(test[1].length()<=1)
                         {
-                            int litres = Integer.parseInt(etLitres.getText().toString());
-                            int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
-                            String spentBy = etSpentBy.getText().toString();
-                            RadioButton rbDieselFor = (RadioButton)rgDieselFor.findViewById(rgDieselFor.getCheckedRadioButtonId());
-
-                            String dieselFor = rbDieselFor.getText().toString();
-                            // VouchersActivity v = (VouchersActivity)getActivity();
-                            DebitFragment parent = (DebitFragment)getParentFragment();
-
-                            Diesel diesel = new Diesel();
-                            diesel.setLitres(litres);
-                            diesel.setTotalAmount(totalAmount);
-                            diesel.setSpentBy(spentBy);
-                            diesel.setDieselFor(dieselFor);
-                            if(parent.getEntryDate().equals(""))
-                            {
-                                etLitres.setError("asdf");
-                            }
-                                else
-                            {
-                                String date = parent.getEntryDate().toString();
-                                String[] test=date.split("/");
-                                if(test[1].length()<=1)
-                                {
-                                    test[1] = "0"+test[1];
-                                }
-                                if(test[0].length()<=1)
-                                {
-                                    test[0] = "0"+test[0];
-                                }
-                                String date1 =(test[2]+test[1]+test[0]);
-                                Integer Diesel_date=Integer.parseInt(date1);
-                                diesel.setDate(Diesel_date);
-
-                                // Insert to DB
-                                DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
-                                dbAdapter.insertDiesel(diesel);
-
-                                // Clear the Form
-                                ((VouchersActivity)getActivity()).clearForm();
-                            }
-
-
+                            test[1] = "0"+test[1];
                         }
+                        if(test[0].length()<=1)
+                        {
+                            test[0] = "0"+test[0];
+                        }
+                        String date1 =(test[2]+test[1]+test[0]);
+                        Integer Diesel_date=Integer.parseInt(date1);
+                        diesel.setDate(Diesel_date);
 
+                        // Insert to DB
+                        DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
+                        dbAdapter.insertDiesel(diesel);
+
+                        // Clear the Form
+                        ((VouchersActivity)getActivity()).clearForm();
                     }
-            }
+                }
             }
         });
 

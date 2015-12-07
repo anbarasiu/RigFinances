@@ -33,66 +33,39 @@ public class SiteFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                if(etWorkType.getText().toString().equals(""))
-                {
-                    etWorkType.setError("Please enter the nature of expense or for what the expense is made");
-                }
-                else
-                {
-                    if (etRemarks.getText().toString().equals(""))
+                if(((VouchersActivity)getActivity()).validForm()){ // TODO: Test validation
+                    String workType = etWorkType.getText().toString();
+                    String remarks = etRemarks.getText().toString();
+                    int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
+                    String spentBy = etSpentBy.getText().toString();
+
+                    DebitFragment parent = (DebitFragment)getParentFragment();
+
+                    Site site = new Site();
+                    site.setWorkType(workType);
+                    site.setRemarks(remarks);
+                    site.setTotalAmount(totalAmount);
+                    site.setSpentBy(spentBy);
+                    String date = parent.getEntryDate().toString();
+                    String[] test=date.split("/");
+                    if(test[1].length()<=1)
                     {
-                        etRemarks.setError("Please enter reason for the expense");
+                        test[1] = "0"+test[1];
                     }
-                    else
+                    if(test[0].length()<=1)
                     {
-                        if (etSpentBy.getText().toString().equals(""))
-                        {
-                            etSpentBy.setError("Please enter name who have spent");
-                        }
-                        else
-                        {
-                            if (etTotalAmount.getText().equals(""))
-                            {
-                                etTotalAmount.setError("Please enter amount spent");
-                            }
-                            else
-                            {
-
-                                String workType = etWorkType.getText().toString();
-                                String remarks = etRemarks.getText().toString();
-                                int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
-                                String spentBy = etSpentBy.getText().toString();
-
-                                DebitFragment parent = (DebitFragment)getParentFragment();
-
-                                Site site = new Site();
-                                site.setWorkType(workType);
-                                site.setRemarks(remarks);
-                                site.setTotalAmount(totalAmount);
-                                site.setSpentBy(spentBy);
-                                String date = parent.getEntryDate().toString();
-                                String[] test=date.split("/");
-                                if(test[1].length()<=1)
-                                {
-                                    test[1] = "0"+test[1];
-                                }
-                                if(test[0].length()<=1)
-                                {
-                                    test[0] = "0"+test[0];
-                                }
-                                String date1 =(test[2]+test[1]+test[0]);
-                                Integer Site_date=Integer.parseInt(date1);
-                                site.setDate(Site_date);
-
-                                // Insert to DB
-                                DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
-                                dbAdapter.insertSite(site);
-
-                                // Clear the Form
-                                ((VouchersActivity)getActivity()).clearForm();
-                            }
-                        }
+                        test[0] = "0"+test[0];
                     }
+                    String date1 =(test[2]+test[1]+test[0]);
+                    Integer Site_date=Integer.parseInt(date1);
+                    site.setDate(Site_date);
+
+                    // Insert to DB
+                    DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
+                    dbAdapter.insertSite(site);
+
+                    // Clear the Form
+                    ((VouchersActivity)getActivity()).clearForm();
                 }
             }
         });

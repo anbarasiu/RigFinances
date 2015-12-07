@@ -47,7 +47,6 @@ public class ToolFragment extends Fragment {
                     String spentBy = etSpentBy.getText().toString();
 
                     ViewGroup group = (ViewGroup)getActivity().findViewById(R.id.list_tool);
-                    //for(int i = 0; i < group.getChildCount(); i++){
                     for(ToolItem toolItem : toolItems){
                         //View form_field = group.getChildAt(i);
 

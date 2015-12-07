@@ -32,59 +32,39 @@ public class RoadFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                if(etExpense.getText().toString().equals(""))
-                {
-                    etExpense.setError("Please enter type of expense or remarks");
-                }
-                else
-                {
-                    if(etSpentBy.getText().equals(""))
+                if(((VouchersActivity)getActivity()).validForm()){ // TODO: Test validation
+                    String expense = etExpense.getText().toString();
+                    int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
+                    String spentBy = etSpentBy.getText().toString();
+
+                    DebitFragment parent = (DebitFragment)getParentFragment();
+
+                    Road road = new Road();
+                    road.setExpenseDetails(expense);
+                    road.setTotalAmount(totalAmount);
+                    road.setSpentBy(spentBy);
+
+                    String date = parent.getEntryDate().toString();
+                    String[] test=date.split("/");
+                    if(test[1].length()<=1)
                     {
-                        etSpentBy.setError("Please enter name who spent");
+                        test[1] = "0"+test[1];
                     }
-                    else
+                    if(test[0].length()<=1)
                     {
-                        if (etTotalAmount.getText().toString().equals(""))
-                        {
-                            etTotalAmount.setError("Please enter total amount");
-                        }
-                        else
-                        {
-                            String expense = etExpense.getText().toString();
-                            int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
-                            String spentBy = etSpentBy.getText().toString();
-
-                            DebitFragment parent = (DebitFragment)getParentFragment();
-
-                            Road road = new Road();
-                            road.setExpenseDetails(expense);
-                            road.setTotalAmount(totalAmount);
-                            road.setSpentBy(spentBy);
-
-                            String date = parent.getEntryDate().toString();
-                            String[] test=date.split("/");
-                            if(test[1].length()<=1)
-                            {
-                                test[1] = "0"+test[1];
-                            }
-                            if(test[0].length()<=1)
-                            {
-                                test[0] = "0"+test[0];
-                            }
-                            String date1 =(test[2]+test[1]+test[0]);
-                            Integer Road_date=Integer.parseInt(date1);
-                            road.setDate(Road_date);
-
-                            // Insert to DB
-                            DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
-                            dbAdapter.insertRoad(road);
-
-                            // Clear the Form
-                            ((VouchersActivity)getActivity()).clearForm();
-                        }
+                        test[0] = "0"+test[0];
                     }
-                }
+                    String date1 =(test[2]+test[1]+test[0]);
+                    Integer Road_date=Integer.parseInt(date1);
+                    road.setDate(Road_date);
 
+                    // Insert to DB
+                    DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
+                    dbAdapter.insertRoad(road);
+
+                    // Clear the Form
+                    ((VouchersActivity)getActivity()).clearForm();
+                }
             }
         });
 

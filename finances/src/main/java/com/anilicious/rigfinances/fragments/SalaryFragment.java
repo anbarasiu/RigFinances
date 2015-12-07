@@ -35,41 +35,42 @@ public class SalaryFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                String employeeName = etEmployeeName.getText().toString();
-                int employeeNumber = Integer.parseInt(etEmployeeNumber.getText().toString());
-                String remarks = etRemarks.getText().toString();
-                int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
-                String spentBy = etSpentBy.getText().toString();
+                if(((VouchersActivity)getActivity()).validForm()){ // TODO: Test validation
+                    String employeeName = etEmployeeName.getText().toString();
+                    int employeeNumber = Integer.parseInt(etEmployeeNumber.getText().toString());
+                    String remarks = etRemarks.getText().toString();
+                    int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
+                    String spentBy = etSpentBy.getText().toString();
 
-                DebitFragment parent = (DebitFragment)getParentFragment();
+                    DebitFragment parent = (DebitFragment)getParentFragment();
+                    Salary salary = new Salary();
+                    salary.setEmployeeName(employeeName);
+                    salary.setEmployeeNumber(employeeNumber);
+                    salary.setReason(remarks);
+                    salary.setAmount(totalAmount);
+                    salary.setSpentBy(spentBy);
 
-                Salary salary = new Salary();
-                salary.setEmployeeName(employeeName);
-                salary.setEmployeeNumber(employeeNumber);
-                salary.setReason(remarks);
-                salary.setAmount(totalAmount);
-                salary.setSpentBy(spentBy);
+                    String date = parent.getEntryDate().toString();
+                    String[] test=date.split("/");
+                    if(test[1].length()<=1)
+                    {
+                        test[1] = "0"+test[1];
+                    }
+                    if(test[0].length()<=1)
+                    {
+                        test[0] = "0"+test[0];
+                    }
+                    String date1 =(test[2]+test[1]+test[0]);
+                    Integer Salary_date=Integer.parseInt(date1);
+                    salary.setDate(Salary_date);
 
-                String date = parent.getEntryDate().toString();
-                String[] test=date.split("/");
-                if(test[1].length()<=1)
-                {
-                    test[1] = "0"+test[1];
+                    // Insert to DB
+                    DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
+                    dbAdapter.insertSalary(salary);
+
+                    // Clear the Form
+                    ((VouchersActivity)getActivity()).clearForm();
                 }
-                if(test[0].length()<=1)
-                {
-                    test[0] = "0"+test[0];
-                }
-                String date1 =(test[2]+test[1]+test[0]);
-                Integer Salary_date=Integer.parseInt(date1);
-                salary.setDate(Salary_date);
-
-                // Insert to DB
-                DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
-                dbAdapter.insertSalary(salary);
-
-                // Clear the Form
-                ((VouchersActivity)getActivity()).clearForm();
             }
         });
 

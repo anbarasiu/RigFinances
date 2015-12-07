@@ -22,6 +22,7 @@ import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.BarChart;
 import org.achartengine.model.CategorySeries;
+import org.achartengine.model.SeriesSelection;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.DefaultRenderer;
@@ -204,9 +205,34 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
         GraphicalView chart = ChartFactory.getPieChartView(getActivity().getApplicationContext(), mSeries, mRenderer);
         layout.addView(chart);
 
+        // On click of wedges, display details
+        chart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SeriesSelection seriesSelection = chart.getCurrentSeriesAndPoint();
+                if(seriesSelection != null){
+                    // Get name of the clicked slice
+                    int seriesIndex = seriesSelection.getPointIndex();
+                    String selectedSeries = "";
+                    selectedSeries = selectedExpenses[seriesIndex];
+
+                    // Get value of clicked slice
+                    double value = seriesSelection.getXValue();
+                    DecimalFormat dFormat = new DecimalFormat("#.#");
+
+                    // Display details table
+                    displayDetails(selectedSeries);
+                }
+            }
+        });
+
         // Bar Chart Rendering
         LinearLayout bar_layout = (LinearLayout)view.findViewById(R.id.bar_chart);
         GraphicalView bar_chart = ChartFactory.getBarChartView(getActivity().getApplicationContext(), dataset, xyRenderer, BarChart.Type.DEFAULT);
         bar_layout.addView(bar_chart);
+    }
+
+    private void displayDetails(String selectedSeries){
+        // TODO: For the selectedSeries, get complete info
     }
 }
