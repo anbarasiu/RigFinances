@@ -52,6 +52,8 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
     CheckBox pipes;
     CheckBox site_expenses;
 
+    ReportsMapper reportsMapper;
+
     private int entryDateFrom;
     private int entryDateTo;
 
@@ -161,7 +163,7 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
         }
     }
 
-    public void renderCharts(int dateFrom, int dateTo, List selectedExpenses){
+    public void renderCharts(final int dateFrom, final int dateTo, final List selectedExpenses){
         // Pie Chart init
         int[] colours = {Color.parseColor("#4D4D4D"), Color.parseColor("#5DA5DA"), Color.parseColor("#FAA43A"), Color.parseColor("#60BD68"), Color.parseColor("#B2912F"), Color.parseColor("#B276B2"), Color.parseColor("#DECF3F"), Color.parseColor("#F15854")};
         int i = 0;
@@ -179,7 +181,7 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
         XYSeriesRenderer xySeriesRenderer = new XYSeriesRenderer();
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 
-        ReportsMapper reportsMapper = new ReportsMapper(getActivity());
+        reportsMapper = new ReportsMapper(getActivity());
         HashMap<String, Double> expenseMap = reportsMapper.mapExpenses(dateFrom, dateTo, selectedExpenses);
 
         //TODO: Add legends & labels to Bar Chart
@@ -202,7 +204,7 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
 
         // Pie Chart Rendering
         LinearLayout layout = (LinearLayout)view.findViewById(R.id.pie_chart);
-        GraphicalView chart = ChartFactory.getPieChartView(getActivity().getApplicationContext(), mSeries, mRenderer);
+        final GraphicalView chart = ChartFactory.getPieChartView(getActivity().getApplicationContext(), mSeries, mRenderer);
         layout.addView(chart);
 
         // On click of wedges, display details
@@ -214,14 +216,14 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
                     // Get name of the clicked slice
                     int seriesIndex = seriesSelection.getPointIndex();
                     String selectedSeries = "";
-                    selectedSeries = selectedExpenses[seriesIndex];
+                    selectedSeries = selectedExpenses.get(seriesIndex).toString();
 
                     // Get value of clicked slice
                     double value = seriesSelection.getXValue();
-                    DecimalFormat dFormat = new DecimalFormat("#.#");
+                    java.text.DecimalFormat dFormat = new java.text.DecimalFormat("#.#");
 
                     // Display details table
-                    displayDetails(selectedSeries);
+                    displayDetails(dateFrom, dateTo, selectedSeries);
                 }
             }
         });
@@ -232,7 +234,8 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
         bar_layout.addView(bar_chart);
     }
 
-    private void displayDetails(String selectedSeries){
+    private void displayDetails(int dateFrom, int dateTo, String selectedSeries){
         // TODO: For the selectedSeries, get complete info
+        reportsMapper.mapExpenseDetails(dateFrom, dateTo, selectedSeries);
     }
 }

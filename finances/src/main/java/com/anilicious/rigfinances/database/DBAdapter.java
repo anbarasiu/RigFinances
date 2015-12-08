@@ -461,141 +461,93 @@ public class DBAdapter extends SQLiteOpenHelper{
         database.close();
     }
 
-    /*public double retrieveDieselAmount(String dateFrom, String dateTo){
+    public Cursor retrieveDieselDetails(String dateFrom, String dateTo){
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.query(DIESEL_DATABASE_NAME,
-                new String[] {"SUM(amount)"},
+                null,
                 "date BETWEEN ? AND ?",
                 new String[] {dateFrom, dateTo},
                 null, null, null);
-        double totalAmount = 0.0;
-
-        while(cursor.moveToNext()){
-           totalAmount = cursor.getDouble(0);
-        }
-
         database.close();
-        return totalAmount;
+        return cursor;
     }
 
-    public double retrieveCookAmount(String dateFrom, String dateTo){
+    public Cursor retrieveCookDetails(String dateFrom, String dateTo){
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.query(COOK_DATABASE_NAME,
-                new String[] {"SUM(price)"},
+                null,
                 "date BETWEEN ? AND ?",
                 new String[] {dateFrom, dateTo},
                 null, null, null);
-        double totalAmount = 0.0;
-
-        while(cursor.moveToNext()){
-            totalAmount = cursor.getDouble(0);
-        }
-
         database.close();
-        return totalAmount;
+        return cursor;
     }
 
-    public double retrieveMaintenanceAmount(String dateFrom, String dateTo){
+    public Cursor retrieveMaintenanceDetails(String dateFrom, String dateTo){
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.query(MAINTENANCE_DATABASE_NAME,
-                new String[] {"SUM(amount)"},
+                null,
                 "date BETWEEN ? AND ?",
                 new String[] {dateFrom, dateTo},
                 null, null, null);
-        double totalAmount = 0.0;
-
-        while(cursor.moveToNext()){
-            totalAmount = cursor.getDouble(0);
-        }
-
         database.close();
-        return totalAmount;
+        return cursor;
     }
 
-    public double retrievePipeAmount(String dateFrom, String dateTo){
+    public Cursor retrievePipeDetails(String dateFrom, String dateTo){
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.query(PIPE_DATABASE_NAME,
-                new String[] {"SUM(amount)"},
+                null,
                 "date BETWEEN ? AND ?",
                 new String[] {dateFrom, dateTo},
                 null, null, null);
-        double totalAmount = 0.0;
-
-        while(cursor.moveToNext()){
-            totalAmount = cursor.getDouble(0);
-        }
-
         database.close();
-        return totalAmount;
+        return cursor;
     }
 
-    public double retrieveRoadAmount(String dateFrom, String dateTo){
+    public Cursor retrieveRoadDetails(String dateFrom, String dateTo){
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.query(ROAD_DATABASE_NAME,
-                new String[] {"SUM(amount)"},
+                null,
                 "date BETWEEN ? AND ?",
                 new String[] {dateFrom, dateTo},
                 null, null, null);
-        double totalAmount = 0.0;
-
-        while(cursor.moveToNext()){
-            totalAmount = cursor.getDouble(0);
-        }
-
         database.close();
-        return totalAmount;
+        return cursor;
     }
 
-    public double retrieveSalaryAmount(String dateFrom, String dateTo){
+    public Cursor retrieveSalaryDetails(String dateFrom, String dateTo){
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.query(SALARY_DATABASE_NAME,
-                new String[] {"SUM(amount)"},
+                null,
                 "date BETWEEN ? AND ?",
                 new String[] {dateFrom, dateTo},
                 null, null, null);
-        double totalAmount = 0.0;
-
-        while(cursor.moveToNext()){
-            totalAmount = cursor.getDouble(0);
-        }
-
         database.close();
-        return totalAmount;
+        return cursor;
     }
 
-    public double retrieveSiteAmount(String dateFrom, String dateTo){
+    public Cursor retrieveSiteDetails(String dateFrom, String dateTo){
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.query(SITE_DATABASE_NAME,
-                new String[] {"SUM(amount)"},
+                null,
                 "date BETWEEN ? AND ?",
                 new String[] {dateFrom, dateTo},
                 null, null, null);
-        double totalAmount = 0.0;
-
-        while(cursor.moveToNext()){
-            totalAmount = cursor.getDouble(0);
-        }
-
         database.close();
-        return totalAmount;
+        return cursor;
     }
 
-    public double retrieveToolAmount(String dateFrom, String dateTo){
+    public Cursor retrieveToolDetails(String dateFrom, String dateTo){
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.query(TOOL_DATABASE_NAME,
-                new String[] {"SUM(price)"},
+                null,
                 "date BETWEEN ? AND ?",
                 new String[] {dateFrom, dateTo},
                 null, null, null);
-        double totalAmount = 0.0;
-
-        while(cursor.moveToNext()){
-            totalAmount = cursor.getDouble(0);
-        }
-
         database.close();
-        return totalAmount;
-    }*/
+        return cursor;
+    }
 
     public HashMap<String, Double> retrieveExpenseAmount(int dateFrom, int dateTo, List<String> selectedExpenses){
         HashMap<String, Double> expenseReport = new HashMap<String, Double>();
@@ -753,5 +705,4 @@ public class DBAdapter extends SQLiteOpenHelper{
                 TOOL_DATABASE_NAME);
                 */
     }
-
 }

@@ -1,6 +1,7 @@
 package com.anilicious.rigfinances.mappers;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.util.Log;
 
 import com.anilicious.rigfinances.activities.ReportsActivity;
@@ -53,4 +54,41 @@ public class ReportsMapper {
         return boreDetailsMap;
     }
 
+    public void mapExpenseDetails(int date_from, int date_to, String selectedExpense){
+        // TODO: Figure out population of table
+        String dateFrom = String.valueOf(date_from);
+        String dateTo = String.valueOf(date_to);
+        switch(selectedExpense){
+            case CommonUtils.CONSTANTS.DIESEL:
+                renderDieselDetails(dbAdapter.retrieveDieselDetails(dateFrom, dateTo));
+                break;
+            case CommonUtils.CONSTANTS.COOK:
+                //renderCookDetails(dbAdapter.retrieveCookDetails(dateFrom, dateTo));
+                break;
+            case CommonUtils.CONSTANTS.MAINTENANCE:
+                //renderMaintenanceDetails(dbAdapter.retrieveMaintenanceDetails(dateFrom, dateTo));
+                break;
+            case CommonUtils.CONSTANTS.SITE:
+                //renderSiteDetails(dbAdapter.retrieveSiteDetails(dateFrom, dateTo));
+                break;
+            case CommonUtils.CONSTANTS.PIPE:
+                //renderPipeDetails(dbAdapter.retrievePipeDetails(dateFrom, dateTo));
+                break;
+            case CommonUtils.CONSTANTS.ROAD:
+                //renderRoadDetails(dbAdapter.retrieveRoadDetails(dateFrom, dateTo));
+                break;
+            case CommonUtils.CONSTANTS.SALARY:
+                //renderSalaryDetails(dbAdapter.retrieveSalaryDetails(dateFrom, dateTo));
+                break;
+            case CommonUtils.CONSTANTS.TOOLS:
+                //renderToolDetails(dbAdapter.retrieveToolDetails(dateFrom, dateTo));
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void renderDieselDetails(Cursor c){
+        int rows = c.getCount();
+    }
 }
