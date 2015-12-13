@@ -54,41 +54,33 @@ public class ReportsMapper {
         return boreDetailsMap;
     }
 
-    public void mapExpenseDetails(int date_from, int date_to, String selectedExpense){
+    public Cursor mapExpenseDetails(int date_from, int date_to, String selectedExpense){
         // TODO: Figure out population of table
         String dateFrom = String.valueOf(date_from);
         String dateTo = String.valueOf(date_to);
         switch(selectedExpense){
             case CommonUtils.CONSTANTS.DIESEL:
-                renderDieselDetails(dbAdapter.retrieveDieselDetails(dateFrom, dateTo));
-                break;
+                return dbAdapter.retrieveDieselDetails(dateFrom, dateTo);
             case CommonUtils.CONSTANTS.COOK:
-                //renderCookDetails(dbAdapter.retrieveCookDetails(dateFrom, dateTo));
-                break;
+                return dbAdapter.retrieveCookDetails(dateFrom, dateTo);
             case CommonUtils.CONSTANTS.MAINTENANCE:
-                //renderMaintenanceDetails(dbAdapter.retrieveMaintenanceDetails(dateFrom, dateTo));
-                break;
+                return dbAdapter.retrieveMaintenanceDetails(dateFrom, dateTo);
             case CommonUtils.CONSTANTS.SITE:
-                //renderSiteDetails(dbAdapter.retrieveSiteDetails(dateFrom, dateTo));
-                break;
+                return dbAdapter.retrieveSiteDetails(dateFrom, dateTo);
             case CommonUtils.CONSTANTS.PIPE:
-                //renderPipeDetails(dbAdapter.retrievePipeDetails(dateFrom, dateTo));
-                break;
+                return dbAdapter.retrievePipeDetails(dateFrom, dateTo);
             case CommonUtils.CONSTANTS.ROAD:
-                //renderRoadDetails(dbAdapter.retrieveRoadDetails(dateFrom, dateTo));
-                break;
+                return dbAdapter.retrieveRoadDetails(dateFrom, dateTo);
             case CommonUtils.CONSTANTS.SALARY:
-                //renderSalaryDetails(dbAdapter.retrieveSalaryDetails(dateFrom, dateTo));
-                break;
+                return dbAdapter.retrieveSalaryDetails(dateFrom, dateTo);
             case CommonUtils.CONSTANTS.TOOLS:
-                //renderToolDetails(dbAdapter.retrieveToolDetails(dateFrom, dateTo));
-                break;
+                return dbAdapter.retrieveToolDetails(dateFrom, dateTo);
             default:
-                break;
+                return null;
         }
     }
 
-    public void renderDieselDetails(Cursor c){
-        int rows = c.getCount();
+    public void closeDBConn(){
+        dbAdapter.close();
     }
 }

@@ -134,6 +134,12 @@
             android:id="@+id/pie_chart">
 
         </LinearLayout>
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="500dp"
+            android:id="@+id/table_details"></TableLayout>
+
         </LinearLayout>
     </ScrollView>
 

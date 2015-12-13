@@ -468,7 +468,6 @@ public class DBAdapter extends SQLiteOpenHelper{
                 "date BETWEEN ? AND ?",
                 new String[] {dateFrom, dateTo},
                 null, null, null);
-        database.close();
         return cursor;
     }
 
@@ -479,7 +478,6 @@ public class DBAdapter extends SQLiteOpenHelper{
                 "date BETWEEN ? AND ?",
                 new String[] {dateFrom, dateTo},
                 null, null, null);
-        database.close();
         return cursor;
     }
 
@@ -490,7 +488,6 @@ public class DBAdapter extends SQLiteOpenHelper{
                 "date BETWEEN ? AND ?",
                 new String[] {dateFrom, dateTo},
                 null, null, null);
-        database.close();
         return cursor;
     }
 
@@ -501,7 +498,6 @@ public class DBAdapter extends SQLiteOpenHelper{
                 "date BETWEEN ? AND ?",
                 new String[] {dateFrom, dateTo},
                 null, null, null);
-        database.close();
         return cursor;
     }
 
@@ -512,7 +508,6 @@ public class DBAdapter extends SQLiteOpenHelper{
                 "date BETWEEN ? AND ?",
                 new String[] {dateFrom, dateTo},
                 null, null, null);
-        database.close();
         return cursor;
     }
 
@@ -523,7 +518,6 @@ public class DBAdapter extends SQLiteOpenHelper{
                 "date BETWEEN ? AND ?",
                 new String[] {dateFrom, dateTo},
                 null, null, null);
-        database.close();
         return cursor;
     }
 
@@ -534,7 +528,6 @@ public class DBAdapter extends SQLiteOpenHelper{
                 "date BETWEEN ? AND ?",
                 new String[] {dateFrom, dateTo},
                 null, null, null);
-        database.close();
         return cursor;
     }
 
@@ -545,7 +538,6 @@ public class DBAdapter extends SQLiteOpenHelper{
                 "date BETWEEN ? AND ?",
                 new String[] {dateFrom, dateTo},
                 null, null, null);
-        database.close();
         return cursor;
     }
 
@@ -704,5 +696,10 @@ public class DBAdapter extends SQLiteOpenHelper{
                 SITE_DATABASE_NAME + ", " +
                 TOOL_DATABASE_NAME);
                 */
+    }
+
+    public void close(){
+        SQLiteDatabase database = this.getReadableDatabase();
+        database.close();
     }
 }

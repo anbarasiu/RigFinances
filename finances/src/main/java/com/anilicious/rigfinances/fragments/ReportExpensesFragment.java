@@ -3,6 +3,7 @@ package com.anilicious.rigfinances.fragments;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 
 import com.anilicious.rigfinances.finances.R;
@@ -51,6 +55,7 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
     CheckBox salary;
     CheckBox pipes;
     CheckBox site_expenses;
+    TableLayout tableLayout;
 
     ReportsMapper reportsMapper;
 
@@ -76,6 +81,9 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
         pipes =(CheckBox)view.findViewById(R.id.report_expense_checkBox7);
         site_expenses =(CheckBox)view.findViewById(R.id.report_expense_checkBox8);
         Button btnViewReports = (Button)view.findViewById(R.id.reports_view);
+
+        tableLayout = (TableLayout)view.findViewById(R.id.table_details);
+
         tvFrom.setOnClickListener(this);
         tvTo.setOnClickListener(this);
         btnViewReports.setOnClickListener(this);
@@ -174,6 +182,7 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
         mRenderer.setLabelsTextSize(36);
         mRenderer.setLabelsColor(Color.BLACK);
         mRenderer.setLegendTextSize(36);
+        mRenderer.setClickEnabled(true);
 
         //Bar Chart init
         double bar_index = 0; // Indices interval
@@ -236,6 +245,29 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
 
     private void displayDetails(int dateFrom, int dateTo, String selectedSeries){
         // TODO: For the selectedSeries, get complete info
-        reportsMapper.mapExpenseDetails(dateFrom, dateTo, selectedSeries);
+        Cursor cResults = reportsMapper.mapExpenseDetails(dateFrom, dateTo, selectedSeries);
+
+        if(cResults != null){
+            cResults.moveToFirst();
+        }
+
+        int rows = cResults.getCount();
+        int columns = cResults.getColumnCount();
+
+        for(int i=0; i<rows; i++){
+            TableRow tableRow = new TableRow(this.getActivity().getApplicationContext());
+            tableRow.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+
+            for(int j=0; j<columns; j++){
+                TextView tableColumn = new TextView(this.getActivity().getApplicationContext());
+                tableColumn.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                tableColumn.setText(cResults.getString(j));
+                tableRow.addView(tableColumn);
+            }
+            cResults.moveToNext();
+            tableLayout.addView(tableRow);
+        }
+
+        reportsMapper.closeDBConn();
     }
 }
