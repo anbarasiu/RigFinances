@@ -23,23 +23,28 @@
         </activity>
         <activity
             android:name="com.anilicious.rigfinances.activities.VouchersActivity"
-            android:label="@string/title_activity_vouchers" >
+            android:label="@string/title_activity_vouchers"
+            android:parentActivityName="MainActivity" >
         </activity>
         <activity
             android:name="com.anilicious.rigfinances.activities.BoreEntryActivity"
-            android:label="@string/title_activity_bore_entry" >
+            android:label="@string/title_activity_bore_entry"
+            android:parentActivityName="MainActivity" >
         </activity>
         <activity
             android:name="com.anilicious.rigfinances.activities.EmployeeDetailsActivity"
-            android:label="@string/title_activity_employee_details" >
+            android:label="@string/title_activity_employee_details"
+            android:parentActivityName="MainActivity" >
         </activity>
         <activity
             android:name="com.anilicious.rigfinances.activities.ReportsActivity"
-            android:label="@string/title_activity_reports" >
+            android:label="@string/title_activity_reports"
+            android:parentActivityName="MainActivity" >
         </activity>
         <activity
             android:name="com.anilicious.rigfinances.activities.SettingsActivity"
-            android:label="@string/title_activity_settings" >
+            android:label="@string/title_activity_settings"
+            android:parentActivityName="MainActivity" >
         </activity>
     </application>
 

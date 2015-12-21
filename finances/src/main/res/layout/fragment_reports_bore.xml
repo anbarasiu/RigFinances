@@ -279,13 +279,6 @@
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
         android:paddingBottom="5dp">
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/back_home"
-            android:id="@+id/btn_home"
-            android:layout_weight="1" />
     </LinearLayout>
 
 </LinearLayout>

@@ -70,17 +70,6 @@ public class CreditFragment extends Fragment {
                 }
             }
         });
-
-        // Return to Home Button
-        Button home_btn = (Button)view.findViewById(R.id.btn_home);
-        home_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
         return view;
     }
 

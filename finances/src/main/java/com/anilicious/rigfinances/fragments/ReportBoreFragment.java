@@ -56,7 +56,6 @@ public class ReportBoreFragment extends Fragment {
         tvCasingPipeInHand = (TextView)view.findViewById(R.id.TextView30);
         retrieveDetailsFromDB();
 
-        // TODO: Back to Home listener
         return view;
     }
 

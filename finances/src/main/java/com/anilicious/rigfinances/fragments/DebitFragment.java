@@ -52,16 +52,6 @@ public class DebitFragment extends Fragment{
         // Setup Date Picker
         setupDatePicker(view);
 
-        // Return to Home Button
-        Button home_btn = (Button)view.findViewById(R.id.btn_home);
-        home_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
         return view;
     }
 
@@ -164,13 +154,6 @@ public class DebitFragment extends Fragment{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 

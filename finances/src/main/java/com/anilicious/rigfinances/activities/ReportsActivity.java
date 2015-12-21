@@ -86,11 +86,16 @@ public class ReportsActivity extends ActionBarActivity implements ActionBar.TabL
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // For now, we've only Settings
-        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-        startActivity(intent);
-
-        return true;
+        if(item.getItemId() == android.R.id.home){
+            Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
+            homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeIntent);
+        }
+        else{
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -161,16 +161,6 @@ public class EmployeeDetailsActivity extends ActionBarActivity {
         });
 
         sharedPrefs = this.getApplicationContext().getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-
-        // On 'Back to Home' button click
-        Button home_btn = (Button)findViewById(R.id.btn_home);
-        home_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     /*
@@ -271,11 +261,16 @@ public class EmployeeDetailsActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // For now, we've only Settings
-        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-        startActivity(intent);
-
-        return true;
+        if(item.getItemId() == android.R.id.home){
+            Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
+            homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeIntent);
+        }
+        else{
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

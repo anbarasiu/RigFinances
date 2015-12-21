@@ -207,19 +207,6 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
 
                                             }}}}
                             }}}}
-
-
-
-        });
-
-        // On 'Back to Home' button click
-        Button home_btn = (Button)findViewById(R.id.btn_home);
-        home_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-            }
         });
     }
 
@@ -377,12 +364,14 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        if(item.getItemId() == android.R.id.home){
+            Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
+            homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeIntent);
+        }
+        else{
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
