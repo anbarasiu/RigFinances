@@ -8,24 +8,31 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.anilicious.rigfinances.activities.VouchersActivity;
 import com.anilicious.rigfinances.beans.Road;
 import com.anilicious.rigfinances.beans.Salary;
 import com.anilicious.rigfinances.database.DBAdapter;
 import com.anilicious.rigfinances.finances.R;
+import com.anilicious.rigfinances.utils.CommonUtils;
+
+import java.util.HashMap;
 
 /**
  * Created by ANBARASI on 11/11/14.
  */
 public class SalaryFragment extends Fragment {
+
+    DBAdapter dbAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_vouchers_salary, null);
 
         // UI Object References
         Button btnSubmit = (Button)view.findViewById(R.id.btn_submit);
-        final EditText etEmployeeName = (EditText)view.findViewById(R.id.editText);
+        //final EditText etEmployeeName = (EditText)view.findViewById(R.id.editText);
         final EditText etEmployeeNumber = (EditText)view.findViewById(R.id.editText2);
         final EditText etRemarks = (EditText)view.findViewById(R.id.editText4);
         final EditText etTotalAmount = (EditText)view.findViewById(R.id.editText3);
@@ -35,37 +42,32 @@ public class SalaryFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                if(((VouchersActivity)getActivity()).validForm()){ // TODO: Test validation
-                    String employeeName = etEmployeeName.getText().toString();
+                if(((VouchersActivity)getActivity()).validForm()){
+                    //String employeeName = etEmployeeName.getText().toString();
                     int employeeNumber = Integer.parseInt(etEmployeeNumber.getText().toString());
                     String remarks = etRemarks.getText().toString();
                     int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
                     String spentBy = etSpentBy.getText().toString();
 
+                    dbAdapter = DBAdapter.getInstance(getActivity());
+                    if(!employeeExists(employeeNumber)){
+                        Toast.makeText(getActivity().getApplicationContext(), "Employee not found. Please check if Employee Number valid / Employee Details has been entered.", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
                     DebitFragment parent = (DebitFragment)getParentFragment();
                     Salary salary = new Salary();
-                    salary.setEmployeeName(employeeName);
+                    //salary.setEmployeeName(employeeName);
                     salary.setEmployeeNumber(employeeNumber);
                     salary.setReason(remarks);
                     salary.setAmount(totalAmount);
                     salary.setSpentBy(spentBy);
 
                     String date = parent.getEntryDate().toString();
-                    String[] test=date.split("/");
-                    if(test[1].length()<=1)
-                    {
-                        test[1] = "0"+test[1];
-                    }
-                    if(test[0].length()<=1)
-                    {
-                        test[0] = "0"+test[0];
-                    }
-                    String date1 =(test[2]+test[1]+test[0]);
-                    Integer Salary_date=Integer.parseInt(date1);
-                    salary.setDate(Salary_date);
+                    Integer salary_date = Integer.parseInt(CommonUtils.formatDateEntry(date));
+                    salary.setDate(salary_date);
 
                     // Insert to DB
-                    DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
                     dbAdapter.insertSalary(salary);
 
                     // Clear the Form
@@ -75,5 +77,12 @@ public class SalaryFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public boolean employeeExists(int employeeNumber){
+        if(dbAdapter.retrieveEmployeeDetails(employeeNumber).size() > 0){
+            return true;
+        }
+        return false;
     }
 }

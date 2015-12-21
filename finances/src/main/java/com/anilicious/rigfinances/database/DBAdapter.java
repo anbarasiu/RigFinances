@@ -610,7 +610,25 @@ public class DBAdapter extends SQLiteOpenHelper{
         return expenseReport;
     }
 
+    public HashMap<String, String> retrieveEmployeeDetails(int employeeNumber){
+        SQLiteDatabase database = this.getReadableDatabase();
+        HashMap<String, String> employeeDetails = new HashMap<String, String>();
 
+        String query = "SELECT employee_name,employee_number,date_of_joining,date_of_leaving,salary FROM "+ EMPLOYEE_DATABASE_NAME
+                + " WHERE employee_number = " + employeeNumber + ";";
+
+        Cursor cursor = database.rawQuery(query, null);
+
+        while(cursor.moveToNext()){
+            employeeDetails.put("employee_name", cursor.getString(0));
+            employeeDetails.put("joining_date", cursor.getString(2));
+            employeeDetails.put("leaving_date", cursor.getString(3));
+            employeeDetails.put("salary_given", cursor.getString(4));
+        }
+
+        database.close();
+        return employeeDetails;
+    }
 
     public HashMap<String, String> retrieveSalaryReportsDetails(int employeeNumber){
         SQLiteDatabase database = this.getReadableDatabase();
