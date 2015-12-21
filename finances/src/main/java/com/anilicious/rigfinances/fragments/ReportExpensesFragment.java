@@ -142,33 +142,13 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
         if(resultCode == 101){
             if(requestCode == DIALOG_DATE_FROM){
                 String date = data.getStringExtra("entryDate");
-                String[] test=date.split("/");
-                if(test[1].length()<=1)
-                {
-                    test[1] = "0"+test[1];
-                }
-                if(test[0].length()<=1)
-                {
-                    test[0] = "0"+test[0];
-                }
-                String date1 =(test[2]+test[1]+test[0]);
-                Integer date_num=Integer.parseInt(date1);
+                Integer date_num = Integer.parseInt(CommonUtils.formatDateEntry(date1));
                 entryDateFrom = date_num;
                 tvFrom.setText(data.getStringExtra("entryDate"));
             }
             else if(requestCode == DIALOG_DATE_TO){
                 String date = data.getStringExtra("entryDate");
-                String[] test=date.split("/");
-                if(test[1].length()<=1)
-                {
-                    test[1] = "0"+test[1];
-                }
-                if(test[0].length()<=1)
-                {
-                    test[0] = "0"+test[0];
-                }
-                String date1 =(test[2]+test[1]+test[0]);
-                Integer date_num=Integer.parseInt(date1);
+                Integer date_num=Integer.parseInt(CommonUtils.formatDateEntry(date1));
                 entryDateTo = date_num;
                 tvTo.setText(data.getStringExtra("entryDate"));
             }
