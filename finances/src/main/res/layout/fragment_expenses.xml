@@ -124,21 +124,24 @@
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="vertical" android:layout_width="fill_parent"
             android:layout_height="500dp"
-            android:id="@+id/bar_chart">
-
-        </LinearLayout>
-
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation="vertical" android:layout_width="fill_parent"
-            android:layout_height="500dp"
             android:id="@+id/pie_chart">
 
         </LinearLayout>
 
         <TableLayout
             android:layout_width="fill_parent"
-            android:layout_height="500dp"
-            android:id="@+id/table_details"></TableLayout>
+            android:layout_height="wrap_content"
+            android:id="@+id/table_details"
+            android:layout_gravity="center"
+            android:layout_margin="1dp"
+            android:divider="@color/blue"></TableLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="fill_parent"
+                android:layout_height="500dp"
+                android:id="@+id/bar_chart">
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

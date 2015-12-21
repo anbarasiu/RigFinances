@@ -172,6 +172,8 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
     }
 
     public void renderCharts(final int dateFrom, final int dateTo, final List selectedExpenses){
+        tableLayout.removeAllViews();
+
         // Pie Chart init
         int[] colours = {Color.parseColor("#4D4D4D"), Color.parseColor("#5DA5DA"), Color.parseColor("#FAA43A"), Color.parseColor("#60BD68"), Color.parseColor("#B2912F"), Color.parseColor("#B276B2"), Color.parseColor("#DECF3F"), Color.parseColor("#F15854")};
         int i = 0;
@@ -213,6 +215,7 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
 
         // Pie Chart Rendering
         LinearLayout layout = (LinearLayout)view.findViewById(R.id.pie_chart);
+        layout.removeAllViews();
         final GraphicalView chart = ChartFactory.getPieChartView(getActivity().getApplicationContext(), mSeries, mRenderer);
         layout.addView(chart);
 
@@ -239,11 +242,13 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
 
         // Bar Chart Rendering
         LinearLayout bar_layout = (LinearLayout)view.findViewById(R.id.bar_chart);
+        bar_layout.removeAllViews();
         GraphicalView bar_chart = ChartFactory.getBarChartView(getActivity().getApplicationContext(), dataset, xyRenderer, BarChart.Type.DEFAULT);
         bar_layout.addView(bar_chart);
     }
 
     private void displayDetails(int dateFrom, int dateTo, String selectedSeries){
+        tableLayout.removeAllViews();
         // TODO: For the selectedSeries, get complete info
         Cursor cResults = reportsMapper.mapExpenseDetails(dateFrom, dateTo, selectedSeries);
 
@@ -254,14 +259,31 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
         int rows = cResults.getCount();
         int columns = cResults.getColumnCount();
 
+        // Table Headers
+        String[] columnNames = cResults.getColumnNames();
+        TableRow tableRowHeader = new TableRow(this.getActivity().getApplicationContext());
+        tableRowHeader.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        tableRowHeader.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        for(int j=0; j<columnNames.length; j++){
+            TextView tableColumn = new TextView(this.getActivity().getApplicationContext());
+            tableColumn.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+            tableColumn.setText(columnNames[j].replace('_', ' ').toUpperCase());
+            tableColumn.setTextColor(Color.BLACK);
+            tableRowHeader.addView(tableColumn);
+        }
+        tableLayout.addView(tableRowHeader);
+
+        // Rendering the Table with values
         for(int i=0; i<rows; i++){
             TableRow tableRow = new TableRow(this.getActivity().getApplicationContext());
             tableRow.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+            tableRow.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
             for(int j=0; j<columns; j++){
                 TextView tableColumn = new TextView(this.getActivity().getApplicationContext());
                 tableColumn.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
                 tableColumn.setText(cResults.getString(j));
+                tableColumn.setTextColor(Color.BLACK);
                 tableRow.addView(tableColumn);
             }
             cResults.moveToNext();
