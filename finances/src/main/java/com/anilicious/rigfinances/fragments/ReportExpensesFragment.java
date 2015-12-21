@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
@@ -42,7 +44,7 @@ import java.util.Map;
 /**
  * Created by ANBARASI on 25/1/15.
  */
-public class ReportExpensesFragment extends Fragment implements View.OnClickListener{
+public class ReportExpensesFragment extends Fragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener{
 
     TextView tvFrom;
     TextView tvTo;
@@ -80,6 +82,7 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
         salary =(CheckBox)view.findViewById(R.id.report_expense_checkBox6);
         pipes =(CheckBox)view.findViewById(R.id.report_expense_checkBox7);
         site_expenses =(CheckBox)view.findViewById(R.id.report_expense_checkBox8);
+        Switch select_all = (Switch)view.findViewById(R.id.reports_expenses_selectall);
         Button btnViewReports = (Button)view.findViewById(R.id.reports_view);
 
         tableLayout = (TableLayout)view.findViewById(R.id.table_details);
@@ -87,6 +90,7 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
         tvFrom.setOnClickListener(this);
         tvTo.setOnClickListener(this);
         btnViewReports.setOnClickListener(this);
+        select_all.setOnCheckedChangeListener(this);
 
         return view;
     }
@@ -291,5 +295,29 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
         }
 
         reportsMapper.closeDBConn();
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        if(b == true){
+            diesel.setChecked(true);
+            maintenance.setChecked(true);
+            cook.setChecked(true);
+            salary.setChecked(true);
+            tools.setChecked(true);
+            pipes.setChecked(true);
+            site_expenses.setChecked(true);
+            road_expenses.setChecked(true);
+        }
+        else if(b == false){
+            diesel.setChecked(false);
+            maintenance.setChecked(false);
+            cook.setChecked(false);
+            salary.setChecked(false);
+            tools.setChecked(false);
+            pipes.setChecked(false);
+            site_expenses.setChecked(false);
+            road_expenses.setChecked(false);
+        }
     }
 }
