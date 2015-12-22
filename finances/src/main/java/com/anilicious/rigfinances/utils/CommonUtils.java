@@ -45,11 +45,11 @@ public final class CommonUtils {
         {
             test[1] = "0" + test[1];
         }
-        if(test[0].length()<=1)
+        if(test[0].length() <= 1)
         {
             test[0] = "0" + test[0];
         }
-        String date1 =(test[2] + test[1] + test[0]);
+        String date1 = test[2] + test[1] + test[0];
         return date1;
     }
 

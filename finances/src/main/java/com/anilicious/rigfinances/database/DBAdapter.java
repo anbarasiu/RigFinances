@@ -634,12 +634,12 @@ public class DBAdapter extends SQLiteOpenHelper{
         SQLiteDatabase database = this.getReadableDatabase();
         HashMap<String, String> salaryReport = new HashMap<String, String>();
 
-        String query = "SELECT employee_name,employee_number,sum(date_of_joining),sum(date_of_leaving),sum(salary) FROM "+ EMPLOYEE_DATABASE_NAME
-                + " WHERE employee_number = " + employeeNumber + ";";
-                /*"SELECT E.employee_name, E.employee_number, E.date_of_joining, E.date_of_leaving, SUM(S.amount) " +
+        String query = /*"SELECT employee_name,employee_number,sum(date_of_joining),sum(date_of_leaving),sum(salary) FROM "+ EMPLOYEE_DATABASE_NAME
+                + " WHERE employee_number = " + employeeNumber + ";";*/
+                "SELECT E.employee_name, E.employee_number, E.date_of_joining, E.date_of_leaving, SUM(S.amount) " +
                 "FROM "+ EMPLOYEE_DATABASE_NAME+" E INNER JOIN "+ SALARY_DATABASE_NAME +" S "+
                 "ON E.employee_number = S.employee_number " +
-                "WHERE E.employee_number = " + employeeNumber + " GROUP BY E.employee_number;";*/
+                "WHERE E.employee_number = " + employeeNumber + " GROUP BY E.employee_number;";
 
         Cursor cursor = database.rawQuery(query, null);
 

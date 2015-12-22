@@ -158,16 +158,19 @@ public class ToolFragment extends Fragment {
                 btn_addDetails.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View view) {
-                        String item = etItem.getText().toString();
-                        String details = etDetails.getText().toString();
-                        int quantity = Integer.parseInt(etQuantity.getText().toString());
-                        float price = Float.parseFloat(etPrice.getText().toString());
+                        ViewGroup group = (ViewGroup)dialog.findViewById(R.id.addToolItem_parent);
+                        if(CommonUtils.validForm(group)){
+                            String item = etItem.getText().toString();
+                            String details = etDetails.getText().toString();
+                            int quantity = Integer.parseInt(etQuantity.getText().toString());
+                            float price = Float.parseFloat(etPrice.getText().toString());
 
-                        ToolItem toolItem = new ToolItem(item, details, quantity, price);
-                        toolItems.add(toolItem);
-                        list_tool_adapter.notifyDataSetChanged();
+                            ToolItem toolItem = new ToolItem(item, details, quantity, price);
+                            toolItems.add(toolItem);
+                            list_tool_adapter.notifyDataSetChanged();
 
-                        dialog.dismiss();
+                            dialog.dismiss();
+                        }
                     }
                 });
 

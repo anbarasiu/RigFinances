@@ -142,13 +142,13 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
         if(resultCode == 101){
             if(requestCode == DIALOG_DATE_FROM){
                 String date = data.getStringExtra("entryDate");
-                Integer date_num = Integer.parseInt(CommonUtils.formatDateEntry(date1));
+                Integer date_num = Integer.parseInt(CommonUtils.formatDateEntry(date));
                 entryDateFrom = date_num;
                 tvFrom.setText(data.getStringExtra("entryDate"));
             }
             else if(requestCode == DIALOG_DATE_TO){
                 String date = data.getStringExtra("entryDate");
-                Integer date_num=Integer.parseInt(CommonUtils.formatDateEntry(date1));
+                Integer date_num=Integer.parseInt(CommonUtils.formatDateEntry(date));
                 entryDateTo = date_num;
                 tvTo.setText(data.getStringExtra("entryDate"));
             }
@@ -253,6 +253,7 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
             tableColumn.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
             tableColumn.setText(columnNames[j].replace('_', ' ').toUpperCase());
             tableColumn.setTextColor(Color.BLACK);
+            tableColumn.setPadding(2, 0, 2, 0);
             tableRowHeader.addView(tableColumn);
         }
         tableLayout.addView(tableRowHeader);
@@ -268,6 +269,7 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
                 tableColumn.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
                 tableColumn.setText(cResults.getString(j));
                 tableColumn.setTextColor(Color.BLACK);
+                tableColumn.setPadding(2, 0, 2, 0);
                 tableRow.addView(tableColumn);
             }
             cResults.moveToNext();
