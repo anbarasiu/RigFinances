@@ -103,7 +103,7 @@ public class AddItemListAdapter extends BaseAdapter {
                 if(convertView == null){
                     convertView = inflater.inflate(R.layout.item_tool, null);
                     convertView.setTag(holder);
-                } else{
+                } else {
                     holder = (ViewHolder) convertView.getTag();
                 }
 
