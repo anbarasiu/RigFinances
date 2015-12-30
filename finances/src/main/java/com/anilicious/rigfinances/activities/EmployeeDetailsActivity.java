@@ -2,7 +2,6 @@ package com.anilicious.rigfinances.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -39,23 +38,6 @@ import java.util.Calendar;
 
 public class EmployeeDetailsActivity extends ActionBarActivity implements ActionBar.TabListener {
 
-    EditText etDate;
-    EditText etDoj;
-    EditText etDol;
-
-    static final int DATE_DIALOG_ID = 1;
-    private int pHour;
-    private int pMinute;
-    private int currentYear;
-    private int currentMonth;
-    private int currentDate;
-
-    SharedPreferences sharedPrefs;
-
-    private static final int DATE_FIELD_ID = 1;
-    private static final int DOJ_FIELD_ID = 2;
-    private static final int DOL_FIELD_ID = 3;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,16 +63,29 @@ public class EmployeeDetailsActivity extends ActionBarActivity implements Action
 
         switch(tab.getPosition()){
             case 0:
-                EmployeeDetailsDateFragment employeeDetailsDateFragment = new EmployeeDetailsDateFragment();
-                ft.replace(fragmentContainer, employeeDetailsDateFragment);
-                ft.commit();
-                break;
-            case 1:
                 EmployeeDetailsRegistrationFragment employeeDetailsRegistrationFragment = new EmployeeDetailsRegistrationFragment();
                 ft.replace(fragmentContainer, employeeDetailsRegistrationFragment);
                 ft.commit();
                 break;
+            case 1:
+                EmployeeDetailsDateFragment employeeDetailsDateFragment = new EmployeeDetailsDateFragment();
+                ft.replace(fragmentContainer, employeeDetailsDateFragment);
+                ft.commit();
+                break;
         }
+    }
+
+    /*
+     *  Reset form once Submitted button is clicked
+     */
+    public void clearForm(){
+        ViewGroup group = (ViewGroup)findViewById(R.id.employee_details_container);
+        CommonUtils.clearForm(group);
+    }
+
+    public boolean validForm(){
+        ViewGroup group = (ViewGroup)findViewById(R.id.employee_details_container);
+        return CommonUtils.validForm(group);
     }
 
     @Override

@@ -175,6 +175,7 @@ public class DBAdapter extends SQLiteOpenHelper{
             "Date" + " integer, " +
             "employee_name" + " text, " +
             "employee_number" + " INTEGER, " +
+            "designation" + " text, " +
             "date_of_joining" + " integer, " +
             "date_of_leaving" + " integer, " +
             "current_balance" + " REAL, " +
@@ -448,16 +449,24 @@ public class DBAdapter extends SQLiteOpenHelper{
     public void insertEmployee(Employee employee){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("Date", employee.getDate());
         values.put("employee_name", employee.getName());
         values.put("employee_number", employee.getNumber());
-        values.put("date_of_joining", employee.getDateOfJoining());
-        values.put("date_of_leaving", employee.getDateOfLeaving());
-        values.put("current_balance", employee.getCurrentBalance());
-        values.put("remarks", employee.getRemarks());
+        values.put("designation", employee.getDesignation());
         values.put("salary", employee.getSalary());
 
         database.insert(EMPLOYEE_DATABASE_NAME, null, values);
+        database.close();
+    }
+
+    // TODO
+    public void updateEmployee(Employee employee){
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("Date", employee.getDate());
+        values.put("date_of_joining", employee.getDateOfJoining());
+        values.put("date_of_leaving", employee.getDateOfLeaving());
+
+        database.update(EMPLOYEE_DATABASE_NAME, values, "employee_number = ?", new String[] {Integer.toString(employee.getNumber())});
         database.close();
     }
 

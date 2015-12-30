@@ -12,6 +12,15 @@ public class Employee {
     private double currentBalance;
     private String remarks;
     private double salary;
+    private String designation;
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
 
     public Integer getDate() {
         return date;
