@@ -17,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.app.DatePickerDialog;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.anilicious.rigfinances.activities.EmployeeDetailsActivity;
 import com.anilicious.rigfinances.activities.MainActivity;
@@ -46,6 +47,7 @@ public class EmployeeDetailsDateFragment extends Fragment {
     private int currentDate;
 
     SharedPreferences sharedPrefs;
+    DBAdapter dbAdapter;
 
     private static final int DATE_FIELD_ID = 1;
     private static final int DOJ_FIELD_ID = 2;
@@ -69,14 +71,14 @@ public class EmployeeDetailsDateFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                if(((VouchersActivity)getActivity()).validForm()){
+                if(((EmployeeDetailsActivity)getActivity()).validForm()){
                     int employeeNumber = Integer.parseInt(etEmployeeNumber.getText().toString());
                     String lastDateOfJoiningOrLeaving = etDate.getText().toString();
                     String date2 = etDoj.getText().toString();
                     String date3 = etDol.getText().toString();
                     Integer date = Integer.parseInt(CommonUtils.formatDateEntry(lastDateOfJoiningOrLeaving));
                     Integer dateOfJoining = Integer.parseInt(CommonUtils.formatDateEntry(date2));
-                    Integer dateOfLeaving=Integer.parseInt(CommonUtils.formatDateEntry(date3));
+                    Integer dateOfLeaving = Integer.parseInt(CommonUtils.formatDateEntry(date3));
 
                     Employee employee = new Employee();
                     employee.setDate(date);
@@ -85,7 +87,11 @@ public class EmployeeDetailsDateFragment extends Fragment {
                     employee.setDateOfLeaving(dateOfLeaving);
 
                     // Insert to DB
-                    DBAdapter dbAdapter = DBAdapter.getInstance(getActivity().getApplicationContext());
+                    dbAdapter = DBAdapter.getInstance(getActivity().getApplicationContext());
+                    if(!employeeExists(employeeNumber)){
+                        Toast.makeText(getActivity().getApplicationContext(), "Employee not found. Please check if Employee Number valid / Employee has been registered.", Toast.LENGTH_LONG).show();
+                        return;
+                    }
                     dbAdapter.updateEmployee(employee);
 
                     // Clear the Form
@@ -107,14 +113,13 @@ public class EmployeeDetailsDateFragment extends Fragment {
         /* Get the current time */
         final Calendar cal = Calendar.getInstance();
         currentYear = cal.get(Calendar.YEAR);
-        currentMonth = cal.get(Calendar.MONTH);
+        currentMonth = cal.get(Calendar.MONTH) + 1;
         currentDate = cal.get(Calendar.DAY_OF_MONTH);
 
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new DatePickerDialog(getActivity(), mDateSetListener, currentYear, currentMonth, currentDate).show();
-                //showDialog(DATE_FIELD_ID);
             }
         });
 
@@ -122,7 +127,6 @@ public class EmployeeDetailsDateFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 new DatePickerDialog(getActivity(), mDateOfJoiningSetListener, currentYear, currentMonth, currentDate).show();
-                //showDialog(DOJ_FIELD_ID);
             }
         });
 
@@ -130,32 +134,18 @@ public class EmployeeDetailsDateFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 new DatePickerDialog(getActivity(), mDateOfLeavingSetListener, currentYear, currentMonth, currentDate).show();
-                //showDialog(DOL_FIELD_ID);
             }
         });
     }
 
-    /*@Override
-    protected Dialog onCreateDialog(int id) {
-        switch(id){
-            case DATE_FIELD_ID:
-                return new DatePickerDialog(getActivity().getApplicationContext(), mDateSetListener, currentYear, currentMonth, currentDate);
-            case DOJ_FIELD_ID:
-                return new DatePickerDialog(getActivity().getApplicationContext(), mDateOfJoiningSetListener, currentYear, currentMonth, currentDate);
-            case DOL_FIELD_ID:
-                return new DatePickerDialog(getActivity().getApplicationContext(), mDateOfLeavingSetListener, currentYear, currentMonth, currentDate);
-        }
-        return null;
-    }*/
-
-    // TODO: Is there a better way instead of these multiple callbacks for different datepicker fields?
+   // TODO: Is there a better way instead of these multiple callbacks for different datepicker fields?
 
    /* Callback received when the user "picks" a date in the dialog */
     private DatePickerDialog.OnDateSetListener mDateSetListener =
             new DatePickerDialog.OnDateSetListener() {
                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                     etDate.setText(new StringBuilder().append(day).append("/")
-                            .append(month).append("/").append(year).toString());
+                            .append(month + 1).append("/").append(year).toString());
                 }
             };
 
@@ -163,7 +153,7 @@ public class EmployeeDetailsDateFragment extends Fragment {
             new DatePickerDialog.OnDateSetListener() {
                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                     etDoj.setText(new StringBuilder().append(day).append("/")
-                            .append(month).append("/").append(year).toString());
+                            .append(month + 1).append("/").append(year).toString());
                 }
             };
 
@@ -171,7 +161,7 @@ public class EmployeeDetailsDateFragment extends Fragment {
             new DatePickerDialog.OnDateSetListener() {
                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                     etDol.setText(new StringBuilder().append(day).append("/")
-                            .append(month).append("/").append(year).toString());
+                            .append(month + 1).append("/").append(year).toString());
                 }
             };
 
@@ -187,5 +177,12 @@ public class EmployeeDetailsDateFragment extends Fragment {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean employeeExists(int employeeNumber){
+        if(dbAdapter.retrieveEmployeeDetails(employeeNumber).size() > 0){
+            return true;
+        }
+        return false;
     }
 }
