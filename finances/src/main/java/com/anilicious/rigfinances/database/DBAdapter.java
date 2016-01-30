@@ -49,7 +49,8 @@ public class DBAdapter extends SQLiteOpenHelper{
             "litres" + " number, " +
             "amount" + " number, " +
             "spent_by" + " text, " +
-            "diesel_in_hand" + " number);"; // DIH = DIH+litres - find out how to implement formulae
+            "diesel_in_hand" + " number, " +
+            "Date_entered" + " number);"; // DIH = DIH+litres - find out how to implement formulae
 
     private static final String COOK_DATABASE_NAME = "COOK";
     private static final String COOK_DATABASE_CREATE = "CREATE TABLE " + COOK_DATABASE_NAME + "(" +
@@ -58,7 +59,8 @@ public class DBAdapter extends SQLiteOpenHelper{
             "item" + " text, " +
             "quantity" + " number, " +
             "amount" + " number, " +
-            "spent_by" + " text);";
+            "spent_by" + " text, " +
+            "Date_entered" + " number);";
 
     /*private static final String COOKITEM_DATABASE_NAME = "COOKITEM";
     private static final String COOKITEM_DATABASE_CREATE = "CREATE TABLE " + COOKITEM_DATABASE_NAME + "(" +
@@ -74,7 +76,8 @@ public class DBAdapter extends SQLiteOpenHelper{
             "Date" + " integer, " +
             "expense" + " text, " +
             "amount" + " number, " +
-            "spent_by" + " text);";
+            "spent_by" + " text, " +
+            "Date_entered" + " number);";
 
     private static final String MAINTENANCE_DATABASE_NAME = "MAINTENANCE";
     private static final String MAINTENANCE_DATABASE_CREATE = "CREATE TABLE " + MAINTENANCE_DATABASE_NAME + "(" +
@@ -85,7 +88,8 @@ public class DBAdapter extends SQLiteOpenHelper{
             "engine_hours" + " real, " +
             "amount" + " number, " +
             "reason" + " text, " +
-            "spent_by" + " text);";
+            "spent_by" + " text, " +
+            "Date_entered" + " number);";
 
     private static final String TOOL_DATABASE_NAME = "TOOL";
     private static final String TOOL_DATABASE_CREATE = "CREATE TABLE " + TOOL_DATABASE_NAME + "(" +
@@ -95,7 +99,8 @@ public class DBAdapter extends SQLiteOpenHelper{
             "detail" + " text, " +
             "quantity" + " number, " +
             "amount" + " number, " +
-            "spent_by" + " text);";
+            "spent_by" + " text, " +
+            "Date_entered" + " number);";
 
     /*private static final String TOOLITEM_DATABASE_NAME = "TOOLITEM";
     private static final String TOOLITEM_DATABASE_CREATE = "CREATE TABLE " + TOOLITEM_DATABASE_NAME + "(" +
@@ -116,7 +121,8 @@ public class DBAdapter extends SQLiteOpenHelper{
             "type" + " text, " +
             "amount" + " real, " +
             "spent_by" + " text, " +
-            "remarks" + " text);";
+            "remarks" + " text, " +
+            "Date_entered" + " number);";
 
     private static final String SALARY_DATABASE_NAME = "SALARY";
     private static final String SALARY_DATABASE_CREATE = "CREATE TABLE " + SALARY_DATABASE_NAME + "(" +
@@ -126,7 +132,8 @@ public class DBAdapter extends SQLiteOpenHelper{
             "employee_name" + " text, " +
             "amount" + " number, " +
             "spent_by" + " text, " +
-            "reason" + " text);";
+            "reason" + " text, " +
+            "Date_entered" + " number);";
 
     private static final String SITE_DATABASE_NAME = "SITE_EXPENSES";
     private static final String SITE_DATABASE_CREATE = "CREATE TABLE " + SITE_DATABASE_NAME + "(" +
@@ -135,7 +142,8 @@ public class DBAdapter extends SQLiteOpenHelper{
             "work_type" + " text, " +
             "amount" + " number, " +
             "remarks" + " text, " +
-            "spent_by" + " text);";
+            "spent_by" + " text, " +
+            "Date_entered" + " number);";
 
     private static final String CREDIT_DATABASE_NAME = "CREDIT";
     private static final String CREDIT_DATABASE_CREATE = "CREATE TABLE " + CREDIT_DATABASE_NAME + "(" +
@@ -144,7 +152,8 @@ public class DBAdapter extends SQLiteOpenHelper{
             "amount_received" + " number, " +
             "received_from" + " text, " +
             "received_by" + " text, " +
-            "remarks" + " text) ;" ;
+            "remarks" + " text, " +
+            "Date_entered" + " number);";
             /*"amount_in_credit" + " text)*/
 
     private static final String BORE_DATABASE_NAME = "BORE_DETAILS";
@@ -163,8 +172,9 @@ public class DBAdapter extends SQLiteOpenHelper{
             "commission" + " text, " +
             "engine_running_time" + " text, " +
             /*"total_amount" + " text, " +*/
-            "diesel_used" + " number);"
-            /*"last_engine_hr_end" + " text);"*/;
+            "diesel_used" + " number, " +
+            "Date_entered" + " number);";
+            /*"last_engine_hr_end" + " text);"*/
 
 
     private static final String EMPLOYEE_DATABASE_NAME = "EMPLOYEE_DETAILS";
@@ -180,7 +190,8 @@ public class DBAdapter extends SQLiteOpenHelper{
             "date_of_leaving" + " integer, " +
             "current_balance" + " REAL, " +
             "remarks" + " text, " +
-            "salary" + " REAL);";
+            "salary" + " REAL, " +
+            "Date_entered" + " number);";
     private static final String USER_DATABASE_CREATE = "CREATE TABLE " + USER_DATABASE_NAME + "(" +
             "_id " + "INTEGER primary key AUTOINCREMENT, " + // 'U' + number
             "user_name" + " text, " +
