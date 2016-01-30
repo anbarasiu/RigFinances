@@ -38,19 +38,22 @@ public final class CommonUtils {
     }
 
     public static String formatDateEntry(String date){
+        if(date.isEmpty()){
+            return "0";
+        }
         //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         //return dateFormat.format(date);
-        String[] test = date.split("/");
-        if(test[1].length() <= 1)
+        String[] temp = date.split("/");
+        if(temp[1].length() <= 1)
         {
-            test[1] = "0" + test[1];
+            temp[1] = "0" + temp[1];
         }
-        if(test[0].length() <= 1)
+        if(temp[0].length() <= 1)
         {
-            test[0] = "0" + test[0];
+            temp[0] = "0" + temp[0];
         }
-        String date1 = test[2] + test[1] + test[0];
-        return date1;
+        String formattedDate = temp[2] + temp[1] + temp[0];
+        return formattedDate;
     }
 
     /*

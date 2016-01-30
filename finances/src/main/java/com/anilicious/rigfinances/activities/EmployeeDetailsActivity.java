@@ -97,4 +97,14 @@ public class EmployeeDetailsActivity extends ActionBarActivity implements Action
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
+            homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeIntent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
