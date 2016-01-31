@@ -12,10 +12,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.app.DatePickerDialog;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -29,6 +32,7 @@ import com.anilicious.rigfinances.finances.R;
 import com.anilicious.rigfinances.utils.CommonUtils;
 
 import java.util.Calendar;
+import java.util.HashMap;
 
 /**
  * Created by ANBARASI on 12/29/15.
@@ -45,6 +49,9 @@ public class EmployeeDetailsDateFragment extends Fragment {
     private int currentYear;
     private int currentMonth;
     private int currentDate;
+    Spinner employee;
+    int employeeNumber;
+    String employeeName;
 
     SharedPreferences sharedPrefs;
     DBAdapter dbAdapter;
@@ -58,21 +65,26 @@ public class EmployeeDetailsDateFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_employee_details, null);
 
         Button btnSubmit = (Button)view.findViewById(R.id.btn_submit);
+        employee = (Spinner)view.findViewById(R.id.spinner);
         final EditText etEmployeeNumber = (EditText)view.findViewById(R.id.editText1);
         final Switch sEntryType = (Switch)view.findViewById(R.id.switch1);
         etDoj = (EditText)view.findViewById(R.id.editText4);
         etDol = (EditText)view.findViewById(R.id.editText5);
         etDate = (EditText)view.findViewById(R.id.editText6);
 
+        dbAdapter = DBAdapter.getInstance(getActivity().getApplicationContext());
+
         // Setup Date Picker
         setupPickers();
+
+        // Load Existing Employees
+        loadEmployees();
 
         // On Form Submission
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 if(((EmployeeDetailsActivity)getActivity()).validForm()){
-                    int employeeNumber = Integer.parseInt(etEmployeeNumber.getText().toString());
                     String lastDateOfJoiningOrLeaving = etDate.getText().toString();
                     String date2 = etDoj.getText().toString();
                     String date3 = etDol.getText().toString();
@@ -83,11 +95,11 @@ public class EmployeeDetailsDateFragment extends Fragment {
                     Employee employee = new Employee();
                     employee.setDate(date);
                     employee.setNumber(employeeNumber);
+                    employee.setName(employeeName);
                     employee.setDateOfJoining(dateOfJoining);
                     employee.setDateOfLeaving(dateOfLeaving);
 
                     // Insert to DB
-                    dbAdapter = DBAdapter.getInstance(getActivity().getApplicationContext());
                     if(!employeeExists(employeeNumber)){
                         Toast.makeText(getActivity().getApplicationContext(), "Employee not found. Please check if Employee Number valid / Employee has been registered.", Toast.LENGTH_LONG).show();
                         return;
@@ -96,7 +108,7 @@ public class EmployeeDetailsDateFragment extends Fragment {
 
                     // Clear the Form
                     ((EmployeeDetailsActivity)getActivity()).clearForm();
-            }
+                }
             }
         });
 
@@ -177,6 +189,35 @@ public class EmployeeDetailsDateFragment extends Fragment {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void loadEmployees(){
+        String[] employees = dbAdapter.retrieveExistingEmployees();
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, employees);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        employee.setAdapter(arrayAdapter);
+
+        employee.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String[] selectedEmp = adapterView.getSelectedItem().toString().split(" : ");
+                employeeNumber = Integer.parseInt(selectedEmp[0]);
+                employeeName = selectedEmp[1];
+
+                HashMap<String, String> employeeDetails = dbAdapter.retrieveEmployeeDetails(employeeNumber);
+                if(employeeDetails.get("joining_date") != null && !employeeDetails.get("joining_date").isEmpty()){
+                    etDoj.setText(employeeDetails.get("joining_date"));
+                }
+                if(employeeDetails.get("joining_date") != null && !employeeDetails.get("joining_date").isEmpty()){
+                    etDol.setText(employeeDetails.get("leaving_date"));
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     public boolean employeeExists(int employeeNumber){

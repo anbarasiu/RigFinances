@@ -25,6 +25,7 @@ import com.anilicious.rigfinances.beans.User;
 import com.anilicious.rigfinances.utils.CommonUtils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -470,6 +471,26 @@ public class DBAdapter extends SQLiteOpenHelper{
     }
 
     // TODO
+
+    public String[] retrieveExistingEmployees(){
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.query(EMPLOYEE_DATABASE_NAME,
+                new String[] {"employee_name","employee_number"},
+                null,
+                null,
+                null, null, null);
+
+        HashMap<Integer, String> employeesMap = new HashMap<Integer, String>();
+        while(cursor.moveToNext()){
+            employeesMap.put(cursor.getInt(1), cursor.getInt(1) + " : " + cursor.getString(0));
+        }
+
+        Collection<String> vals = employeesMap.values();
+        String[] employees = vals.toArray(new String[vals.size()]);
+
+        return employees;
+    }
+
     public void updateEmployee(Employee employee){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
