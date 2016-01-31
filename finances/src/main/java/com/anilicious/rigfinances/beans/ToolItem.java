@@ -11,7 +11,15 @@ public class ToolItem {
     private int quantity;
     private float amount;
     private float totalAmount;
+    private int inserted_date;
 
+    public Integer getInsertedDate() {
+        return (inserted_date);
+    }
+
+    public void setInsertedDate(Integer inserted_date) {
+        this.inserted_date = inserted_date;
+    }
     public ToolItem(String item, String details, int quantity, float amount){
         this.item = item;
         this.details = details;

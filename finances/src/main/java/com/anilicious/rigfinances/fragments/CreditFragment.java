@@ -21,6 +21,9 @@ import com.anilicious.rigfinances.finances.R;
 import com.anilicious.rigfinances.utils.CommonUtils;
 import com.anilicious.rigfinances.utils.PickerFragment;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * Created by ANBARASI on 11/11/14.
  */
@@ -48,6 +51,11 @@ public class CreditFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
+                Calendar inserted_date_c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+                String formattedDate = df.format(inserted_date_c.getTime());
+                int inserted_date = Integer.parseInt(formattedDate);
                 if(((VouchersActivity)getActivity()).validForm()){ // TODO: Test validation
                     int amountReceived = Integer.parseInt(etAmountReceived.getText().toString());
                     String amountReceivedFrom = etAmountReceivedFrom.getText().toString();
@@ -60,7 +68,7 @@ public class CreditFragment extends Fragment {
                     credit.setReceivedBy(receivedBy);
                     credit.setRemarks(remarks);
                     credit.setDate(entryDate);
-
+                    credit.setInsertedDate(inserted_date);
                     // Insert to DB
                     DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
                     dbAdapter.insertCredit(credit);

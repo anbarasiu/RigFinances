@@ -18,6 +18,9 @@ import com.anilicious.rigfinances.beans.Maintenance;
 import com.anilicious.rigfinances.database.DBAdapter;
 import com.anilicious.rigfinances.finances.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * Created by ANBARASI on 11/11/14.
  */
@@ -40,6 +43,11 @@ public class MaintenanceFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
+                Calendar inserted_date_c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+                String formattedDate = df.format(inserted_date_c.getTime());
+                int inserted_date = Integer.parseInt(formattedDate);
                 if(((VouchersActivity)getActivity()).validForm()){ // TODO: Test validation
                     boolean service = swService.isChecked();
                     float totalAmount = Float.parseFloat(etTotalAmount.getText().toString());
@@ -80,6 +88,7 @@ public class MaintenanceFragment extends Fragment {
                         maintenance.setReason(remarks);
                         maintenance.setSpentBy(spentBy);
                         maintenance.setWorkType(workType);
+                        maintenance.setInsertedDate(inserted_date);
                         String date = parent.getEntryDate().toString();
                         String[] test=date.split("/");
 

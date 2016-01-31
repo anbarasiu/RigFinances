@@ -14,6 +14,9 @@ import com.anilicious.rigfinances.beans.Site;
 import com.anilicious.rigfinances.database.DBAdapter;
 import com.anilicious.rigfinances.finances.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * Created by ANBARASI on 11/11/14.
  */
@@ -33,6 +36,11 @@ public class SiteFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
+                Calendar inserted_date_c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+                String formattedDate = df.format(inserted_date_c.getTime());
+                int inserted_date = Integer.parseInt(formattedDate);
                 if(((VouchersActivity)getActivity()).validForm()){ // TODO: Test validation
                     String workType = etWorkType.getText().toString();
                     String remarks = etRemarks.getText().toString();
@@ -59,7 +67,7 @@ public class SiteFragment extends Fragment {
                     String date1 =(test[2]+test[1]+test[0]);
                     Integer Site_date=Integer.parseInt(date1);
                     site.setDate(Site_date);
-
+                    site.setInsertedDate(inserted_date);
                     // Insert to DB
                     DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
                     dbAdapter.insertSite(site);

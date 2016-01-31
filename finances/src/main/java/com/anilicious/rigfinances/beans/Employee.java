@@ -13,7 +13,15 @@ public class Employee {
     private String remarks;
     private double salary;
     private String designation;
+    private int inserted_date;
 
+    public Integer getInsertedDate() {
+        return (inserted_date);
+    }
+
+    public void setInsertedDate(Integer inserted_date) {
+        this.inserted_date = inserted_date;
+    }
     public String getDesignation() {
         return designation;
     }

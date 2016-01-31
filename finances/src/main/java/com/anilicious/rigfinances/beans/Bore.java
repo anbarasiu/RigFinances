@@ -17,7 +17,15 @@ public class Bore {
     private float commission;
     private String engineRunningTime;
     private double dieselUsed;
+    private int inserted_date;
 
+    public Integer getInsertedDate() {
+        return (inserted_date);
+    }
+
+    public void setInsertedDate(Integer inserted_date) {
+        this.inserted_date = inserted_date;
+    }
 
     public Integer getDate() {
         return Bore_Date;

@@ -19,7 +19,10 @@ import com.anilicious.rigfinances.beans.CookItem;
 import com.anilicious.rigfinances.database.DBAdapter;
 import com.anilicious.rigfinances.finances.R;
 import com.anilicious.rigfinances.utils.CommonUtils;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -45,6 +48,10 @@ public class CookFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                Calendar inserted_date_c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+                String formattedDate = df.format(inserted_date_c.getTime());
+                int inserted_date = Integer.parseInt(formattedDate);
                 if(((VouchersActivity)getActivity()).validForm()){ // TODO: Test validation
                     //float totalAmount = Float.parseFloat(etTotalAmount.getText().toString());
                     String spentBy = etSpentBy.getText().toString();
@@ -76,7 +83,7 @@ public class CookFragment extends Fragment {
                         cook.setItem(item);
                         cook.setQuantity(quantity);
                         cook.setPrice(price);
-
+                        cook.setInsertedDate(inserted_date);
                         String date = parent.getEntryDate().toString();
                         Integer Cook_date = Integer.parseInt(CommonUtils.formatDateEntry(date));  // TODO: Test
                         cook.setDate(Cook_date);

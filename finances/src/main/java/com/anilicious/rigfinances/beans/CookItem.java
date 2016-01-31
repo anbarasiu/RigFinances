@@ -7,7 +7,15 @@ public class CookItem {
     private String item;
     private int quantity;
     private float amount;
+    private int inserted_date;
 
+    public Integer getInsertedDate() {
+        return (inserted_date);
+    }
+
+    public void setInsertedDate(Integer inserted_date) {
+        this.inserted_date = inserted_date;
+    }
     public CookItem(String item, int quantity, float amount){
         this.item = item;
         this.quantity = quantity;

@@ -11,7 +11,15 @@ public class Credit {
     private String from;
     private String receivedBy;
     private String remarks;
+    private int inserted_date;
 
+    public Integer getInsertedDate() {
+        return (inserted_date);
+    }
+
+    public void setInsertedDate(Integer inserted_date) {
+        this.inserted_date = inserted_date;
+    }
     public Integer getDate() {
         return date;
     }

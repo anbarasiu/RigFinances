@@ -9,6 +9,15 @@ public class Site {
     private float totalAmount;
     private String spentBy;
     private Integer date;
+    private int inserted_date;
+
+    public Integer getInsertedDate() {
+        return (inserted_date);
+    }
+
+    public void setInsertedDate(Integer inserted_date) {
+        this.inserted_date = inserted_date;
+    }
 
     public Integer getDate() {
         return date;

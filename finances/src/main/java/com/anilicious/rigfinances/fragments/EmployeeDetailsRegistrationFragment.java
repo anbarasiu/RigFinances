@@ -25,6 +25,7 @@ import com.anilicious.rigfinances.database.DBAdapter;
 import com.anilicious.rigfinances.finances.R;
 import com.anilicious.rigfinances.utils.CommonUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -46,6 +47,11 @@ public class EmployeeDetailsRegistrationFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
+                Calendar inserted_date_c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+                String formattedDate = df.format(inserted_date_c.getTime());
+                int inserted_date = Integer.parseInt(formattedDate);
                 if(((EmployeeDetailsActivity)getActivity()).validForm()){
                     int employeeNumber = Integer.parseInt(etEmployeeNumber.getText().toString());
                     String employeeName = etEmployeeName.getText().toString();
@@ -57,7 +63,7 @@ public class EmployeeDetailsRegistrationFragment extends Fragment {
                     employee.setName(employeeName);
                     employee.setDesignation(designation);
                     employee.setSalary(salary);
-
+                    employee.setInsertedDate(inserted_date);
                     // Insert to DB
                     DBAdapter dbAdapter = DBAdapter.getInstance(getActivity().getApplicationContext());
                     dbAdapter.insertEmployee(employee);

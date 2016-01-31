@@ -12,7 +12,15 @@ public class Salary {
     private float amount;
     private String spentBy;
     private String reason;
+    private int inserted_date;
 
+    public Integer getInsertedDate() {
+        return (inserted_date);
+    }
+
+    public void setInsertedDate(Integer inserted_date) {
+        this.inserted_date = inserted_date;
+    }
     public Integer getDate() {
         return (date);
     }

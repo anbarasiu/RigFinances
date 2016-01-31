@@ -31,6 +31,7 @@ import com.anilicious.rigfinances.database.DBAdapter;
 import com.anilicious.rigfinances.finances.R;
 import com.anilicious.rigfinances.utils.CommonUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -84,6 +85,11 @@ public class EmployeeDetailsDateFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
+                Calendar inserted_date_c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+                String formattedDate = df.format(inserted_date_c.getTime());
+                int inserted_date = Integer.parseInt(formattedDate);
                 if(((EmployeeDetailsActivity)getActivity()).validForm()){
                     String lastDateOfJoiningOrLeaving = etDate.getText().toString();
                     String date2 = etDoj.getText().toString();
@@ -98,7 +104,7 @@ public class EmployeeDetailsDateFragment extends Fragment {
                     employee.setName(employeeName);
                     employee.setDateOfJoining(dateOfJoining);
                     employee.setDateOfLeaving(dateOfLeaving);
-
+                    employee.setInsertedDate(inserted_date);
                     // Insert to DB
                     if(!employeeExists(employeeNumber)){
                         Toast.makeText(getActivity().getApplicationContext(), "Employee not found. Please check if Employee Number valid / Employee has been registered.", Toast.LENGTH_LONG).show();

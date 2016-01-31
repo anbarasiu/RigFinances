@@ -16,6 +16,9 @@ import com.anilicious.rigfinances.beans.Pipe;
 import com.anilicious.rigfinances.database.DBAdapter;
 import com.anilicious.rigfinances.finances.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * Created by ANBARASI on 11/11/14.
  */
@@ -71,7 +74,10 @@ public class PipeFragment extends Fragment {
                             {
                                 pipeLength = Double.parseDouble(etPipeLength.getText().toString());
                                 DebitFragment parent = (DebitFragment)getParentFragment();
-
+                                Calendar inserted_date_c = Calendar.getInstance();
+                                SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+                                String formattedDate = df.format(inserted_date_c.getTime());
+                                int inserted_date = Integer.parseInt(formattedDate);
                                 Pipe pipe = new Pipe();
                                 pipe.setLength(pipeLength);
                                 pipe.setAmount(totalAmount);
@@ -92,7 +98,7 @@ public class PipeFragment extends Fragment {
                                 String date1 =(test[2]+test[1]+test[0]);
                                 Integer Pipe_date=Integer.parseInt(date1);
                                 pipe.setDate(Pipe_date);
-
+                                pipe.setInsertedDate(inserted_date);
                                 // Insert to DB
                                 DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
                                 dbAdapter.insertPipe(pipe);

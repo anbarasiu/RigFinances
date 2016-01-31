@@ -19,7 +19,9 @@ import com.anilicious.rigfinances.database.DBAdapter;
 import com.anilicious.rigfinances.finances.R;
 import com.anilicious.rigfinances.utils.CommonUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -42,6 +44,11 @@ public class ToolFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
+                Calendar inserted_date_c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+                String formattedDate = df.format(inserted_date_c.getTime());
+                int inserted_date = Integer.parseInt(formattedDate);
                 if(((VouchersActivity)getActivity()).validForm()){
     //                float totalAmount = Float.parseFloat(etTotalAmount.getText().toString());
                     String spentBy = etSpentBy.getText().toString();
@@ -85,7 +92,7 @@ public class ToolFragment extends Fragment {
                         String date1 =(test[2]+test[1]+test[0]);
                         Integer Tool_date=Integer.parseInt(date1);
                         tool.setDate(Tool_date);
-
+                        tool.setInsertedDate(inserted_date);
                         //ToolItem toolItem = new ToolItem(item, details, quantity, price);
                         //toolItems.add(toolItem);
 

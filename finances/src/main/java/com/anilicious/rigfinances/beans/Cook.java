@@ -14,7 +14,15 @@ public class Cook {
     private float price;
     private String spentBy;
     private float amount;
+    private int inserted_date;
 
+    public Integer getInsertedDate() {
+        return (inserted_date);
+    }
+
+    public void setInsertedDate(Integer inserted_date) {
+        this.inserted_date = inserted_date;
+    }
     public float getAmount() {
         return amount;
     }

@@ -17,6 +17,8 @@ import com.anilicious.rigfinances.database.DBAdapter;
 import com.anilicious.rigfinances.finances.R;
 import com.anilicious.rigfinances.utils.CommonUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 
 /**
@@ -42,6 +44,11 @@ public class SalaryFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
+                Calendar inserted_date_c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+                String formattedDate = df.format(inserted_date_c.getTime());
+                int inserted_date = Integer.parseInt(formattedDate);
                 if(((VouchersActivity)getActivity()).validForm()){
                     //String employeeName = etEmployeeName.getText().toString();
                     int employeeNumber = Integer.parseInt(etEmployeeNumber.getText().toString());
@@ -62,7 +69,7 @@ public class SalaryFragment extends Fragment {
                     salary.setReason(remarks);
                     salary.setAmount(totalAmount);
                     salary.setSpentBy(spentBy);
-
+                    salary.setInsertedDate(inserted_date);
                     String date = parent.getEntryDate().toString();
                     Integer salary_date = Integer.parseInt(CommonUtils.formatDateEntry(date));
                     salary.setDate(salary_date);

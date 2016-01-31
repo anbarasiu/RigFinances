@@ -14,6 +14,9 @@ import com.anilicious.rigfinances.beans.Road;
 import com.anilicious.rigfinances.database.DBAdapter;
 import com.anilicious.rigfinances.finances.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * Created by ANBARASI on 11/11/14.
  */
@@ -32,6 +35,11 @@ public class RoadFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
+                Calendar inserted_date_c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+                String formattedDate = df.format(inserted_date_c.getTime());
+                int inserted_date = Integer.parseInt(formattedDate);
                 if(((VouchersActivity)getActivity()).validForm()){ // TODO: Test validation
                     String expense = etExpense.getText().toString();
                     int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
@@ -57,7 +65,7 @@ public class RoadFragment extends Fragment {
                     String date1 =(test[2]+test[1]+test[0]);
                     Integer Road_date=Integer.parseInt(date1);
                     road.setDate(Road_date);
-
+                    road.setInsertedDate(inserted_date);
                     // Insert to DB
                     DBAdapter dbAdapter = DBAdapter.getInstance(getActivity());
                     dbAdapter.insertRoad(road);
