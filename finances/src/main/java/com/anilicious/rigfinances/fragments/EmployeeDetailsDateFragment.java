@@ -32,6 +32,7 @@ import com.anilicious.rigfinances.finances.R;
 import com.anilicious.rigfinances.utils.CommonUtils;
 
 import java.util.Calendar;
+import java.util.HashMap;
 
 /**
  * Created by ANBARASI on 12/29/15.
@@ -202,6 +203,14 @@ public class EmployeeDetailsDateFragment extends Fragment {
                 String[] selectedEmp = adapterView.getSelectedItem().toString().split(" : ");
                 employeeNumber = Integer.parseInt(selectedEmp[0]);
                 employeeName = selectedEmp[1];
+
+                HashMap<String, String> employeeDetails = dbAdapter.retrieveEmployeeDetails(employeeNumber);
+                if(employeeDetails.get("joining_date") != null && !employeeDetails.get("joining_date").isEmpty()){
+                    etDoj.setText(employeeDetails.get("joining_date"));
+                }
+                if(employeeDetails.get("joining_date") != null && !employeeDetails.get("joining_date").isEmpty()){
+                    etDol.setText(employeeDetails.get("leaving_date"));
+                }
             }
 
             @Override
