@@ -50,7 +50,7 @@ public class DBAdapter extends SQLiteOpenHelper{
             "amount" + " number, " +
             "spent_by" + " text, " +
             "diesel_in_hand" + " number, " +
-            "Date_entered" + " number);"; // DIH = DIH+litres - find out how to implement formulae
+            "inserted_date" + " number);"; // DIH = DIH+litres - find out how to implement formulae
 
     private static final String COOK_DATABASE_NAME = "COOK";
     private static final String COOK_DATABASE_CREATE = "CREATE TABLE " + COOK_DATABASE_NAME + "(" +
@@ -294,7 +294,7 @@ public class DBAdapter extends SQLiteOpenHelper{
         values.put("litres", diesel.getLitres());
         values.put("amount", diesel.getTotalAmount());
         values.put("spent_by", diesel.getSpentBy());
-        values.put("diesel_in_hand", diesel.getDieselInHand());
+        values.put("inserted_date", diesel.getInsertedDate());
 
         database.insert(DIESEL_DATABASE_NAME, null, values);
         database.close();

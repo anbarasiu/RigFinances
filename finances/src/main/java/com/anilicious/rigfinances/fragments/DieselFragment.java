@@ -3,6 +3,7 @@ package com.anilicious.rigfinances.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,11 @@ import com.anilicious.rigfinances.activities.VouchersActivity;
 import com.anilicious.rigfinances.beans.Diesel;
 import com.anilicious.rigfinances.database.DBAdapter;
 import com.anilicious.rigfinances.finances.R;
+
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Created by ANBARASI on 9/11/14.
@@ -38,6 +44,11 @@ public class DieselFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
+                Calendar inserted_date_c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+                String formattedDate = df.format(inserted_date_c.getTime());
+                int inserted_date = Integer.parseInt(formattedDate);
                 if(((VouchersActivity)getActivity()).validForm()){
                     int litres = Integer.parseInt(etLitres.getText().toString());
                     int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
@@ -52,6 +63,7 @@ public class DieselFragment extends Fragment {
                     diesel.setTotalAmount(totalAmount);
                     diesel.setSpentBy(spentBy);
                     diesel.setDieselFor(dieselFor);
+                    diesel.setInsertedDate(inserted_date);
                     if(parent.getEntryDate().equals(""))
                     {
                         etLitres.setError("asdf");
@@ -68,6 +80,7 @@ public class DieselFragment extends Fragment {
                         {
                             test[0] = "0"+test[0];
                         }
+
                         String date1 =(test[2]+test[1]+test[0]);
                         Integer Diesel_date=Integer.parseInt(date1);
                         diesel.setDate(Diesel_date);
@@ -79,8 +92,8 @@ public class DieselFragment extends Fragment {
                         // Clear the Form
                         ((VouchersActivity)getActivity()).clearForm();
                     }
-                }
-            }
+            }   }
+
         });
 
         return view;

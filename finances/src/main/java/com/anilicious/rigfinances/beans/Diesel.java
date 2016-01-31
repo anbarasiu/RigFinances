@@ -12,6 +12,15 @@ public class Diesel {
     private int totalAmount;
     private String spentBy;
     private int dieselInHand;
+    private int inserted_date;
+
+    public Integer getInsertedDate() {
+        return (inserted_date);
+    }
+
+    public void setInsertedDate(Integer inserted_date) {
+        this.inserted_date = inserted_date;
+    }
 
     public String getSpentBy() {
         return spentBy;
