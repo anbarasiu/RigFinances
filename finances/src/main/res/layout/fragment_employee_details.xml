@@ -16,12 +16,13 @@
             android:id="@+id/textView1"
             android:layout_weight="1" />
 
-        <EditText
+        <Spinner
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:id="@+id/editText1"
-            android:layout_weight="1" />
+            android:id="@+id/spinner"
+            android:layout_weight="1"
+            android:spinnerMode="dropdown" />
+
     </LinearLayout>
 
     <LinearLayout
