@@ -3,20 +3,31 @@ package com.anilicious.rigfinances.activities;
 import android.app.ActionBar;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.anilicious.rigfinances.database.DBAdapter;
 import com.anilicious.rigfinances.finances.R;
 import com.anilicious.rigfinances.fragments.ReportBoreFragment;
 import com.anilicious.rigfinances.fragments.ReportDieselFragment;
 import com.anilicious.rigfinances.fragments.ReportExpensesFragment;
 import com.anilicious.rigfinances.fragments.ReportSalaryFragment;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ReportsActivity extends ActionBarActivity implements ActionBar.TabListener{
 
@@ -91,6 +102,9 @@ public class ReportsActivity extends ActionBarActivity implements ActionBar.TabL
             homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
         }
+        else if(item.getItemId() == android.R.id.action_download){
+
+        }
         else{
             Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(intent);
@@ -106,5 +120,32 @@ public class ReportsActivity extends ActionBarActivity implements ActionBar.TabL
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 
+    }
+
+    private class ExportDatabaseCSVTask extends AsyncTask<String, String, Boolean>{
+        private final ProgressDialog progressDialog = new ProgressDialog(this);
+        boolean memoryErr = false;
+
+        @Override
+        protected void onPreExecute() {
+            Toast.makeText(this, "Downloading Reports into a CSV...", Toast.LENGTH_LONG);
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            int rowCount = 0;
+            int colCount = 0;
+
+            DBAdapter dbAdapter = DBAdapter.getInstance(this);
+            Map<String, HashMap<String, String>> csvData = dbAdapter.retrieveAll();
+
+            File sdCardDir = Environment.getExternalStorageDirectory();
+            String fileName = "SivagamiBorewells.csv";
+            File saveFile = new File(sdCardDir, fileName);
+            FileWriter fw = new FileWriter(saveFile);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+
+        }
     }
 }

@@ -7,6 +7,7 @@
     <string name="section_heading3">Employee Details</string>
     <string name="section_heading4">Reports</string>
     <string name="action_settings">Settings</string>
+    <string name="action_download">Export as CSV</string>
     <string name="title_activity_vouchers">Vouchers</string>
     <string name="hello_world">Hello world!</string>
     <string name="submit">Submit</string>

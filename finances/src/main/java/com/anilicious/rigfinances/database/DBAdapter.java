@@ -740,21 +740,40 @@ public class DBAdapter extends SQLiteOpenHelper{
         return boreDetailsReport;
     }
 
-    /* BEGIN : Tables - Insert Methods */
+    /*
+     * Retrieve all data from the DB to export to CSV
+     */
+    public Map<String, HashMap<String, String>>, String> retrieveAll(){
+        Map<String, HashMap<String, String>> csvData = new HashMap<String, HashMap<String, String>>();
+        HashMap<String, String> innerCsvData = new HashMap<String, String>();
 
-    public void retrieveBoreReports(){ //TODO: Change return type
-        SQLiteDatabase database = this.getReadableDatabase();
-        /*Cursor cursor = database.rawQuery("SELECT SUM(amount), SUM(amount) FROM " +
-                COOK_DATABASE_NAME + ", " +
-                CREDIT_DATABASE_NAME + ", " +
-                DIESEL_DATABASE_NAME + ", " +
-                MAINTENANCE_DATABASE_NAME + ", " +
-                PIPE_DATABASE_NAME + ", " +
-                ROAD_DATABASE_NAME + ", " +
-                SALARY_DATABASE_NAME + ", " +
-                SITE_DATABASE_NAME + ", " +
-                TOOL_DATABASE_NAME);
-                */
+        for(String table : tables){
+            SQLiteDatabase database = this.getReadableDatabase();
+            Cursor cursor = database.rawQuery("Select * from " + table, null);
+            while(cursor.moveToNext()){
+                for(int column : cursor.getColumnCount()){
+                    switch(cursor.getType()){
+                        case Cursor.FIELD_TYPE_FLOAT:
+                            innerCsvData.put(cursor.getColumnName(), cursor.getFloat(column));
+                            break;
+                        case Cursor.FIELD_TYPE_INTEGER:
+                            innerCsvData.put(cursor.getColumnName(), cursor.getInt(column));
+                            break;
+                        case Cursor.FIELD_TYPE_STRING:
+                            innerCsvData.put(cursor.getColumnName(), cursor.getString(column));
+                            break;
+                        case Cursor.FIELD_TYPE_NULL:
+                            // Do we need to handle null values?
+                            break;
+                        default:
+                    }
+                }
+                csvData.put(table, innerCsvData);
+            }
+
+            database.close();
+            return csvData;
+        }
     }
 
     public void close(){
