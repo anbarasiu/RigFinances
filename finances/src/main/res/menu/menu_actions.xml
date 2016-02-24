@@ -4,7 +4,7 @@
     tools:context="com.anilicious.rigfinances.activities.MainActivity" >
 
     <item android:id="@+id/action_download"
-        android:icon="@drawable/ic_menu_save"
+        android:icon="@android:drawable/ic_menu_save"
         android:orderInCategory="100"
         app:showAsAction="always" />
 

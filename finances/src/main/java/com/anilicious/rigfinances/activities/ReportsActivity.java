@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -102,8 +103,9 @@ public class ReportsActivity extends ActionBarActivity implements ActionBar.TabL
             homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
         }
-        else if(item.getItemId() == android.R.id.action_download){
-
+        else if(item.getItemId() == R.id.action_download){
+            ExportDatabaseCSVTask exportDatabaseCSVTask = new ExportDatabaseCSVTask();
+            exportDatabaseCSVTask.execute();
         }
         else{
             Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
@@ -123,29 +125,46 @@ public class ReportsActivity extends ActionBarActivity implements ActionBar.TabL
     }
 
     private class ExportDatabaseCSVTask extends AsyncTask<String, String, Boolean>{
-        private final ProgressDialog progressDialog = new ProgressDialog(this);
+        private final ProgressDialog progressDialog = new ProgressDialog(getApplicationContext());
         boolean memoryErr = false;
 
         @Override
         protected void onPreExecute() {
-            Toast.makeText(this, "Downloading Reports into a CSV...", Toast.LENGTH_LONG);
+            Toast.makeText(getApplicationContext(), "Downloading Reports into a CSV...", Toast.LENGTH_LONG);
         }
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            int rowCount = 0;
-            int colCount = 0;
+            try{
+                int rowCount = 0;
+                int colCount = 0;
 
-            DBAdapter dbAdapter = DBAdapter.getInstance(this);
-            Map<String, HashMap<String, String>> csvData = dbAdapter.retrieveAll();
+                DBAdapter dbAdapter = DBAdapter.getInstance(getApplicationContext());
+                Map<String, HashMap<String, String>> csvData = dbAdapter.retrieveAll();
 
-            File sdCardDir = Environment.getExternalStorageDirectory();
-            String fileName = "SivagamiBorewells.csv";
-            File saveFile = new File(sdCardDir, fileName);
-            FileWriter fw = new FileWriter(saveFile);
-            BufferedWriter bw = new BufferedWriter(fw);
+                File sdCardDir = Environment.getExternalStorageDirectory();
+                String fileName = "SivagamiBorewells.csv";
+                File saveFile = new File(sdCardDir, fileName);
+                FileWriter fw = new FileWriter(saveFile);
+                BufferedWriter bw = new BufferedWriter(fw);
 
-
+                for(Map.Entry tableEntry : csvData.entrySet()){
+                    bw.write(tableEntry.getKey().toString());
+                    bw.newLine();
+                    HashMap<String, String> columns = (HashMap<String, String>)tableEntry.getValue();
+                    for(Map.Entry data : columns.entrySet()){
+                        bw.write(data.getKey() + ",");
+                        bw.write(data.getValue().toString());
+                        bw.newLine();
+                    }
+                }
+                bw.flush();
+                Toast.makeText(getApplicationContext(), "Exported successfully!", Toast.LENGTH_LONG);
+            } catch(Exception e){
+                Log.e("EXPORT", "Export failed!");
+                e.printStackTrace();
+            }
+            return true;
         }
     }
 }

@@ -743,24 +743,24 @@ public class DBAdapter extends SQLiteOpenHelper{
     /*
      * Retrieve all data from the DB to export to CSV
      */
-    public Map<String, HashMap<String, String>>, String> retrieveAll(){
+    public Map<String, HashMap<String, String>> retrieveAll(){
         Map<String, HashMap<String, String>> csvData = new HashMap<String, HashMap<String, String>>();
         HashMap<String, String> innerCsvData = new HashMap<String, String>();
+        SQLiteDatabase database = this.getReadableDatabase();
 
         for(String table : tables){
-            SQLiteDatabase database = this.getReadableDatabase();
             Cursor cursor = database.rawQuery("Select * from " + table, null);
             while(cursor.moveToNext()){
-                for(int column : cursor.getColumnCount()){
-                    switch(cursor.getType()){
+                for(int column=0; column<cursor.getColumnCount(); column++){
+                    switch(cursor.getType(column)){
                         case Cursor.FIELD_TYPE_FLOAT:
-                            innerCsvData.put(cursor.getColumnName(), cursor.getFloat(column));
+                            innerCsvData.put(cursor.getColumnName(column), Float.toString(cursor.getFloat(column)));
                             break;
                         case Cursor.FIELD_TYPE_INTEGER:
-                            innerCsvData.put(cursor.getColumnName(), cursor.getInt(column));
+                            innerCsvData.put(cursor.getColumnName(column), Integer.toString(cursor.getInt(column)));
                             break;
                         case Cursor.FIELD_TYPE_STRING:
-                            innerCsvData.put(cursor.getColumnName(), cursor.getString(column));
+                            innerCsvData.put(cursor.getColumnName(column), cursor.getString(column));
                             break;
                         case Cursor.FIELD_TYPE_NULL:
                             // Do we need to handle null values?
@@ -770,10 +770,9 @@ public class DBAdapter extends SQLiteOpenHelper{
                 }
                 csvData.put(table, innerCsvData);
             }
-
-            database.close();
-            return csvData;
         }
+        database.close();
+        return csvData;
     }
 
     public void close(){
