@@ -130,7 +130,7 @@ public class ReportsActivity extends ActionBarActivity implements ActionBar.TabL
 
         @Override
         protected void onPreExecute() {
-            Toast.makeText(getApplicationContext(), "Downloading Reports into a CSV...", Toast.LENGTH_LONG);
+            Toast.makeText(ReportsActivity.this, "Downloading Reports into a CSV...", Toast.LENGTH_LONG);
         }
 
         @Override
@@ -159,7 +159,7 @@ public class ReportsActivity extends ActionBarActivity implements ActionBar.TabL
                     }
                 }
                 bw.flush();
-                Toast.makeText(getApplicationContext(), "Exported successfully!", Toast.LENGTH_LONG);
+                Toast.makeText(ReportsActivity.this, "Exported successfully!", Toast.LENGTH_LONG);
             } catch(Exception e){
                 Log.e("EXPORT", "Export failed!");
                 e.printStackTrace();

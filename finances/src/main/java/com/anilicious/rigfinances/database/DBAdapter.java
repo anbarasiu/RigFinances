@@ -216,6 +216,18 @@ public class DBAdapter extends SQLiteOpenHelper{
                                             BORE_DATABASE_CREATE,
                                             EMPLOYEE_DATABASE_CREATE};
 
+    private static final String[] tableNames = new String[] {DIESEL_DATABASE_NAME,
+            COOK_DATABASE_NAME,
+            ROAD_DATABASE_NAME,
+            MAINTENANCE_DATABASE_NAME,
+            TOOL_DATABASE_NAME,
+            PIPE_DATABASE_NAME,
+            SALARY_DATABASE_NAME,
+            SITE_DATABASE_NAME,
+            CREDIT_DATABASE_NAME,
+            BORE_DATABASE_NAME,
+            EMPLOYEE_DATABASE_NAME};
+
     public static DBAdapter getInstance(Context context){
         // Use the application context, which will ensure that you
         // don't accidentally leak an Activity's context.
@@ -748,7 +760,7 @@ public class DBAdapter extends SQLiteOpenHelper{
         HashMap<String, String> innerCsvData = new HashMap<String, String>();
         SQLiteDatabase database = this.getReadableDatabase();
 
-        for(String table : tables){
+        for(String table : tableNames){
             Cursor cursor = database.rawQuery("Select * from " + table, null);
             while(cursor.moveToNext()){
                 for(int column=0; column<cursor.getColumnCount(); column++){

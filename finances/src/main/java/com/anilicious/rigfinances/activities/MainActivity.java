@@ -69,11 +69,11 @@ public class MainActivity extends ActionBarActivity{
 
         @Override
         public boolean onCreateOptionsMenu(Menu menu) {
-            // Inflate the menu items for use in the action bar
+            /* Inflate the menu items for use in the action bar
             if(sharedPrefs.getString(getString(R.string.user_role), "USER").equals("ADMIN")){
                 MenuInflater inflater = getMenuInflater();
                 inflater.inflate(R.menu.menu_actions, menu);
-            }
+            }*/
             return super.onCreateOptionsMenu(menu);
         }
 
