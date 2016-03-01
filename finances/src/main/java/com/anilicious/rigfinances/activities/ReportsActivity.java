@@ -27,7 +27,9 @@ import com.anilicious.rigfinances.fragments.ReportSalaryFragment;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ReportsActivity extends ActionBarActivity implements ActionBar.TabListener{
@@ -140,7 +142,7 @@ public class ReportsActivity extends ActionBarActivity implements ActionBar.TabL
                 int colCount = 0;
 
                 DBAdapter dbAdapter = DBAdapter.getInstance(getApplicationContext());
-                Map<String, HashMap<String, String>> csvData = dbAdapter.retrieveAll();
+                Map<String, List<String>> csvData = dbAdapter.retrieveAll();
 
                 File sdCardDir = Environment.getExternalStorageDirectory();
                 String fileName = "SivagamiBorewells.csv";
@@ -151,10 +153,9 @@ public class ReportsActivity extends ActionBarActivity implements ActionBar.TabL
                 for(Map.Entry tableEntry : csvData.entrySet()){
                     bw.write(tableEntry.getKey().toString());
                     bw.newLine();
-                    HashMap<String, String> columns = (HashMap<String, String>)tableEntry.getValue();
-                    for(Map.Entry data : columns.entrySet()){
-                        bw.write(data.getKey() + ",");
-                        bw.write(data.getValue().toString());
+                    List<String> innerCsvData = (ArrayList<String>)tableEntry.getValue();
+                    for(String data : innerCsvData){
+                        bw.write(data + ",");
                         bw.newLine();
                     }
                 }

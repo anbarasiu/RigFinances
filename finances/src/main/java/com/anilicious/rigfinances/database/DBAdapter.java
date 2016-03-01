@@ -216,7 +216,8 @@ public class DBAdapter extends SQLiteOpenHelper{
                                             BORE_DATABASE_CREATE,
                                             EMPLOYEE_DATABASE_CREATE};
 
-    private static final String[] tableNames = new String[] {DIESEL_DATABASE_NAME,
+    private static final String[] tableNames = new String[] {
+            DIESEL_DATABASE_NAME,
             COOK_DATABASE_NAME,
             ROAD_DATABASE_NAME,
             MAINTENANCE_DATABASE_NAME,
@@ -755,24 +756,27 @@ public class DBAdapter extends SQLiteOpenHelper{
     /*
      * Retrieve all data from the DB to export to CSV
      */
-    public Map<String, HashMap<String, String>> retrieveAll(){
-        Map<String, HashMap<String, String>> csvData = new HashMap<String, HashMap<String, String>>();
-        HashMap<String, String> innerCsvData = new HashMap<String, String>();
+    public Map<String, List<String>> retrieveAll(){
+        Map<String, List<String>> csvData = new HashMap<String, List<String>>();
         SQLiteDatabase database = this.getReadableDatabase();
 
-        for(String table : tableNames){
-            Cursor cursor = database.rawQuery("Select * from " + table, null);
+        for(String tableName : tableNames){
+            Cursor cursor = database.rawQuery("Select * from " + tableName, null);
+            List<String> innerCsvData = new ArrayList<String>();
+            for(String columnName : cursor.getColumnNames()){
+                innerCsvData.add(columnName);
+            }
             while(cursor.moveToNext()){
                 for(int column=0; column<cursor.getColumnCount(); column++){
                     switch(cursor.getType(column)){
                         case Cursor.FIELD_TYPE_FLOAT:
-                            innerCsvData.put(cursor.getColumnName(column), Float.toString(cursor.getFloat(column)));
+                            innerCsvData.add(Float.toString(cursor.getFloat(column)));
                             break;
                         case Cursor.FIELD_TYPE_INTEGER:
-                            innerCsvData.put(cursor.getColumnName(column), Integer.toString(cursor.getInt(column)));
+                            innerCsvData.add(Integer.toString(cursor.getInt(column)));
                             break;
                         case Cursor.FIELD_TYPE_STRING:
-                            innerCsvData.put(cursor.getColumnName(column), cursor.getString(column));
+                            innerCsvData.add(cursor.getString(column));
                             break;
                         case Cursor.FIELD_TYPE_NULL:
                             // Do we need to handle null values?
@@ -780,7 +784,9 @@ public class DBAdapter extends SQLiteOpenHelper{
                         default:
                     }
                 }
-                csvData.put(table, innerCsvData);
+            }
+            if(innerCsvData.size() != 0){
+                csvData.put(tableName, innerCsvData);
             }
         }
         database.close();
