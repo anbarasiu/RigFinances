@@ -356,11 +356,8 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_actions, menu);
-        return true;
-    }
+        return super.onCreateOptionsMenu(menu);
+   }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -368,11 +365,11 @@ public class BoreEntryActivity extends ActionBarActivity implements LocationList
             Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
             homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
-        }
+        }/*
         else{
             Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(intent);
-        }
+        }*/
         return super.onOptionsItemSelected(item);
     }
 }

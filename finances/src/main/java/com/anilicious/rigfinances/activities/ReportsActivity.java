@@ -108,11 +108,11 @@ public class ReportsActivity extends ActionBarActivity implements ActionBar.TabL
         else if(item.getItemId() == R.id.action_download){
             ExportDatabaseCSVTask exportDatabaseCSVTask = new ExportDatabaseCSVTask();
             exportDatabaseCSVTask.execute();
-        }
+        }/*
         else{
             Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(intent);
-        }
+        }*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -145,12 +145,12 @@ public class ReportsActivity extends ActionBarActivity implements ActionBar.TabL
                 Map<String, List<String>> csvData = dbAdapter.retrieveAll();
 
                 File sdCardDir = Environment.getExternalStorageDirectory();
-                String fileName = "SivagamiBorewells.csv";
-                File saveFile = new File(sdCardDir, fileName);
-                FileWriter fw = new FileWriter(saveFile);
-                BufferedWriter bw = new BufferedWriter(fw);
 
                 for(Map.Entry tableEntry : csvData.entrySet()){
+                    String fileName = "SivagamiBorewells-" + tableEntry.getKey().toString() + ".csv";
+                    File saveFile = new File(sdCardDir, fileName);
+                    FileWriter fw = new FileWriter(saveFile);
+                    BufferedWriter bw = new BufferedWriter(fw);
                     bw.write(tableEntry.getKey().toString());
                     bw.newLine();
                     List<String> innerCsvData = (ArrayList<String>)tableEntry.getValue();
@@ -158,8 +158,8 @@ public class ReportsActivity extends ActionBarActivity implements ActionBar.TabL
                         bw.write(data + ",");
                         bw.newLine();
                     }
+                    bw.flush();
                 }
-                bw.flush();
                 Toast.makeText(ReportsActivity.this, "Exported successfully!", Toast.LENGTH_LONG);
             } catch(Exception e){
                 Log.e("EXPORT", "Export failed!");

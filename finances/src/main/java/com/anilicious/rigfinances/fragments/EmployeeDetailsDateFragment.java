@@ -211,11 +211,15 @@ public class EmployeeDetailsDateFragment extends Fragment {
                 employeeName = selectedEmp[1];
 
                 HashMap<String, String> employeeDetails = dbAdapter.retrieveEmployeeDetails(employeeNumber);
-                if(employeeDetails.get("joining_date") != null && !employeeDetails.get("joining_date").isEmpty()){
+                if(employeeDetails.get("joining_date") != null && !employeeDetails.get("joining_date").isEmpty() && employeeDetails.get("joining_date") != "0"){
                     etDoj.setText(employeeDetails.get("joining_date"));
+                } else {
+                    etDoj.setText("");
                 }
-                if(employeeDetails.get("joining_date") != null && !employeeDetails.get("joining_date").isEmpty()){
+                if(employeeDetails.get("leaving_date") != null && !employeeDetails.get("leaving_date").isEmpty() && employeeDetails.get("leaving_date") != "0"){
                     etDol.setText(employeeDetails.get("leaving_date"));
+                } else {
+                    etDol.setText("");
                 }
             }
 

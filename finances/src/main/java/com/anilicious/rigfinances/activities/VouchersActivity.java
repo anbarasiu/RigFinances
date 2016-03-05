@@ -116,10 +116,10 @@ public class VouchersActivity extends ActionBarActivity implements TabListener{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
-        if(sharedPrefs.getString(getString(R.string.user_role), "USER").equals("ADMIN")){
+        /*if(sharedPrefs.getString(getString(R.string.user_role), "USER").equals("ADMIN")){
             MenuInflater inflater = getMenuInflater();
             inflater.inflate(R.menu.menu_actions, menu);
-        }
+        }*/
 
        return super.onCreateOptionsMenu(menu);
     }
@@ -130,11 +130,11 @@ public class VouchersActivity extends ActionBarActivity implements TabListener{
             Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
             homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
-        }
+        }/*
         else{
             Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
+            }*/
+            return super.onOptionsItemSelected(item);
     }
 }
