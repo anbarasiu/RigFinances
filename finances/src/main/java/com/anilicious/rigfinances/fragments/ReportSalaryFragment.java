@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,12 +35,14 @@ public class ReportSalaryFragment extends Fragment implements View.OnClickListen
     TextView tvSalaryGiven;
     TextView tvSalaryWithCompany;
     TextView tvTotalAmountSpent;
+    LinearLayout reportSection;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reports_salary, null);
 
         // Attach listeners
+        reportSection = (LinearLayout) view.findViewById(R.id.salary_section);
         etEmpNumber =(EditText)view.findViewById(R.id.editText);
         //TODO Financial Year
         tvEmpName =(TextView)view.findViewById(R.id.TextView_empName);
@@ -75,6 +78,9 @@ public class ReportSalaryFragment extends Fragment implements View.OnClickListen
         String empName = salaryMap.get("employee_name");
         if(empName == null){
             Toast.makeText(getActivity().getApplicationContext(), "Details not found. Please enter a valid Employee Number.", Toast.LENGTH_LONG);
+        }
+        else{
+            reportSection.setVisibility(View.VISIBLE);
         }
 
         tvEmpName.setText(empName);

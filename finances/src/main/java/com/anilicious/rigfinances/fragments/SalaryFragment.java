@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.anilicious.rigfinances.activities.VouchersActivity;
@@ -27,6 +30,9 @@ import java.util.HashMap;
 public class SalaryFragment extends Fragment {
 
     DBAdapter dbAdapter;
+    String employeeName;
+    int employeeNumber;
+    Spinner spEmployee;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,11 +40,16 @@ public class SalaryFragment extends Fragment {
 
         // UI Object References
         Button btnSubmit = (Button)view.findViewById(R.id.btn_submit);
-        //final EditText etEmployeeName = (EditText)view.findViewById(R.id.editText);
-        final EditText etEmployeeNumber = (EditText)view.findViewById(R.id.editText2);
+        spEmployee = (Spinner)view.findViewById(R.id.spinner_employeeNo);
         final EditText etRemarks = (EditText)view.findViewById(R.id.editText4);
         final EditText etTotalAmount = (EditText)view.findViewById(R.id.editText3);
         final EditText etSpentBy = (EditText)view.findViewById(R.id.editText5);
+
+        // Load the DB instance
+        dbAdapter = DBAdapter.getInstance(getActivity());
+
+        // Load Existing Employees
+        loadEmployees();
 
         // On Form Submission
         btnSubmit.setOnClickListener(new View.OnClickListener(){
@@ -50,13 +61,10 @@ public class SalaryFragment extends Fragment {
                 String formattedDate = df.format(inserted_date_c.getTime());
                 int inserted_date = Integer.parseInt(formattedDate);
                 if(((VouchersActivity)getActivity()).validForm()){
-                    //String employeeName = etEmployeeName.getText().toString();
-                    int employeeNumber = Integer.parseInt(etEmployeeNumber.getText().toString());
                     String remarks = etRemarks.getText().toString();
                     int totalAmount = Integer.parseInt(etTotalAmount.getText().toString());
                     String spentBy = etSpentBy.getText().toString();
 
-                    dbAdapter = DBAdapter.getInstance(getActivity());
                     if(!employeeExists(employeeNumber)){
                         Toast.makeText(getActivity().getApplicationContext(), "Employee not found. Please check if Employee Number valid / Employee Details has been entered.", Toast.LENGTH_LONG).show();
                         return;
@@ -64,7 +72,7 @@ public class SalaryFragment extends Fragment {
 
                     DebitFragment parent = (DebitFragment)getParentFragment();
                     Salary salary = new Salary();
-                    //salary.setEmployeeName(employeeName);
+                    salary.setEmployeeName(employeeName);
                     salary.setEmployeeNumber(employeeNumber);
                     salary.setReason(remarks);
                     salary.setAmount(totalAmount);
@@ -84,6 +92,27 @@ public class SalaryFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void loadEmployees(){
+        String[] employees = dbAdapter.retrieveExistingEmployees();
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, employees);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spEmployee.setAdapter(arrayAdapter);
+
+        spEmployee.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String[] selectedEmp = adapterView.getSelectedItem().toString().split(" : ");
+                employeeNumber = Integer.parseInt(selectedEmp[0]);
+                employeeName = selectedEmp[1];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     public boolean employeeExists(int employeeNumber){

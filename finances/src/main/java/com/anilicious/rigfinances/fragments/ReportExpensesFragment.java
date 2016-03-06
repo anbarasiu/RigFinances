@@ -181,20 +181,21 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
 
         //TODO: Add legends & labels to Bar Chart
         for(Map.Entry entry : expenseMap.entrySet()){
-            XYSeries xySeries = new XYSeries(entry.getKey().toString());
             mSeries.add(entry.getKey().toString(), Double.parseDouble(entry.getValue().toString()));
-            xySeries.add(bar_index, Double.parseDouble(entry.getValue().toString()));
-            bar_index = bar_index + 20;
-
             SimpleSeriesRenderer renderer = new SimpleSeriesRenderer();
             renderer.setColor(colours[i++]);
 
             mRenderer.addSeriesRenderer(renderer);
+            /*
+            XYSeries xySeries = new XYSeries(entry.getKey().toString());
+            xySeries.add(bar_index, Double.parseDouble(entry.getValue().toString()));
+            bar_index = bar_index + 20;
+
             xyRenderer.addSeriesRenderer(renderer);
             xyRenderer.setBarSpacing(0.1);
             xySeriesRenderer.setLineWidth(75);
 
-            dataset.addSeries(xySeries);
+            dataset.addSeries(xySeries);*/
         }
 
         // Pie Chart Rendering
@@ -225,10 +226,10 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
         });
 
         // Bar Chart Rendering
-        LinearLayout bar_layout = (LinearLayout)view.findViewById(R.id.bar_chart);
+        /*LinearLayout bar_layout = (LinearLayout)view.findViewById(R.id.bar_chart);
         bar_layout.removeAllViews();
         GraphicalView bar_chart = ChartFactory.getBarChartView(getActivity().getApplicationContext(), dataset, xyRenderer, BarChart.Type.DEFAULT);
-        bar_layout.addView(bar_chart);
+        bar_layout.addView(bar_chart);*/
     }
 
     private void displayDetails(int dateFrom, int dateTo, String selectedSeries){

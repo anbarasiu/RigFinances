@@ -38,14 +38,15 @@
             android:id="@+id/textView"
             android:layout_weight="1"
             android:layout_below="@+id/textView"
-            android:layout_toEndOf="@id/textView2" />
+            android:layout_toEndOf="@id/textView2"
+            android:layout_gravity="bottom" />
 
-        <EditText
+        <Spinner
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText2"
-            android:inputType="number"
-            android:layout_weight="1" />
+            android:id="@+id/spinner_employeeNo"
+            android:layout_weight="1"
+            android:spinnerMode="dropdown" />
     </LinearLayout>
 
     <LinearLayout

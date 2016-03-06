@@ -150,14 +150,13 @@
             android:layout_gravity="center"
             android:layout_margin="1dp"
             android:divider="@color/blue"></TableLayout>
-
+<!--
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical" android:layout_width="fill_parent"
                 android:layout_height="500dp"
                 android:id="@+id/bar_chart">
-
             </LinearLayout>
-
+-->
         </LinearLayout>
     </ScrollView>
 
