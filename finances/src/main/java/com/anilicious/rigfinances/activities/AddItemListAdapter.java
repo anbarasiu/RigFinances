@@ -75,7 +75,6 @@ public class AddItemListAdapter extends BaseAdapter {
 
     public View getView(final int position, View convertView, ViewGroup parent){
         ViewHolder holder = new ViewHolder();
-
         if(inflater == null)
             inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -98,6 +97,15 @@ public class AddItemListAdapter extends BaseAdapter {
                 holder.item.setText(((CookItem)items.get(position)).getItem());
                 holder.quantity.setText((Integer.toString(((CookItem)items.get(position)).getQuantity())));
                 holder.price.setText((Float.toString(((CookItem)items.get(position)).getAmount())));
+
+                holder.delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        items.remove(position);
+                        notifyDataSetChanged();
+                    }
+                });
+
                 break;
             case CommonUtils.VOUCHER_TOOL:
                 if(convertView == null){
@@ -110,13 +118,14 @@ public class AddItemListAdapter extends BaseAdapter {
                 holder.item = (TextView)convertView.findViewById(R.id.tool_details_item);
                 holder.quantity = (TextView)convertView.findViewById(R.id.tool_details_quantity);
                 holder.price = (TextView)convertView.findViewById(R.id.tool_details_price);
-                holder.details = (TextView)convertView.findViewById(R.id.tool_details_price);
+                holder.details = (TextView)convertView.findViewById(R.id.tool_details_details);
                 holder.delete = (Button)convertView.findViewById(R.id.tool_details_delete);
 
                 holder.item.setText(((ToolItem)items.get(position)).getItem());
                 holder.quantity.setText((Integer.toString(((ToolItem)items.get(position)).getQuantity())));
                 holder.price.setText((Float.toString(((ToolItem)items.get(position)).getAmount())));
                 holder.details.setText(((ToolItem)items.get(position)).getDetails());
+
                 break;
         }
 
