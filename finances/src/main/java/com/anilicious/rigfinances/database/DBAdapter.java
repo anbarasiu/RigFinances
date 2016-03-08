@@ -192,7 +192,7 @@ public class DBAdapter extends SQLiteOpenHelper{
             "current_balance" + " REAL, " +
             "remarks" + " text, " +
             "salary" + " REAL, " +
-            "Date_entered" + " number);";
+            "inserted_date" + " number);";
     private static final String USER_DATABASE_CREATE = "CREATE TABLE " + USER_DATABASE_NAME + "(" +
             "_id " + "INTEGER primary key AUTOINCREMENT, " + // 'U' + number
             "user_name" + " text, " +
@@ -478,6 +478,7 @@ public class DBAdapter extends SQLiteOpenHelper{
         values.put("employee_number", employee.getNumber());
         values.put("designation", employee.getDesignation());
         values.put("salary", employee.getSalary());
+        values.put("inserted_date", employee.getInserted_date());
 
         database.insert(EMPLOYEE_DATABASE_NAME, null, values);
         database.close();
@@ -487,11 +488,11 @@ public class DBAdapter extends SQLiteOpenHelper{
 
     public String[] retrieveExistingEmployees(){
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.query(EMPLOYEE_DATABASE_NAME,
+        Cursor cursor = database.query(true, EMPLOYEE_DATABASE_NAME,    // Select distinct employees
                 new String[] {"employee_name","employee_number"},
                 null,
                 null,
-                null, null, null);
+                null, null, null, null, null);
 
         HashMap<Integer, String> employeesMap = new HashMap<Integer, String>();
         while(cursor.moveToNext()){
@@ -510,6 +511,7 @@ public class DBAdapter extends SQLiteOpenHelper{
         values.put("Date", employee.getDate());
         values.put("date_of_joining", employee.getDateOfJoining());
         values.put("date_of_leaving", employee.getDateOfLeaving());
+        values.put("inserted_date", employee.getInserted_date());
 
         database.update(EMPLOYEE_DATABASE_NAME, values, "employee_number = ?", new String[] {Integer.toString(employee.getNumber())});
         database.close();
@@ -670,6 +672,26 @@ public class DBAdapter extends SQLiteOpenHelper{
 
         String query = "SELECT employee_name,employee_number,date_of_joining,date_of_leaving,salary FROM "+ EMPLOYEE_DATABASE_NAME
                 + " WHERE employee_number = " + employeeNumber + ";";
+
+        Cursor cursor = database.rawQuery(query, null);
+
+        while(cursor.moveToNext()){
+            employeeDetails.put("employee_name", cursor.getString(0));
+            employeeDetails.put("joining_date", cursor.getString(2));
+            employeeDetails.put("leaving_date", cursor.getString(3));
+            employeeDetails.put("salary_given", cursor.getString(4));
+        }
+
+        database.close();
+        return employeeDetails;
+    }
+
+    public HashMap<String, String> retrieveEmployeeLatestDetails(int employeeNumber){
+        SQLiteDatabase database = this.getReadableDatabase();
+        HashMap<String, String> employeeDetails = new HashMap<String, String>();
+
+        String query = "SELECT employee_name,employee_number,date_of_joining,date_of_leaving,salary FROM "+ EMPLOYEE_DATABASE_NAME
+                + " WHERE date_of_leaving IS NOT NULL ORDER BY inserted_date DESC LIMIT 1;";
 
         Cursor cursor = database.rawQuery(query, null);
 

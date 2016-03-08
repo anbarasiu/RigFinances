@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.anilicious.rigfinances.activities.EmployeeDetailsActivity;
 import com.anilicious.rigfinances.activities.MainActivity;
@@ -32,6 +33,8 @@ import java.util.Calendar;
  * Created by ANBARASI on 12/29/15.
  */
 public class EmployeeDetailsRegistrationFragment extends Fragment {
+    DBAdapter dbAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_employee_registration, null);
@@ -64,9 +67,14 @@ public class EmployeeDetailsRegistrationFragment extends Fragment {
                     employee.setDesignation(designation);
                     employee.setSalary(salary);
                     employee.setInsertedDate(inserted_date);
+
                     // Insert to DB
-                    DBAdapter dbAdapter = DBAdapter.getInstance(getActivity().getApplicationContext());
-                    dbAdapter.insertEmployee(employee);
+                    dbAdapter = DBAdapter.getInstance(getActivity().getApplicationContext());
+                    if(!employeeExists(employeeNumber)){
+                        dbAdapter.insertEmployee(employee);
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(), "Employee already exists. Go to the Existing Employee tab for details", Toast.LENGTH_LONG);
+                    }
 
                     // Clear the Form
                     ((EmployeeDetailsActivity)getActivity()).clearForm();
@@ -74,5 +82,12 @@ public class EmployeeDetailsRegistrationFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    public boolean employeeExists(int employeeNumber){
+        if(dbAdapter.retrieveEmployeeLatestDetails(employeeNumber).size() > 0){
+            return true;
+        }
+        return false;
     }
 }

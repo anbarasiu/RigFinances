@@ -14,6 +14,23 @@ public class Employee {
     private double salary;
     private String designation;
     private int inserted_date;
+    private boolean exEmployee;
+
+    public int getInserted_date() {
+        return inserted_date;
+    }
+
+    public void setInserted_date(int inserted_date) {
+        this.inserted_date = inserted_date;
+    }
+
+    public boolean isExEmployee() {
+        return (dateOfLeaving != null && dateOfLeaving != 0);
+    }
+
+    public void setExEmployee(boolean exEmployee) {
+        this.exEmployee = exEmployee;
+    }
 
     public Integer getInsertedDate() {
         return (inserted_date);

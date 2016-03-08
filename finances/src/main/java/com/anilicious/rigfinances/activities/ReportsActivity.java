@@ -156,8 +156,8 @@ public class ReportsActivity extends ActionBarActivity implements ActionBar.TabL
                     List<String> innerCsvData = (ArrayList<String>)tableEntry.getValue();
                     for(String data : innerCsvData){
                         bw.write(data + ",");
-                        bw.newLine();
                     }
+                    bw.newLine();
                     bw.flush();
                 }
                 Toast.makeText(ReportsActivity.this, "Exported successfully!", Toast.LENGTH_LONG);

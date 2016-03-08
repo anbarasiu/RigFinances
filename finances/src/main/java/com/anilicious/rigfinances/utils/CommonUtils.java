@@ -56,6 +56,14 @@ public final class CommonUtils {
         return formattedDate;
     }
 
+    public static String reverseFormatDateEntry(String date){
+        if(date.equals("0") || date == null || date.isEmpty()){
+            return "";
+        }
+
+        return date.substring(6, 8) + "/" + date.substring(4, 6) + "/" + date.substring(0, 4);
+    }
+
     /*
         Clear all input-fields in a form
      */

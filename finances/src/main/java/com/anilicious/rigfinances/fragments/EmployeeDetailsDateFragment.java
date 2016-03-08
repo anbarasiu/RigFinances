@@ -68,7 +68,6 @@ public class EmployeeDetailsDateFragment extends Fragment {
         Button btnSubmit = (Button)view.findViewById(R.id.btn_submit);
         employee = (Spinner)view.findViewById(R.id.spinner);
         final EditText etEmployeeNumber = (EditText)view.findViewById(R.id.editText1);
-        final Switch sEntryType = (Switch)view.findViewById(R.id.switch1);
         etDoj = (EditText)view.findViewById(R.id.editText4);
         etDol = (EditText)view.findViewById(R.id.editText5);
         etDate = (EditText)view.findViewById(R.id.editText6);
@@ -105,13 +104,12 @@ public class EmployeeDetailsDateFragment extends Fragment {
                     employee.setDateOfJoining(dateOfJoining);
                     employee.setDateOfLeaving(dateOfLeaving);
                     employee.setInsertedDate(inserted_date);
-                    // Insert to DB
-                    if(!employeeExists(employeeNumber)){
-                        Toast.makeText(getActivity().getApplicationContext(), "Employee not found. Please check if Employee Number valid / Employee has been registered.", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    dbAdapter.updateEmployee(employee);
 
+                    if(employee.isExEmployee()){
+                        dbAdapter.insertEmployee(employee);
+                    } else{
+                        dbAdapter.updateEmployee(employee);
+                    }
                     // Clear the Form
                     ((EmployeeDetailsActivity)getActivity()).clearForm();
                 }
@@ -211,16 +209,8 @@ public class EmployeeDetailsDateFragment extends Fragment {
                 employeeName = selectedEmp[1];
 
                 HashMap<String, String> employeeDetails = dbAdapter.retrieveEmployeeDetails(employeeNumber);
-                if(employeeDetails.get("joining_date") != null && !employeeDetails.get("joining_date").isEmpty() && employeeDetails.get("joining_date") != "0"){
-                    etDoj.setText(employeeDetails.get("joining_date"));
-                } else {
-                    etDoj.setText("");
-                }
-                if(employeeDetails.get("leaving_date") != null && !employeeDetails.get("leaving_date").isEmpty() && employeeDetails.get("leaving_date") != "0"){
-                    etDol.setText(employeeDetails.get("leaving_date"));
-                } else {
-                    etDol.setText("");
-                }
+                etDoj.setText(CommonUtils.reverseFormatDateEntry(employeeDetails.get("joining_date")));
+                etDol.setText(CommonUtils.reverseFormatDateEntry(employeeDetails.get("leaving_date")));
             }
 
             @Override
