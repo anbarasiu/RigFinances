@@ -110,8 +110,9 @@ public class EmployeeDetailsDateFragment extends Fragment {
                     } else{
                         dbAdapter.updateEmployee(employee);
                     }
-                    // Clear the Form
-                    ((EmployeeDetailsActivity)getActivity()).clearForm();
+
+                    // Re-load Existing Employees
+                    loadEmployees();
                 }
             }
         });

@@ -488,11 +488,7 @@ public class DBAdapter extends SQLiteOpenHelper{
 
     public String[] retrieveExistingEmployees(){
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.query(true, EMPLOYEE_DATABASE_NAME,    // Select distinct employees
-                new String[] {"employee_name","employee_number"},
-                null,
-                null,
-                null, null, null, null, null);
+        Cursor cursor = database.rawQuery("SELECT DISTINCT employee_name,employee_number from " + EMPLOYEE_DATABASE_NAME +" WHERE date_of_joining IS NOT NULL AND date_of_joining != 0;", null);
 
         HashMap<Integer, String> employeesMap = new HashMap<Integer, String>();
         while(cursor.moveToNext()){

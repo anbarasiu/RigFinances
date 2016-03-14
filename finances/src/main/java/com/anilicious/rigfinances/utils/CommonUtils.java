@@ -57,7 +57,7 @@ public final class CommonUtils {
     }
 
     public static String reverseFormatDateEntry(String date){
-        if(date.equals("0") || date == null || date.isEmpty()){
+        if(date == null || date.isEmpty() || date.equals("0")){
             return "";
         }
 
