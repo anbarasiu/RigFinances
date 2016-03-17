@@ -73,7 +73,7 @@ public class EmployeeDetailsRegistrationFragment extends Fragment {
                     if(!employeeExists(employeeNumber)){
                         dbAdapter.insertEmployee(employee);
                     } else {
-                        Toast.makeText(getActivity().getApplicationContext(), "Employee already exists. Go to the Existing Employee tab for details", Toast.LENGTH_LONG);
+                        Toast.makeText(getActivity().getApplicationContext(), "Employee already exists. Go to the Existing Employee tab for details", Toast.LENGTH_LONG).show();
                     }
 
                     // Clear the Form

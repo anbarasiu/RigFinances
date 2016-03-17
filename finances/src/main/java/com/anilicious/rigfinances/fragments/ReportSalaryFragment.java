@@ -77,7 +77,7 @@ public class ReportSalaryFragment extends Fragment implements View.OnClickListen
 
         String empName = salaryMap.get("employee_name");
         if(empName == null){
-            Toast.makeText(getActivity().getApplicationContext(), "Details not found. Please enter a valid Employee Number.", Toast.LENGTH_LONG);
+            Toast.makeText(getActivity().getApplicationContext(), "Details not found. Please enter a valid Employee Number.", Toast.LENGTH_LONG).show();
         }
         else{
             reportSection.setVisibility(View.VISIBLE);
