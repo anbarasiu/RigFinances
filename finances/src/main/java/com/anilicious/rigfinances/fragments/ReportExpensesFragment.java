@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -179,13 +180,17 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
         reportsMapper = new ReportsMapper(getActivity());
         HashMap<String, Double> expenseMap = reportsMapper.mapExpenses(dateFrom, dateTo, selectedExpenses);
 
+        final List<String> mappedExpenses = new ArrayList<String>();
         //TODO: Add legends & labels to Bar Chart
         for(Map.Entry entry : expenseMap.entrySet()){
             mSeries.add(entry.getKey().toString(), Double.parseDouble(entry.getValue().toString()));
             SimpleSeriesRenderer renderer = new SimpleSeriesRenderer();
             renderer.setColor(colours[i++]);
-
             mRenderer.addSeriesRenderer(renderer);
+
+            if(selectedExpenses.contains(entry.getKey().toString())){
+                mappedExpenses.add(entry.getKey().toString());
+            }
             /*
             XYSeries xySeries = new XYSeries(entry.getKey().toString());
             xySeries.add(bar_index, Double.parseDouble(entry.getValue().toString()));
@@ -213,7 +218,7 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
                     // Get name of the clicked slice
                     int seriesIndex = seriesSelection.getPointIndex();
                     String selectedSeries = "";
-                    selectedSeries = selectedExpenses.get(seriesIndex).toString();
+                    selectedSeries = mappedExpenses.get(seriesIndex).toString();
 
                     // Get value of clicked slice
                     double value = seriesSelection.getXValue();
@@ -233,50 +238,58 @@ public class ReportExpensesFragment extends Fragment implements View.OnClickList
     }
 
     private void displayDetails(int dateFrom, int dateTo, String selectedSeries){
+        GradientDrawable gd = new GradientDrawable();
+        gd.setStroke(2, Color.BLACK);
+
         tableLayout.removeAllViews();
         // TODO: For the selectedSeries, get complete info
         Cursor cResults = reportsMapper.mapExpenseDetails(dateFrom, dateTo, selectedSeries);
 
         if(cResults != null){
             cResults.moveToFirst();
-        }
+            int rows = cResults.getCount();
+            int columns = cResults.getColumnCount();
 
-        int rows = cResults.getCount();
-        int columns = cResults.getColumnCount();
+            // Table Headers
+            String[] columnNames = cResults.getColumnNames();
+            TableRow tableRowHeader = new TableRow(this.getActivity().getApplicationContext());
+            tableRowHeader.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+            tableRowHeader.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            for(int j=0; j<columnNames.length; j++){
 
-        // Table Headers
-        String[] columnNames = cResults.getColumnNames();
-        TableRow tableRowHeader = new TableRow(this.getActivity().getApplicationContext());
-        tableRowHeader.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-        tableRowHeader.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        for(int j=0; j<columnNames.length; j++){
-            TextView tableColumn = new TextView(this.getActivity().getApplicationContext());
-            tableColumn.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-            tableColumn.setText(columnNames[j].replace('_', ' ').toUpperCase());
-            tableColumn.setTextColor(Color.BLACK);
-            tableColumn.setPadding(2, 0, 2, 0);
-            tableRowHeader.addView(tableColumn);
-        }
-        tableLayout.addView(tableRowHeader);
-
-        // Rendering the Table with values
-        for(int i=0; i<rows; i++){
-            TableRow tableRow = new TableRow(this.getActivity().getApplicationContext());
-            tableRow.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-            tableRow.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-
-            for(int j=0; j<columns; j++){
                 TextView tableColumn = new TextView(this.getActivity().getApplicationContext());
                 tableColumn.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-                tableColumn.setText(cResults.getString(j));
+                tableColumn.setText(columnNames[j].replace('_', ' ').toUpperCase());
                 tableColumn.setTextColor(Color.BLACK);
                 tableColumn.setPadding(2, 0, 2, 0);
-                tableRow.addView(tableColumn);
+                tableColumn.setBackground(gd);
+                tableRowHeader.addView(tableColumn);
             }
-            cResults.moveToNext();
-            tableLayout.addView(tableRow);
-        }
 
+            tableLayout.addView(tableRowHeader);
+
+            // Rendering the Table with values
+            for(int i=0; i<rows; i++){
+                TableRow tableRow = new TableRow(this.getActivity().getApplicationContext());
+                tableRow.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                tableRow.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+                for(int j=0; j<columns; j++){
+                    TextView tableColumn = new TextView(this.getActivity().getApplicationContext());
+                    tableColumn.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                    tableColumn.setText(cResults.getString(j));
+                    tableColumn.setTextColor(Color.BLACK);
+                    tableColumn.setPadding(2, 0, 2, 0);
+                    tableColumn.setBackground(gd);
+                    tableRow.addView(tableColumn);
+                }
+                cResults.moveToNext();
+
+                tableRow.setBackground(gd);
+                tableLayout.addView(tableRow);
+            }
+            tableLayout.setBackground(gd);
+        }
         reportsMapper.closeDBConn();
     }
 

@@ -649,9 +649,9 @@ public class DBAdapter extends SQLiteOpenHelper{
             Cursor cursor = database.rawQuery(query, null);
 
             while(cursor.moveToNext()){
-                //    for(String entry : columnRetriever){
-                expenseReport.put(type, cursor.getDouble(0));
-                //  }
+                if(cursor.getDouble(0) != 0.0){
+                    expenseReport.put(type, cursor.getDouble(0));
+                }
             }
         }
         // TODO: Error handling : If no entry made, just return 0

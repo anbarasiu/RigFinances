@@ -90,15 +90,12 @@ public class EmployeeDetailsDateFragment extends Fragment {
                 String formattedDate = df.format(inserted_date_c.getTime());
                 int inserted_date = Integer.parseInt(formattedDate);
                 if(((EmployeeDetailsActivity)getActivity()).validForm()){
-                    String lastDateOfJoiningOrLeaving = etDate.getText().toString();
                     String date2 = etDoj.getText().toString();
                     String date3 = etDol.getText().toString();
-                    Integer date = Integer.parseInt(CommonUtils.formatDateEntry(lastDateOfJoiningOrLeaving));
                     Integer dateOfJoining = Integer.parseInt(CommonUtils.formatDateEntry(date2));
                     Integer dateOfLeaving = Integer.parseInt(CommonUtils.formatDateEntry(date3));
 
                     Employee employee = new Employee();
-                    employee.setDate(date);
                     employee.setNumber(employeeNumber);
                     employee.setName(employeeName);
                     employee.setDateOfJoining(dateOfJoining);
@@ -133,13 +130,6 @@ public class EmployeeDetailsDateFragment extends Fragment {
         currentMonth = cal.get(Calendar.MONTH) + 1;
         currentDate = cal.get(Calendar.DAY_OF_MONTH);
 
-        etDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new DatePickerDialog(getActivity(), mDateSetListener, currentYear, currentMonth, currentDate).show();
-            }
-        });
-
         etDoj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,14 +148,6 @@ public class EmployeeDetailsDateFragment extends Fragment {
    // TODO: Is there a better way instead of these multiple callbacks for different datepicker fields?
 
    /* Callback received when the user "picks" a date in the dialog */
-    private DatePickerDialog.OnDateSetListener mDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                    etDate.setText(new StringBuilder().append(day).append("/")
-                            .append(month + 1).append("/").append(year).toString());
-                }
-            };
-
     private DatePickerDialog.OnDateSetListener mDateOfJoiningSetListener =
             new DatePickerDialog.OnDateSetListener() {
                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {
