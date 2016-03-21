@@ -34,8 +34,8 @@ public class MainActivity extends ActionBarActivity{
         //Load the Application Preferences
         sharedPrefs = this.getApplicationContext().getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE);
 
-        TextView tvWelcome = (TextView)findViewById(R.id.main_username);
-        tvWelcome.setText(sharedPrefs.getString(getString(R.string.sp_username), "User"));
+        //TextView tvWelcome = (TextView)findViewById(R.id.main_username);
+        //tvWelcome.setText(sharedPrefs.getString(getString(R.string.sp_username), "User"));
 
         GridView gridView = (GridView)findViewById(R.id.gridView);
 
