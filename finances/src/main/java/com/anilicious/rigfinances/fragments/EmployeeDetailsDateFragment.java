@@ -102,11 +102,11 @@ public class EmployeeDetailsDateFragment extends Fragment {
                     employee.setDateOfLeaving(dateOfLeaving);
                     employee.setInsertedDate(inserted_date);
 
-                    if(employee.isExEmployee()){
+                    /*if(employee.isExEmployee()){
                         dbAdapter.insertEmployee(employee);
-                    } else{
-                        dbAdapter.updateEmployee(employee);
-                    }
+                    } else{*/
+                    dbAdapter.updateEmployee(employee);
+                    //}
 
                     // Re-load Existing Employees
                     loadEmployees();

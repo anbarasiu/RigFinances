@@ -107,6 +107,8 @@ public class ToolFragment extends Fragment {
 
                     // Clear the Form
                     ((VouchersActivity)getActivity()).clearForm();
+                    toolItems.clear();
+                    list_tool_adapter.notifyDataSetChanged();
                 }
             }
         });

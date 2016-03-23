@@ -480,7 +480,7 @@ public class DBAdapter extends SQLiteOpenHelper{
         values.put("salary", employee.getSalary());
         values.put("inserted_date", employee.getInserted_date());
 
-        database.insert(EMPLOYEE_DATABASE_NAME, null, values);
+        long row = database.insert(EMPLOYEE_DATABASE_NAME, null, values);
         database.close();
     }
 
@@ -488,8 +488,7 @@ public class DBAdapter extends SQLiteOpenHelper{
 
     public String[] retrieveExistingEmployees(){
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.rawQuery("SELECT DISTINCT employee_name,employee_number from " + EMPLOYEE_DATABASE_NAME +" WHERE date_of_joining IS NOT NULL AND date_of_joining != 0;", null);
-
+        Cursor cursor = database.rawQuery("SELECT DISTINCT employee_name,employee_number from " + EMPLOYEE_DATABASE_NAME +" WHERE date_of_leaving IS NULL;", null);
         HashMap<Integer, String> employeesMap = new HashMap<Integer, String>();
         while(cursor.moveToNext()){
             employeesMap.put(cursor.getInt(1), cursor.getInt(1) + " : " + cursor.getString(0));
@@ -687,7 +686,7 @@ public class DBAdapter extends SQLiteOpenHelper{
         HashMap<String, String> employeeDetails = new HashMap<String, String>();
 
         String query = "SELECT employee_name,employee_number,date_of_joining,date_of_leaving,salary FROM "+ EMPLOYEE_DATABASE_NAME
-                + " WHERE date_of_leaving IS NOT NULL ORDER BY inserted_date DESC LIMIT 1;";
+                + " WHERE employee_number = " + employeeNumber + " AND date_of_leaving IS NULL ORDER BY inserted_date DESC LIMIT 1;";
 
         Cursor cursor = database.rawQuery(query, null);
 
