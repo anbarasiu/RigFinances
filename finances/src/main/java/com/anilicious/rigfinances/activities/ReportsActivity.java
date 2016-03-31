@@ -132,7 +132,7 @@ public class ReportsActivity extends ActionBarActivity implements ActionBar.TabL
 
         @Override
         protected void onPreExecute() {
-            Toast.makeText(ReportsActivity.this, "Downloading Reports into a CSV...", Toast.LENGTH_LONG).show();
+            Toast.makeText(ReportsActivity.this, "Downloading Reports into a CSV at " + Environment.getExternalStorageDirectory().getAbsolutePath() + "...", Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -142,7 +142,7 @@ public class ReportsActivity extends ActionBarActivity implements ActionBar.TabL
                 int colCount = 0;
 
                 DBAdapter dbAdapter = DBAdapter.getInstance(getApplicationContext());
-                Map<String, List<String>> csvData = dbAdapter.retrieveAll();
+                Map<String, List<String[]>> csvData = dbAdapter.retrieveAll();
 
                 File sdCardDir = Environment.getExternalStorageDirectory();
 
@@ -151,13 +151,19 @@ public class ReportsActivity extends ActionBarActivity implements ActionBar.TabL
                     File saveFile = new File(sdCardDir, fileName);
                     FileWriter fw = new FileWriter(saveFile);
                     BufferedWriter bw = new BufferedWriter(fw);
+
+                    // Table Heading
                     bw.write(tableEntry.getKey().toString());
                     bw.newLine();
-                    List<String> innerCsvData = (ArrayList<String>)tableEntry.getValue();
-                    for(String data : innerCsvData){
-                        bw.write(data + ",");
+
+                    // Table Data
+                    List<String[]> innerCsvData = (ArrayList<String[]>)tableEntry.getValue();
+                    for(String[] row : innerCsvData){
+                        for(int index=0; index<row.length; index++){
+                            bw.write(row[index] + ",");
+                        }
+                        bw.newLine();
                     }
-                    bw.newLine();
                     bw.flush();
                 }
                 Toast.makeText(ReportsActivity.this, "Exported successfully!", Toast.LENGTH_LONG).show();

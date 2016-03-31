@@ -773,27 +773,32 @@ public class DBAdapter extends SQLiteOpenHelper{
     /*
      * Retrieve all data from the DB to export to CSV
      */
-    public Map<String, List<String>> retrieveAll(){
-        Map<String, List<String>> csvData = new HashMap<String, List<String>>();
+    public Map<String, List<String[]>> retrieveAll(){
+        Map<String, List<String[]>> csvData = new HashMap<String, List<String[]>>();
         SQLiteDatabase database = this.getReadableDatabase();
 
         for(String tableName : tableNames){
             Cursor cursor = database.rawQuery("Select * from " + tableName, null);
-            List<String> innerCsvData = new ArrayList<String>();
-            for(String columnName : cursor.getColumnNames()){
-                innerCsvData.add(columnName);
+            List<String[]> innerCsvData = new ArrayList<String[]>();
+
+            String[] columnNamesData = new String[cursor.getColumnCount()];
+            for(int i=0; i<cursor.getColumnCount(); i++){
+                columnNamesData[i] = cursor.getColumnName(i);
             }
+            innerCsvData.add(columnNamesData);
+
             while(cursor.moveToNext()){
+                String[] data = new String[cursor.getColumnCount()];
                 for(int column=0; column<cursor.getColumnCount(); column++){
                     switch(cursor.getType(column)){
                         case Cursor.FIELD_TYPE_FLOAT:
-                            innerCsvData.add(Float.toString(cursor.getFloat(column)));
+                            data[column] = Float.toString(cursor.getFloat(column));
                             break;
                         case Cursor.FIELD_TYPE_INTEGER:
-                            innerCsvData.add(Integer.toString(cursor.getInt(column)));
+                            data[column] = Integer.toString(cursor.getInt(column));
                             break;
                         case Cursor.FIELD_TYPE_STRING:
-                            innerCsvData.add(cursor.getString(column));
+                            data[column] = cursor.getString(column);
                             break;
                         case Cursor.FIELD_TYPE_NULL:
                             // Do we need to handle null values?
@@ -801,11 +806,31 @@ public class DBAdapter extends SQLiteOpenHelper{
                         default:
                     }
                 }
+                innerCsvData.add(data);
             }
             if(innerCsvData.size() != 0){
                 csvData.put(tableName, innerCsvData);
             }
         }
+        database.close();
+        return csvData;
+    }
+
+    public Map<String, List<String>> retrieveAllColumnNames(){
+        SQLiteDatabase database = this.getReadableDatabase();
+        Map<String, List<String>> csvData = new HashMap<String, List<String>>();
+        for(String tableName : tableNames){
+            Cursor cursor = database.rawQuery("Select * from " + tableName, null);
+            List<String> columnNames = new ArrayList<String>();
+            for(String columnName : cursor.getColumnNames()){
+                columnNames.add(columnName);
+            }
+
+            if(columnNames.size() != 0){
+                csvData.put(tableName, columnNames);
+            }
+        }
+
         database.close();
         return csvData;
     }
