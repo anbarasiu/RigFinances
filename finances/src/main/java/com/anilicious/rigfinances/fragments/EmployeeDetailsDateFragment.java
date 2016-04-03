@@ -89,28 +89,27 @@ public class EmployeeDetailsDateFragment extends Fragment {
                 SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
                 String formattedDate = df.format(inserted_date_c.getTime());
                 int inserted_date = Integer.parseInt(formattedDate);
-                if(((EmployeeDetailsActivity)getActivity()).validForm()){
-                    String date2 = etDoj.getText().toString();
-                    String date3 = etDol.getText().toString();
-                    Integer dateOfJoining = Integer.parseInt(CommonUtils.formatDateEntry(date2));
-                    Integer dateOfLeaving = Integer.parseInt(CommonUtils.formatDateEntry(date3));
+                String date2 = etDoj.getText().toString();
+                String date3 = etDol.getText().toString();
+                Integer dateOfJoining = Integer.parseInt(CommonUtils.formatDateEntry(date2));
+                Integer dateOfLeaving = Integer.parseInt(CommonUtils.formatDateEntry(date3));
 
-                    Employee employee = new Employee();
-                    employee.setNumber(employeeNumber);
-                    employee.setName(employeeName);
-                    employee.setDateOfJoining(dateOfJoining);
-                    employee.setDateOfLeaving(dateOfLeaving);
-                    employee.setInsertedDate(inserted_date);
+                Employee employee = new Employee();
+                employee.setNumber(employeeNumber);
+                employee.setName(employeeName);
+                employee.setDateOfJoining(dateOfJoining);
+                employee.setDateOfLeaving(dateOfLeaving);
+                employee.setInsertedDate(inserted_date);
 
-                    /*if(employee.isExEmployee()){
-                        dbAdapter.insertEmployee(employee);
-                    } else{*/
-                    dbAdapter.updateEmployee(employee);
-                    //}
-
-                    // Re-load Existing Employees
-                    loadEmployees();
+                if(employee.getDateOfLeaving() == 0){
+                    dbAdapter.insertEmployee(employee);
                 }
+                else{
+                    dbAdapter.updateEmployee(employee);
+                }
+
+                // Re-load Existing Employees
+                loadEmployees();
             }
         });
 
@@ -127,7 +126,7 @@ public class EmployeeDetailsDateFragment extends Fragment {
         /* Get the current time */
         final Calendar cal = Calendar.getInstance();
         currentYear = cal.get(Calendar.YEAR);
-        currentMonth = cal.get(Calendar.MONTH) + 1;
+        currentMonth = cal.get(Calendar.MONTH);
         currentDate = cal.get(Calendar.DAY_OF_MONTH);
 
         etDoj.setOnClickListener(new View.OnClickListener() {
@@ -191,7 +190,7 @@ public class EmployeeDetailsDateFragment extends Fragment {
                 employeeNumber = Integer.parseInt(selectedEmp[0]);
                 employeeName = selectedEmp[1];
 
-                HashMap<String, String> employeeDetails = dbAdapter.retrieveEmployeeDetails(employeeNumber);
+                HashMap<String, String> employeeDetails = dbAdapter.retrieveEmployeeLatestDetails(employeeNumber);
                 etDoj.setText(CommonUtils.reverseFormatDateEntry(employeeDetails.get("joining_date")));
                 etDol.setText(CommonUtils.reverseFormatDateEntry(employeeDetails.get("leaving_date")));
             }
