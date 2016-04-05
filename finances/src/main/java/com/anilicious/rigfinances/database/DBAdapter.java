@@ -479,6 +479,9 @@ public class DBAdapter extends SQLiteOpenHelper{
         values.put("designation", employee.getDesignation());
         values.put("salary", employee.getSalary());
         values.put("inserted_date", employee.getInserted_date());
+        values.put("remarks", "Registration");
+        values.put("joining_date", employee.getDateOfJoining());
+        values.put("leaving_date", employee.getDateOfLeaving());
 
         long row = database.insert(EMPLOYEE_DATABASE_NAME, null, values);
         database.close();
@@ -488,7 +491,7 @@ public class DBAdapter extends SQLiteOpenHelper{
 
     public String[] retrieveExistingEmployees(){
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.rawQuery("SELECT DISTINCT employee_name,employee_number from " + EMPLOYEE_DATABASE_NAME +" WHERE date_of_leaving='0' OR date_of_leaving IS NULL;", null);
+        Cursor cursor = database.rawQuery("SELECT DISTINCT employee_name,employee_number from " + EMPLOYEE_DATABASE_NAME +";", null);
         HashMap<Integer, String> employeesMap = new HashMap<Integer, String>();
         while(cursor.moveToNext()){
             employeesMap.put(cursor.getInt(1), cursor.getInt(1) + " : " + cursor.getString(0));
@@ -503,12 +506,22 @@ public class DBAdapter extends SQLiteOpenHelper{
     public void updateEmployee(Employee employee){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("Date", employee.getDate());
+        //values.put("Date", employee.getDate());
         values.put("date_of_joining", employee.getDateOfJoining());
         values.put("date_of_leaving", employee.getDateOfLeaving());
         values.put("inserted_date", employee.getInserted_date());
 
-        database.update(EMPLOYEE_DATABASE_NAME, values, "employee_number = ?", new String[] {Integer.toString(employee.getNumber())});
+        String employeeNumber = Integer.toString(employee.getNumber());
+
+        /*database.rawQuery("UPDATE " + EMPLOYEE_DATABASE_NAME + " SET date_of_joining = ?, date_of_leaving = ?, inserted_date = ? " +
+                "WHERE employee_number = ? AND inserted_date = (SELECT MAX(inserted_date) from " + EMPLOYEE_DATABASE_NAME + " " +
+                "WHERE employee_number = ?);", new String[]{Integer.toString(employee.getDateOfJoining()), Integer.toString(employee.getDateOfLeaving()), Integer.toString(employee.getInserted_date()), employeeNumber, employeeNumber});
+*/
+        Cursor c = database.rawQuery("UPDATE " + EMPLOYEE_DATABASE_NAME + " SET date_of_joining = "+employee.getDateOfJoining()+", date_of_leaving = "+employee.getDateOfLeaving()+", inserted_date = "+employee.getInserted_date()+" " +
+                "WHERE employee_number = "+employeeNumber+" AND inserted_date = (SELECT MAX(inserted_date) from " + EMPLOYEE_DATABASE_NAME + " " +
+                "WHERE employee_number = "+employeeNumber+");", null);
+
+        c.moveToNext(); // Odd!! TODO
         database.close();
     }
 
@@ -685,8 +698,8 @@ public class DBAdapter extends SQLiteOpenHelper{
         SQLiteDatabase database = this.getReadableDatabase();
         HashMap<String, String> employeeDetails = new HashMap<String, String>();
 
-        String query = "SELECT employee_name,employee_number,date_of_joining,date_of_leaving,salary FROM "+ EMPLOYEE_DATABASE_NAME
-                + " WHERE employee_number = " + employeeNumber + " AND date_of_leaving=0 ORDER BY inserted_date DESC LIMIT 1;";
+        String query = "SELECT employee_name,employee_number,date_of_joining,date_of_leaving,salary,designation FROM "+ EMPLOYEE_DATABASE_NAME
+                + " WHERE employee_number = " + employeeNumber + " ORDER BY inserted_date DESC LIMIT 1;";
 
         Cursor cursor = database.rawQuery(query, null);
 
@@ -695,6 +708,7 @@ public class DBAdapter extends SQLiteOpenHelper{
             employeeDetails.put("joining_date", cursor.getString(2));
             employeeDetails.put("leaving_date", cursor.getString(3));
             employeeDetails.put("salary_given", cursor.getString(4));
+            employeeDetails.put("designation", cursor.getString(5));
         }
 
         database.close();
