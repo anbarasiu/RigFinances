@@ -478,16 +478,14 @@ public class DBAdapter extends SQLiteOpenHelper{
         values.put("employee_number", employee.getNumber());
         values.put("designation", employee.getDesignation());
         values.put("salary", employee.getSalary());
-        values.put("inserted_date", employee.getInserted_date());
         values.put("remarks", "Registration");
-        values.put("joining_date", employee.getDateOfJoining());
-        values.put("leaving_date", employee.getDateOfLeaving());
+        values.put("date_of_joining", employee.getDateOfJoining());
+        values.put("date_of_leaving", employee.getDateOfLeaving());
+        values.put("inserted_date", employee.getInserted_date());
 
         long row = database.insert(EMPLOYEE_DATABASE_NAME, null, values);
         database.close();
     }
-
-    // TODO
 
     public String[] retrieveExistingEmployees(){
         SQLiteDatabase database = this.getReadableDatabase();
@@ -498,10 +496,11 @@ public class DBAdapter extends SQLiteOpenHelper{
         }
 
         Collection<String> vals = employeesMap.values();
-    String[] employees = vals.toArray(new String[vals.size()]);
+        String[] employees = vals.toArray(new String[vals.size()]);
 
-    return employees;
-}
+        database.close();
+        return employees;
+    }
 
     public void updateEmployee(Employee employee){
         SQLiteDatabase database = this.getWritableDatabase();
@@ -699,7 +698,7 @@ public class DBAdapter extends SQLiteOpenHelper{
         HashMap<String, String> employeeDetails = new HashMap<String, String>();
 
         String query = "SELECT employee_name,employee_number,date_of_joining,date_of_leaving,salary,designation FROM "+ EMPLOYEE_DATABASE_NAME
-                + " WHERE employee_number = " + employeeNumber + " ORDER BY inserted_date DESC LIMIT 1;";
+                + " WHERE employee_number =" + employeeNumber + " ORDER BY inserted_date DESC;";
 
         Cursor cursor = database.rawQuery(query, null);
 

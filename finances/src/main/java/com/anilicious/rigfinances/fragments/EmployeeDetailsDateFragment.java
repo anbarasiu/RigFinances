@@ -104,6 +104,9 @@ public class EmployeeDetailsDateFragment extends Fragment {
                 if(employee.getDateOfLeaving() == 0){
                     dbAdapter.insertEmployee(employee);
                 }
+                else if(employee.getDateOfLeaving() == 0){
+                    Toast.makeText(getActivity().getApplicationContext(), "Please enter the Joining Date for the employee", Toast.LENGTH_LONG).show();
+                }
                 else{
                     dbAdapter.updateEmployee(employee);
                 }
