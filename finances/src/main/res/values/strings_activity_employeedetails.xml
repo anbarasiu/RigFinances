@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="employeedetails_question10">Date</string>
-    <string name="employeedetails_question1">Employee</string>
+    <string name="employeedetails_question1">Employee No.</string>
     <string name="employeedetails_question2">Employee Name</string>
     <string name="employeedetails_question3">Designation</string>
     <string name="employeedetails_question4">Salary</string>
     <string name="employeedetails_question5">Entry Type</string>
     <string name="employeedetails_question6">Last Joining Date</string>
     <string name="employeedetails_question7">Last Leaving Date</string>
-    <string name="employeedetails_question8">Date of Joining/Leaving</string>
+    <string name="employeedetails_question8">Previous Joining Date</string>
+    <string name="employeedetails_question9">Previous Leaving Date</string>
 
     <string name="employeedetails_tab1">New Employee Registration</string>
     <string name="employeedetails_tab2">Employee Joining/Relieving Date</string>

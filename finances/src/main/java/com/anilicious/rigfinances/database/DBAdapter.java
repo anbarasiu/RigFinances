@@ -29,6 +29,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Created by ANBARASI on 14/11/14.
@@ -698,7 +699,7 @@ public class DBAdapter extends SQLiteOpenHelper{
         HashMap<String, String> employeeDetails = new HashMap<String, String>();
 
         String query = "SELECT employee_name,employee_number,date_of_joining,date_of_leaving,salary,designation FROM "+ EMPLOYEE_DATABASE_NAME
-                + " WHERE employee_number =" + employeeNumber + " ORDER BY inserted_date DESC;";
+                + " WHERE employee_number =" + employeeNumber + " ORDER BY inserted_date DESC LIMIT 1;";
 
         Cursor cursor = database.rawQuery(query, null);
 

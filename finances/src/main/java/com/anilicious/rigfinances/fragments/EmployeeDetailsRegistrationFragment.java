@@ -67,6 +67,8 @@ public class EmployeeDetailsRegistrationFragment extends Fragment {
                     employee.setDesignation(designation);
                     employee.setSalary(salary);
                     employee.setInsertedDate(inserted_date);
+                    employee.setDateOfJoining(0); // TODO: Hack
+                    employee.setDateOfLeaving(0);
 
                     // Insert to DB
                     dbAdapter = DBAdapter.getInstance(getActivity().getApplicationContext());

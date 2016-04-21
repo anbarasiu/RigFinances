@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.app.DatePickerDialog;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anilicious.rigfinances.activities.EmployeeDetailsActivity;
@@ -43,6 +44,8 @@ public class EmployeeDetailsDateFragment extends Fragment {
     EditText etDate;
     EditText etDoj;
     EditText etDol;
+    TextView tvDoj;
+    TextView tvDol;
 
     static final int DATE_DIALOG_ID = 1;
     private int pHour;
@@ -71,6 +74,8 @@ public class EmployeeDetailsDateFragment extends Fragment {
         etDoj = (EditText)view.findViewById(R.id.editText4);
         etDol = (EditText)view.findViewById(R.id.editText5);
         etDate = (EditText)view.findViewById(R.id.editText6);
+        tvDoj = (TextView)view.findViewById(R.id.textView7);
+        tvDol = (TextView)view.findViewById(R.id.textView9);
 
         dbAdapter = DBAdapter.getInstance(getActivity().getApplicationContext());
 
@@ -84,6 +89,7 @@ public class EmployeeDetailsDateFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
 
                 Calendar inserted_date_c = Calendar.getInstance();
                 SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
@@ -103,13 +109,12 @@ public class EmployeeDetailsDateFragment extends Fragment {
 
                 if(employee.getDateOfLeaving() == 0){
                     dbAdapter.insertEmployee(employee);
-                }
-                else if(employee.getDateOfLeaving() == 0){
-                    Toast.makeText(getActivity().getApplicationContext(), "Please enter the Joining Date for the employee", Toast.LENGTH_LONG).show();
-                }
                 else{
                     dbAdapter.updateEmployee(employee);
                 }
+
+                // Clear the Form
+                ((EmployeeDetailsActivity)getActivity()).clearForm();
 
                 // Re-load Existing Employees
                 loadEmployees();
@@ -194,8 +199,8 @@ public class EmployeeDetailsDateFragment extends Fragment {
                 employeeName = selectedEmp[1];
 
                 HashMap<String, String> employeeDetails = dbAdapter.retrieveEmployeeLatestDetails(employeeNumber);
-                etDoj.setText(CommonUtils.reverseFormatDateEntry(employeeDetails.get("joining_date")));
-                etDol.setText(CommonUtils.reverseFormatDateEntry(employeeDetails.get("leaving_date")));
+                tvDoj.setText(CommonUtils.reverseFormatDateEntry(employeeDetails.get("joining_date")));
+                tvDol.setText(CommonUtils.reverseFormatDateEntry(employeeDetails.get("leaving_date")));
             }
 
             @Override
