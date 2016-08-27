@@ -107,8 +107,9 @@ public class EmployeeDetailsDateFragment extends Fragment {
                 employee.setDateOfLeaving(dateOfLeaving);
                 employee.setInsertedDate(inserted_date);
 
-                if(employee.getDateOfLeaving() == 0){
+                if(employee.getDateOfLeaving() == 0) {
                     dbAdapter.insertEmployee(employee);
+                }
                 else{
                     dbAdapter.updateEmployee(employee);
                 }
